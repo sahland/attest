@@ -1,4 +1,4 @@
-name: a11y_audit_workspace
+name: attest_workspace
 publish_to: none
 
 environment:
@@ -7,16 +7,16 @@ environment:
 # Native Dart pub workspace (Dart >= 3.6). All member packages share one
 # resolution and a single root lockfile.
 workspace:
-  - packages/a11y_audit
-  - packages/a11y_audit_flutter
-  - packages/a11y_audit_cli
+  - packages/attest
+  - packages/attest_flutter
+  - packages/attest_cli
   - example
 
 dev_dependencies:
   melos: ^8.0.0
 
 melos:
-  name: a11y_audit
+  name: attest
 
   scripts:
     analyze:

@@ -31,5 +31,5 @@ Thumbs.db
 # Local tooling
 .claude/settings.local.json
 
-# a11y_audit artifacts
+# attest artifacts
 .a11y/*.tmp

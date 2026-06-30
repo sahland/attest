@@ -10,9 +10,9 @@ class ExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'a11y_audit example',
+      title: 'attest example',
       home: Scaffold(
-        appBar: AppBar(title: const Text('a11y_audit example')),
+        appBar: AppBar(title: const Text('attest example')),
         body: const Center(
           child: Text('Dogfood screens land with the first rules.'),
         ),

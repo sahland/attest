@@ -4,8 +4,8 @@ import 'package:args/command_runner.dart';
 
 Future<void> main(List<String> args) async {
   final runner = CommandRunner<int>(
-    'a11y_audit',
-    'Aggregate a11y_audit reports, gate a baseline, and render output.',
+    'attest',
+    'Aggregate attest reports, gate a baseline, and render output.',
   );
 
   // The `ci`, `baseline` and `transcript` commands are registered here as they

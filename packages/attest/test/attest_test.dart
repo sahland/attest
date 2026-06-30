@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 
 void main() {
-  group('a11y_audit_cli scaffold', () {
+  group('attest scaffold', () {
     test('test harness runs', () {
       expect(true, isTrue);
     });

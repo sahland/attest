@@ -1,4 +1,4 @@
-/// Programmatic entry point for the `a11y_audit` command-line tool.
+/// Programmatic entry point for the `attest` command-line tool.
 ///
 /// The CLI aggregates the per-screen JSON reports emitted by a widget-test run,
 /// diffs them against a baseline by fingerprint, and renders JSON, SARIF and

@@ -1,11 +1,11 @@
-name: a11y_audit_flutter
+name: attest_flutter
 description: >-
-  Flutter widget-test integration for a11y_audit: a WidgetTester accessibility
+  Flutter widget-test integration for attest: a WidgetTester accessibility
   audit, raster and text-scale collectors, and gate matchers for CI.
 version: 0.1.0
-repository: https://github.com/a11y-audit/a11y_audit
-issue_tracker: https://github.com/a11y-audit/a11y_audit/issues
-homepage: https://github.com/a11y-audit/a11y_audit
+repository: https://github.com/sahland/attest
+issue_tracker: https://github.com/sahland/attest/issues
+homepage: https://github.com/sahland/attest
 topics:
   - accessibility
   - a11y
@@ -19,7 +19,7 @@ environment:
 resolution: workspace
 
 dependencies:
-  a11y_audit: ^0.1.0
+  attest: ^0.1.0
   flutter:
     sdk: flutter
   # flutter_test is a runtime dependency here (not dev): this package *provides*
