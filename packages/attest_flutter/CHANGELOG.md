@@ -4,6 +4,14 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.3.0
+
+### Added
+
+- `TextScaleCollector` and the `textScales` parameter on `auditAccessibility`:
+  the screen is re-pumped at enlarged text sizes and layout overflow is captured
+  into the snapshot for the text-overflow rule. Requires `attest` 0.3.0.
+
 ## 0.2.0
 
 ### Changed

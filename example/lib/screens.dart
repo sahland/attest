@@ -154,6 +154,32 @@ class BrokenAmbiguousNameScreen extends StatelessWidget {
   }
 }
 
+/// A screen whose row fits at the normal text size but overflows when the
+/// system font is enlarged.
+///
+/// Triggers `attest/text-overflow` only under the text-scale pass.
+class BrokenTextOverflowScreen extends StatelessWidget {
+  const BrokenTextOverflowScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Text overflow')),
+      body: const Center(
+        child: SizedBox(
+          width: 200,
+          child: Row(
+            children: [
+              Text('Settings overview panel'),
+              Icon(Icons.info),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// A screen built correctly: every element has an accessible name.
 ///
 /// Produces no findings, and serves as the audit's clean baseline.

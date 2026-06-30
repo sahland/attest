@@ -39,3 +39,4 @@ export 'src/rules/image_alt_rule.dart';
 export 'src/rules/interactive_name_rule.dart';
 export 'src/rules/placeholder_name_rule.dart';
 export 'src/rules/target_size_rule.dart';
+export 'src/rules/text_overflow_rule.dart';

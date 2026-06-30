@@ -10,6 +10,7 @@ import '../rules/image_alt_rule.dart';
 import '../rules/interactive_name_rule.dart';
 import '../rules/placeholder_name_rule.dart';
 import '../rules/target_size_rule.dart';
+import '../rules/text_overflow_rule.dart';
 import 'rule.dart';
 import 'rule_config.dart';
 import 'snapshot_index.dart';
@@ -29,6 +30,7 @@ class RuleEngine {
         TargetSizeRule(),
         FocusTrapRule(),
         AmbiguousNameRule(),
+        TextOverflowRule(),
       ]);
 
   /// The rules this engine evaluates, in order.

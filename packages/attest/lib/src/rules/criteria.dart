@@ -58,4 +58,15 @@ abstract final class Criteria {
     en301549: '11.2.1.1',
     title: 'Keyboard',
   );
+
+  /// WCAG 1.4.4 Resize Text (Level AA).
+  ///
+  /// Closely related to 1.4.10 Reflow; layout that overflows at enlarged text
+  /// loses content, failing both.
+  static const Criterion resizeText = Criterion(
+    wcag: '1.4.4',
+    wcagLevel: 'AA',
+    en301549: '11.1.4.4',
+    title: 'Resize Text',
+  );
 }

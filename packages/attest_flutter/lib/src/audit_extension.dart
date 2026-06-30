@@ -3,6 +3,7 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'snapshot_builder.dart';
+import 'text_scale_collector.dart';
 
 /// The version of attest reported in [AuditMeta.toolVersion].
 const String attestVersion = '0.1.0';
@@ -25,22 +26,38 @@ extension AccessibilityAudit on WidgetTester {
   /// ```
   ///
   /// Pass [screenName] to label the report, [engine] to supply a custom rule
-  /// set, [config] to tune the rules, and [gateSeverity] to change which
-  /// findings fail the gate.
+  /// set, [config] to tune the rules, [gateSeverity] to change which findings
+  /// fail the gate, and [textScales] to choose the system text sizes the
+  /// overflow check re-pumps at (1.0 is the as-pumped baseline and is skipped by
+  /// the collector). Pass `const [1.0]` to disable the text-scale pass.
   Future<AuditReport> auditAccessibility({
     String screenName = 'screen',
     RuleEngine? engine,
     RuleConfig config = const RuleConfig(),
     Severity gateSeverity = Severity.error,
+    List<double> textScales = const [1.0, 1.3, 2.0],
   }) async {
     final handle = ensureSemantics();
     await pump();
     try {
       final (root, devicePixelRatio) = _rootSemanticsView();
-      final snapshot = const SemanticsSnapshotBuilder().build(
+      var snapshot = const SemanticsSnapshotBuilder().build(
         root,
         devicePixelRatio: devicePixelRatio,
       );
+
+      if (textScales.any((scale) => scale != 1.0)) {
+        final observations = await const TextScaleCollector().collect(
+          this,
+          textScales,
+        );
+        snapshot = SemanticsSnapshot(
+          root: snapshot.root,
+          contrastSamples: snapshot.contrastSamples,
+          textScaleObservations: observations,
+        );
+      }
+
       return (engine ?? RuleEngine.standard()).run(
         snapshot,
         meta: AuditMeta(

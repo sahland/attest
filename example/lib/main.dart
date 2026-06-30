@@ -33,6 +33,7 @@ class HomeScreen extends StatelessWidget {
       ('Target size (broken)', (_) => const BrokenTargetSizeScreen()),
       ('Focus trap (broken)', (_) => const BrokenFocusTrapScreen()),
       ('Ambiguous name (broken)', (_) => const BrokenAmbiguousNameScreen()),
+      ('Text overflow (broken)', (_) => const BrokenTextOverflowScreen()),
       ('Clean', (_) => const CleanScreen()),
     ];
 
