@@ -11,5 +11,6 @@ library;
 // Re-export the core so a test file needs a single import.
 export 'package:attest/attest.dart';
 
-// Flutter-facing API is exported here as it is built out (see roadmap M1+).
-// Intentionally minimal during the M0 scaffold.
+export 'src/audit_extension.dart';
+export 'src/matchers.dart';
+export 'src/snapshot_builder.dart';
