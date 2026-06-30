@@ -1,0 +1,18 @@
+# Normalize line endings to LF for all text; let Git detect text vs binary.
+* text=auto eol=lf
+
+# Explicit source types
+*.dart   text eol=lf
+*.yaml   text eol=lf
+*.yml    text eol=lf
+*.md     text eol=lf
+*.json   text eol=lf
+
+# Binary assets
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.ttf    binary
+*.otf    binary

@@ -1,0 +1,11 @@
+# The example app is not a published library, so it does not require dartdoc on
+# every public member; otherwise it inherits the workspace-wide strict rules.
+include: ../analysis_options.yaml
+
+analyzer:
+  errors:
+    public_member_api_docs: ignore
+
+linter:
+  rules:
+    public_member_api_docs: false

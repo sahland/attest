@@ -1,0 +1,26 @@
+name: a11y_audit
+description: >-
+  Continuous accessibility-compliance engine for Flutter. Pure-Dart rules that
+  map findings to WCAG and EN 301 549 success criteria, with CI baseline gating.
+version: 0.1.0
+repository: https://github.com/a11y-audit/a11y_audit
+issue_tracker: https://github.com/a11y-audit/a11y_audit/issues
+homepage: https://github.com/a11y-audit/a11y_audit
+topics:
+  - accessibility
+  - a11y
+  - wcag
+  - testing
+
+environment:
+  sdk: ^3.6.0
+
+resolution: workspace
+
+dependencies:
+  collection: ^1.19.0
+  meta: ^1.16.0
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  test: ^1.31.0

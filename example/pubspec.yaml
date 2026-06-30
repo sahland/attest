@@ -1,0 +1,20 @@
+name: a11y_audit_example
+description: Intentionally-broken demo app used to dogfood a11y_audit in CI.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.6.0
+  flutter: ">=3.27.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  a11y_audit_flutter: ^0.1.0
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter

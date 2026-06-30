@@ -1,0 +1,52 @@
+name: a11y_audit_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.6.0
+
+# Native Dart pub workspace (Dart >= 3.6). All member packages share one
+# resolution and a single root lockfile.
+workspace:
+  - packages/a11y_audit
+  - packages/a11y_audit_flutter
+  - packages/a11y_audit_cli
+  - example
+
+dev_dependencies:
+  melos: ^8.0.0
+
+melos:
+  name: a11y_audit
+
+  scripts:
+    analyze:
+      description: Statically analyze every package; infos and warnings are fatal.
+      run: melos run analyze:dart && melos run analyze:flutter
+
+    analyze:dart:
+      description: Analyze pure-Dart packages.
+      run: melos exec -c 1 --no-flutter --order-dependents -- dart analyze --fatal-infos .
+
+    analyze:flutter:
+      description: Analyze Flutter packages.
+      run: melos exec -c 1 --flutter -- flutter analyze --fatal-infos .
+
+    format:
+      description: Format all Dart code in place.
+      run: dart format .
+
+    format:check:
+      description: Fail if any Dart code is not formatted.
+      run: dart format --output=none --set-exit-if-changed .
+
+    test:
+      description: Run all unit, widget and golden tests.
+      run: melos run test:dart && melos run test:flutter
+
+    test:dart:
+      description: Run tests in pure-Dart packages that have a test directory.
+      run: melos exec -c 1 --dir-exists=test --no-flutter -- dart test
+
+    test:flutter:
+      description: Run tests in Flutter packages that have a test directory.
+      run: melos exec -c 1 --dir-exists=test --flutter -- flutter test

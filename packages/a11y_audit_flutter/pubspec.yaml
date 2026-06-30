@@ -1,0 +1,32 @@
+name: a11y_audit_flutter
+description: >-
+  Flutter widget-test integration for a11y_audit: a WidgetTester accessibility
+  audit, raster and text-scale collectors, and gate matchers for CI.
+version: 0.1.0
+repository: https://github.com/a11y-audit/a11y_audit
+issue_tracker: https://github.com/a11y-audit/a11y_audit/issues
+homepage: https://github.com/a11y-audit/a11y_audit
+topics:
+  - accessibility
+  - a11y
+  - wcag
+  - testing
+
+environment:
+  sdk: ^3.6.0
+  flutter: ">=3.27.0"
+
+resolution: workspace
+
+dependencies:
+  a11y_audit: ^0.1.0
+  flutter:
+    sdk: flutter
+  # flutter_test is a runtime dependency here (not dev): this package *provides*
+  # test helpers, so consumers import them from their own test code.
+  flutter_test:
+    sdk: flutter
+  meta: ^1.16.0
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
