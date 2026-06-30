@@ -1,0 +1,35 @@
+# Dart / Flutter
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+doc/api/
+
+# Melos
+.melos_tool/
+**/.melos_tool/
+
+# Generated / coverage
+coverage/
+*.g.dart.bak
+.test_coverage.json
+lcov.info
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+.history/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local tooling
+.claude/settings.local.json
+
+# a11y_audit artifacts
+.a11y/*.tmp
