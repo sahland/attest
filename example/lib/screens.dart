@@ -76,6 +76,84 @@ class BrokenFieldLabelScreen extends StatelessWidget {
   }
 }
 
+/// A screen with a touch target smaller than the platform minimum.
+///
+/// Triggers `attest/target-size`: the tappable box is 24×24, below 48.
+class BrokenTargetSizeScreen extends StatelessWidget {
+  const BrokenTargetSizeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Target size')),
+      body: Center(
+        child: Semantics(
+          button: true,
+          label: 'Add item',
+          onTap: () {},
+          child: const SizedBox(
+            width: 24,
+            height: 24,
+            child: ColoredBox(color: Colors.indigo),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A screen with an interactive element that is tappable but hidden from
+/// assistive technology.
+///
+/// Triggers `attest/focus-trap`.
+class BrokenFocusTrapScreen extends StatelessWidget {
+  const BrokenFocusTrapScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Focus trap')),
+      body: Center(
+        child: Semantics(
+          button: true,
+          label: 'Buy now',
+          hidden: true,
+          onTap: () {},
+          child: const SizedBox(
+            width: 96,
+            height: 48,
+            child: ColoredBox(color: Colors.orange),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A screen with two interactive elements that share an accessible name.
+///
+/// Triggers `attest/ambiguous-name`.
+class BrokenAmbiguousNameScreen extends StatelessWidget {
+  const BrokenAmbiguousNameScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Ambiguous name')),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(onPressed: () {}, child: const Text('More')),
+            const SizedBox(height: 16),
+            ElevatedButton(onPressed: () {}, child: const Text('More')),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// A screen built correctly: every element has an accessible name.
 ///
 /// Produces no findings, and serves as the audit's clean baseline.

@@ -31,6 +31,18 @@ void main() {
       ruleIds(await audit(tester, const BrokenFieldLabelScreen())),
       {'attest/field-label'},
     );
+    expect(
+      ruleIds(await audit(tester, const BrokenTargetSizeScreen())),
+      {'attest/target-size'},
+    );
+    expect(
+      ruleIds(await audit(tester, const BrokenFocusTrapScreen())),
+      {'attest/focus-trap'},
+    );
+    expect(
+      ruleIds(await audit(tester, const BrokenAmbiguousNameScreen())),
+      {'attest/ambiguous-name'},
+    );
   });
 
   testWidgets('the clean screen has no violations', (tester) async {

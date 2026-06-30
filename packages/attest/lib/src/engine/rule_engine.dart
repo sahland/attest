@@ -3,10 +3,13 @@ import '../model/audit_report.dart';
 import '../model/finding.dart';
 import '../model/semantics_snapshot.dart';
 import '../model/severity.dart';
+import '../rules/ambiguous_name_rule.dart';
 import '../rules/field_label_rule.dart';
+import '../rules/focus_trap_rule.dart';
 import '../rules/image_alt_rule.dart';
 import '../rules/interactive_name_rule.dart';
 import '../rules/placeholder_name_rule.dart';
+import '../rules/target_size_rule.dart';
 import 'rule.dart';
 import 'rule_config.dart';
 import 'snapshot_index.dart';
@@ -23,6 +26,9 @@ class RuleEngine {
         ImageAltRule(),
         PlaceholderNameRule(),
         FieldLabelRule(),
+        TargetSizeRule(),
+        FocusTrapRule(),
+        AmbiguousNameRule(),
       ]);
 
   /// The rules this engine evaluates, in order.

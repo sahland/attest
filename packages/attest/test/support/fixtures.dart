@@ -9,6 +9,7 @@ const SemanticsFlagData isLink = SemanticsFlagData.isLink;
 const SemanticsFlagData isImage = SemanticsFlagData.isImage;
 const SemanticsFlagData isTextField = SemanticsFlagData.isTextField;
 const SemanticsFlagData isHeader = SemanticsFlagData.isHeader;
+const SemanticsFlagData isHidden = SemanticsFlagData.isHidden;
 const SemanticsFlagData isEnabled = SemanticsFlagData.isEnabled;
 const SemanticsFlagData hasCheckedState = SemanticsFlagData.hasCheckedState;
 const SemanticsFlagData hasToggledState = SemanticsFlagData.hasToggledState;

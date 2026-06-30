@@ -39,4 +39,23 @@ abstract final class Criteria {
     en301549: '11.1.3.1',
     title: 'Info and Relationships',
   );
+
+  /// WCAG 2.5.8 Target Size (Minimum) (Level AA).
+  ///
+  /// New in WCAG 2.2; the EN clause follows the v4.1.1 mirror. The default
+  /// v3.2.1 pack predates it (see roadmap M8 for pack gating).
+  static const Criterion targetSize = Criterion(
+    wcag: '2.5.8',
+    wcagLevel: 'AA',
+    en301549: '11.2.5.8',
+    title: 'Target Size (Minimum)',
+  );
+
+  /// WCAG 2.1.1 Keyboard (Level A).
+  static const Criterion keyboard = Criterion(
+    wcag: '2.1.1',
+    wcagLevel: 'A',
+    en301549: '11.2.1.1',
+    title: 'Keyboard',
+  );
 }

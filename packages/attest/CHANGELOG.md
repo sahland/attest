@@ -4,6 +4,16 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.2.0
+
+### Added
+
+- Three geometry and reachability rules: `attest/target-size` (WCAG 2.5.8, with
+  a configurable platform/WCAG-minimum threshold), `attest/focus-trap` (2.1.1),
+  and the heuristic `attest/ambiguous-name` (2.4.6).
+- `TargetSizeMode` and the `targetSizeMode`/`platformTargetSize` options on
+  `RuleConfig`.
+
 ## 0.1.0
 
 ### Added

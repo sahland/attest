@@ -15,19 +15,32 @@ class SemanticsSnapshotBuilder {
   const SemanticsSnapshotBuilder();
 
   /// Builds a snapshot rooted at [root].
-  SemanticsSnapshot build(SemanticsNode root) =>
-      SemanticsSnapshot(root: _convert(root, Matrix4.identity()));
+  ///
+  /// Accumulated semantics transforms yield physical-pixel bounds; pass the
+  /// view's [devicePixelRatio] so bounds are stored in logical pixels, which is
+  /// what the geometry rules (and developers) reason about.
+  SemanticsSnapshot build(
+    SemanticsNode root, {
+    double devicePixelRatio = 1.0,
+  }) =>
+      SemanticsSnapshot(
+        root: _convert(root, Matrix4.identity(), devicePixelRatio),
+      );
 
-  SemanticsNodeData _convert(SemanticsNode node, Matrix4 parentTransform) {
+  SemanticsNodeData _convert(
+    SemanticsNode node,
+    Matrix4 parentTransform,
+    double devicePixelRatio,
+  ) {
     final data = node.getSemanticsData();
     final globalTransform = parentTransform.multiplied(
       node.transform ?? Matrix4.identity(),
     );
-    final globalRect = MatrixUtils.transformRect(globalTransform, node.rect);
+    final physicalRect = MatrixUtils.transformRect(globalTransform, node.rect);
 
     final children = <SemanticsNodeData>[];
     node.visitChildren((SemanticsNode child) {
-      children.add(_convert(child, globalTransform));
+      children.add(_convert(child, globalTransform, devicePixelRatio));
       return true;
     });
 
@@ -40,10 +53,10 @@ class SemanticsSnapshotBuilder {
       flags: _flags(data.flagsCollection),
       actions: _actions(data),
       bounds: RectData(
-        left: globalRect.left,
-        top: globalRect.top,
-        width: globalRect.width,
-        height: globalRect.height,
+        left: physicalRect.left / devicePixelRatio,
+        top: physicalRect.top / devicePixelRatio,
+        width: physicalRect.width / devicePixelRatio,
+        height: physicalRect.height / devicePixelRatio,
       ),
       textDirection: data.textDirection == TextDirection.rtl
           ? TextDirectionData.rtl

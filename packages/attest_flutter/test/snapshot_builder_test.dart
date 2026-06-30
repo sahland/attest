@@ -29,9 +29,12 @@ void main() {
 
     final handle = tester.ensureSemantics();
     await tester.pump();
-    final root = tester
-        .binding.renderViews.first.owner!.semanticsOwner!.rootSemanticsNode!;
-    final snapshot = const SemanticsSnapshotBuilder().build(root);
+    final view = tester.binding.renderViews.first;
+    final root = view.owner!.semanticsOwner!.rootSemanticsNode!;
+    final snapshot = const SemanticsSnapshotBuilder().build(
+      root,
+      devicePixelRatio: view.flutterView.devicePixelRatio,
+    );
     handle.dispose();
 
     final nodes = snapshot.allNodes.toList();
@@ -59,5 +62,35 @@ void main() {
       isTrue,
       reason: 'expected a text field node',
     );
+  });
+
+  testWidgets('resolves bounds to logical pixels', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: Semantics(
+              container: true,
+              label: 'box',
+              child: const SizedBox(width: 100, height: 40),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final handle = tester.ensureSemantics();
+    await tester.pump();
+    final view = tester.binding.renderViews.first;
+    final root = view.owner!.semanticsOwner!.rootSemanticsNode!;
+    final snapshot = const SemanticsSnapshotBuilder().build(
+      root,
+      devicePixelRatio: view.flutterView.devicePixelRatio,
+    );
+    handle.dispose();
+
+    final box = snapshot.allNodes.firstWhere((n) => n.label == 'box');
+    expect(box.bounds.width, closeTo(100, 0.5));
+    expect(box.bounds.height, closeTo(40, 0.5));
   });
 }

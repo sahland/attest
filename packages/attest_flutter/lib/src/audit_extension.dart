@@ -36,8 +36,11 @@ extension AccessibilityAudit on WidgetTester {
     final handle = ensureSemantics();
     await pump();
     try {
-      final root = _rootSemanticsNode();
-      final snapshot = const SemanticsSnapshotBuilder().build(root);
+      final (root, devicePixelRatio) = _rootSemanticsView();
+      final snapshot = const SemanticsSnapshotBuilder().build(
+        root,
+        devicePixelRatio: devicePixelRatio,
+      );
       return (engine ?? RuleEngine.standard()).run(
         snapshot,
         meta: AuditMeta(
@@ -54,10 +57,10 @@ extension AccessibilityAudit on WidgetTester {
     }
   }
 
-  SemanticsNode _rootSemanticsNode() {
+  (SemanticsNode, double) _rootSemanticsView() {
     for (final view in binding.renderViews) {
       final root = view.owner?.semanticsOwner?.rootSemanticsNode;
-      if (root != null) return root;
+      if (root != null) return (root, view.flutterView.devicePixelRatio);
     }
     throw StateError(
       'No semantics tree is available. Pump a widget before calling '
