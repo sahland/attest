@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'screens.dart';
+
 void main() => runApp(const ExampleApp());
 
-/// The dogfood application. It will grow one intentionally-broken screen per
-/// accessibility rule (plus a few clean screens) as rules are implemented.
+/// The dogfood application: a menu of screens, each demonstrating one
+/// accessibility defect attest detects, plus a clean baseline screen.
 class ExampleApp extends StatelessWidget {
   const ExampleApp({super.key});
 
@@ -11,11 +13,39 @@ class ExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'attest example',
-      home: Scaffold(
-        appBar: AppBar(title: const Text('attest example')),
-        body: const Center(
-          child: Text('Dogfood screens land with the first rules.'),
-        ),
+      theme: ThemeData(useMaterial3: true),
+      home: const HomeScreen(),
+    );
+  }
+}
+
+/// Lists the demo screens.
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final entries = <(String, WidgetBuilder)>[
+      ('Interactive name (broken)', (_) => const BrokenInteractiveNameScreen()),
+      ('Image alt (broken)', (_) => const BrokenImageAltScreen()),
+      ('Placeholder name (broken)', (_) => const BrokenPlaceholderNameScreen()),
+      ('Field label (broken)', (_) => const BrokenFieldLabelScreen()),
+      ('Clean', (_) => const CleanScreen()),
+    ];
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('attest example')),
+      body: ListView(
+        children: [
+          for (final (title, builder) in entries)
+            ListTile(
+              title: Text(title),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(
+                context,
+              ).push(MaterialPageRoute<void>(builder: builder)),
+            ),
+        ],
       ),
     );
   }

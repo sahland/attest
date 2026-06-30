@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart';
+
+/// A screen with one interactive element that has no accessible name.
+///
+/// Triggers `attest/interactive-name`: the icon button has neither a tooltip nor
+/// a semantic label, so a screen reader announces only "button".
+class BrokenInteractiveNameScreen extends StatelessWidget {
+  const BrokenInteractiveNameScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Interactive name')),
+      body: Center(
+        child: IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+      ),
+    );
+  }
+}
+
+/// A screen with an image exposed to semantics but lacking a text alternative.
+///
+/// Triggers `attest/image-alt`.
+class BrokenImageAltScreen extends StatelessWidget {
+  const BrokenImageAltScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Image alt')),
+      body: Center(
+        child: Semantics(
+          image: true,
+          child: Container(width: 96, height: 96, color: Colors.indigo),
+        ),
+      ),
+    );
+  }
+}
+
+/// A screen whose button is named with a generic placeholder word.
+///
+/// Triggers `attest/placeholder-name`: the accessible name "Button" passes the
+/// presence check but tells the user nothing.
+class BrokenPlaceholderNameScreen extends StatelessWidget {
+  const BrokenPlaceholderNameScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Placeholder name')),
+      body: Center(
+        child: ElevatedButton(onPressed: () {}, child: const Text('Button')),
+      ),
+    );
+  }
+}
+
+/// A screen with an unlabelled form field.
+///
+/// Triggers `attest/field-label`: the field has no programmatic label (a hint is
+/// not a label).
+class BrokenFieldLabelScreen extends StatelessWidget {
+  const BrokenFieldLabelScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Field label')),
+      // A bare field with no label: a screen reader announces only "edit box".
+      body: const Padding(
+        padding: EdgeInsets.all(24),
+        child: TextField(),
+      ),
+    );
+  }
+}
+
+/// A screen built correctly: every element has an accessible name.
+///
+/// Produces no findings, and serves as the audit's clean baseline.
+class CleanScreen extends StatelessWidget {
+  const CleanScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Clean')),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Semantics(
+              image: true,
+              label: 'Revenue chart',
+              child: Container(width: 96, height: 96, color: Colors.teal),
+            ),
+            const SizedBox(height: 24),
+            const SizedBox(
+              width: 240,
+              child: TextField(
+                decoration: InputDecoration(labelText: 'Email'),
+              ),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(onPressed: () {}, child: const Text('Pay')),
+          ],
+        ),
+      ),
+    );
+  }
+}
