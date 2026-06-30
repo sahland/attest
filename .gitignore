@@ -29,7 +29,7 @@ lcov.info
 Thumbs.db
 
 # Local tooling
-.claude/settings.local.json
+.claude/
 
 # attest artifacts
 .a11y/*.tmp
