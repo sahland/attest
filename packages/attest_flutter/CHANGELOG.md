@@ -4,6 +4,15 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.5.0
+
+### Added
+
+- Findings now carry a source location. The snapshot builder recovers each
+  node's originating widget location from the render tree's debug creator (via a
+  new `renderRoot` argument), so a failure points at `file:line`. Best-effort:
+  it relies on `--track-widget-creation` (on by default under `flutter test`).
+
 ## 0.4.0
 
 ### Added

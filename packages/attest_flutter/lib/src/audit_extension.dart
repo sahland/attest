@@ -1,5 +1,5 @@
 import 'package:attest/attest.dart';
-import 'package:flutter/semantics.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'raster_collector.dart';
@@ -43,10 +43,11 @@ extension AccessibilityAudit on WidgetTester {
     final handle = ensureSemantics();
     await pump();
     try {
-      final (root, devicePixelRatio) = _rootSemanticsView();
+      final (root, devicePixelRatio, renderRoot) = _rootSemanticsView();
       var snapshot = const SemanticsSnapshotBuilder().build(
         root,
         devicePixelRatio: devicePixelRatio,
+        renderRoot: renderRoot,
       );
 
       if (contrast) {
@@ -78,10 +79,12 @@ extension AccessibilityAudit on WidgetTester {
     }
   }
 
-  (SemanticsNode, double) _rootSemanticsView() {
+  (SemanticsNode, double, RenderObject) _rootSemanticsView() {
     for (final view in binding.renderViews) {
       final root = view.owner?.semanticsOwner?.rootSemanticsNode;
-      if (root != null) return (root, view.flutterView.devicePixelRatio);
+      if (root != null) {
+        return (root, view.flutterView.devicePixelRatio, view);
+      }
     }
     throw StateError(
       'No semantics tree is available. Pump a widget before calling '

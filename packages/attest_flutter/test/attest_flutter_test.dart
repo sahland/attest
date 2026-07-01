@@ -44,6 +44,34 @@ void main() {
     expect(report, hasNoAccessibilityViolations());
   });
 
+  testWidgets('findings carry the source location of the offending widget', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Semantics(
+            button: true,
+            onTap: () {},
+            child: const SizedBox(width: 48, height: 48),
+          ),
+        ),
+      ),
+    );
+
+    final report = await tester.auditAccessibility(
+      contrast: false,
+      textScales: const [1.0],
+    );
+    final finding = report.findings.firstWhere(
+      (f) => f.ruleId == 'attest/interactive-name',
+    );
+
+    expect(finding.location, isNotNull);
+    expect(finding.location!.file, endsWith('.dart'));
+    expect(finding.location!.line, greaterThan(0));
+  });
+
   testWidgets('the gate failure description is grouped and readable', (
     tester,
   ) async {
