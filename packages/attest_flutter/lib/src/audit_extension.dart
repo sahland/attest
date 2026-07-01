@@ -31,7 +31,8 @@ extension AccessibilityAudit on WidgetTester {
   /// fail the gate, and [textScales] to choose the system text sizes the
   /// overflow check re-pumps at (1.0 is the as-pumped baseline and is skipped by
   /// the collector). Pass `const [1.0]` to disable the text-scale pass. Set
-  /// [contrast] to `false` to skip the (more expensive) raster contrast pass.
+  /// [contrast] to `false` to skip the (more expensive) raster contrast pass,
+  /// and [transcript] to `false` to skip attaching the screen-reader transcript.
   Future<AuditReport> auditAccessibility({
     String screenName = 'screen',
     RuleEngine? engine,
@@ -39,6 +40,7 @@ extension AccessibilityAudit on WidgetTester {
     Severity gateSeverity = Severity.error,
     List<double> textScales = const [1.0, 1.3, 2.0],
     bool contrast = true,
+    bool transcript = true,
   }) async {
     final handle = ensureSemantics();
     await pump();
@@ -63,7 +65,7 @@ extension AccessibilityAudit on WidgetTester {
         snapshot = snapshot.copyWith(textScaleObservations: observations);
       }
 
-      return (engine ?? RuleEngine.standard()).run(
+      var report = (engine ?? RuleEngine.standard()).run(
         snapshot,
         meta: AuditMeta(
           screenName: screenName,
@@ -74,6 +76,12 @@ extension AccessibilityAudit on WidgetTester {
         config: config,
         gateSeverity: gateSeverity,
       );
+      if (transcript) {
+        report = report.copyWith(
+          transcript: const TranscriptGenerator().generate(snapshot),
+        );
+      }
+      return report;
     } finally {
       handle.dispose();
     }

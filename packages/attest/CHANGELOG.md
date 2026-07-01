@@ -4,6 +4,13 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.7.0
+
+### Added
+
+- `TranscriptGenerator`, which turns a snapshot into the screen-reader
+  announcement sequence, and an `AuditReport.transcript` field to carry it.
+
 ## 0.6.0
 
 ### Added

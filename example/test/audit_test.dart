@@ -95,4 +95,10 @@ void main() {
     expect(report, hasNoAccessibilityViolations());
     expect(report, passesAccessibilityGate());
   });
+
+  testWidgets('the audit attaches a screen-reader transcript', (tester) async {
+    final report = await audit(tester, const CleanScreen());
+    expect(report.transcript, isNotEmpty);
+    expect(report.transcript, contains('Pay, button'));
+  });
 }

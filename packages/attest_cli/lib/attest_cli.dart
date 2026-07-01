@@ -10,16 +10,20 @@ import 'package:args/command_runner.dart';
 
 import 'src/commands/baseline_command.dart';
 import 'src/commands/ci_command.dart';
+import 'src/commands/transcript_command.dart';
 
 export 'src/commands/baseline_command.dart';
 export 'src/commands/ci_command.dart';
+export 'src/commands/transcript_command.dart';
 export 'src/html_writer.dart';
 export 'src/report_loader.dart';
 
-/// Builds the `attest` command runner with the `ci` and `baseline` commands.
+/// Builds the `attest` command runner with the `ci`, `baseline` and
+/// `transcript` commands.
 CommandRunner<int> buildAttestRunner() => CommandRunner<int>(
       'attest',
       'Aggregate attest reports, gate a baseline, and render output.',
     )
       ..addCommand(CiCommand())
-      ..addCommand(BaselineCommand());
+      ..addCommand(BaselineCommand())
+      ..addCommand(TranscriptCommand());

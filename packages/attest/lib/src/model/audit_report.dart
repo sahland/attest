@@ -19,6 +19,7 @@ class AuditReport {
     required this.findings,
     required this.meta,
     this.gateSeverity = Severity.error,
+    this.transcript = const [],
   });
 
   /// Every finding produced for the screen, regardless of severity.
@@ -29,6 +30,18 @@ class AuditReport {
 
   /// Findings at or above this severity fail the gate.
   final Severity gateSeverity;
+
+  /// The screen-reader transcript: the announcements a screen reader would make,
+  /// in traversal order. Empty unless the audit was asked to produce it.
+  final List<String> transcript;
+
+  /// Returns a copy with [transcript] replaced.
+  AuditReport copyWith({List<String>? transcript}) => AuditReport(
+        findings: findings,
+        meta: meta,
+        gateSeverity: gateSeverity,
+        transcript: transcript ?? this.transcript,
+      );
 
   /// The findings that fail the gate, i.e. those at or above [gateSeverity].
   Iterable<Finding> get gateFailures =>
@@ -56,6 +69,10 @@ class AuditReport {
         gateSeverity: json['gateSeverity'] == null
             ? Severity.error
             : Severity.fromJson(json['gateSeverity'] as String),
+        transcript: [
+          for (final line in (json['transcript'] as List<dynamic>? ?? const []))
+            line as String,
+        ],
       );
 
   /// The JSON representation of this report.
@@ -63,6 +80,7 @@ class AuditReport {
         'findings': [for (final f in findings) f.toJson()],
         'meta': meta.toJson(),
         'gateSeverity': gateSeverity.toJson(),
+        if (transcript.isNotEmpty) 'transcript': transcript,
       };
 
   @override
@@ -70,11 +88,16 @@ class AuditReport {
       other is AuditReport &&
       _deepEquality.equals(other.findings, findings) &&
       other.meta == meta &&
-      other.gateSeverity == gateSeverity;
+      other.gateSeverity == gateSeverity &&
+      _deepEquality.equals(other.transcript, transcript);
 
   @override
-  int get hashCode =>
-      Object.hash(_deepEquality.hash(findings), meta, gateSeverity);
+  int get hashCode => Object.hash(
+        _deepEquality.hash(findings),
+        meta,
+        gateSeverity,
+        _deepEquality.hash(transcript),
+      );
 
   @override
   String toString() =>

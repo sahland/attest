@@ -39,6 +39,7 @@ void main() {
         toolVersion: '0.6.0',
         timestamp: DateTime.utc(2026),
       ),
+      transcript: const ['Total, heading', 'Pay, button'],
     );
     File('$reportDir/checkout.json').writeAsStringSync(
       jsonEncode(report.toJson()),
@@ -107,5 +108,9 @@ void main() {
         jsonDecode(File(outputPath).readAsStringSync()) as Map<String, dynamic>;
     expect(sarif['version'], '2.1.0');
     expect((sarif['runs'] as List).single, isA<Map<String, dynamic>>());
+  });
+
+  test('transcript runs over the reports', () async {
+    expect(await run(['transcript', '--report-dir', reportDir]), 0);
   });
 }
