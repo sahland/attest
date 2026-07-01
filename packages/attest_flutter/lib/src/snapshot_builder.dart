@@ -162,20 +162,56 @@ class _LocationIndex {
 
   SourceLocation? locationFor(int nodeId) {
     final renderObject = _renderObjectsByNodeId[nodeId];
-    if (renderObject == null) return null;
+    final creator = renderObject?.debugCreator;
+    if (creator is! DebugCreator) return null;
     try {
-      final creator = renderObject.debugCreator;
-      if (creator is! DebugCreator) return null;
-      for (final node in debugTransformDebugCreator([
-        DiagnosticsDebugCreator(creator),
-      ])) {
-        final location = _search(node);
-        if (location != null) return location;
+      // Walk up from the creating element, preferring the first location in the
+      // user's own code over a framework or package internal (e.g. the widget
+      // that wraps a Material control). Fall back to the nearest location found.
+      SourceLocation? firstResolved;
+      Element? element = creator.element;
+      for (var hops = 0; element != null && hops < 64; hops++) {
+        final location = _locationOf(element);
+        if (location != null) {
+          firstResolved ??= location;
+          if (_isLocal(location.file)) return location;
+        }
+        Element? parent;
+        element.visitAncestorElements((ancestor) {
+          parent = ancestor;
+          return false;
+        });
+        element = parent;
       }
+      return firstResolved;
     } on Object {
       // Best-effort: any failure simply leaves the location unresolved.
+      return null;
+    }
+  }
+
+  SourceLocation? _locationOf(Element element) {
+    for (final node in debugTransformDebugCreator([
+      DiagnosticsDebugCreator(DebugCreator(element)),
+    ])) {
+      final location = _search(node);
+      if (location != null) return location;
     }
     return null;
+  }
+
+  /// Whether [file] is in the user's own code rather than the Flutter SDK or a
+  /// pub package.
+  static bool _isLocal(String file) {
+    if (file.startsWith('package:flutter/') ||
+        file.startsWith('package:flutter_test/')) {
+      return false;
+    }
+    final lower = file.toLowerCase();
+    return !lower.contains('/hosted/pub.dev/') &&
+        !lower.contains(r'\hosted\pub.dev\') &&
+        !lower.contains('.pub-cache') &&
+        !lower.contains('/flutter/packages/');
   }
 
   SourceLocation? _search(DiagnosticsNode node) {

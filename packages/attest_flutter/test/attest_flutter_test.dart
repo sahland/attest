@@ -72,6 +72,29 @@ void main() {
     expect(finding.location!.line, greaterThan(0));
   });
 
+  testWidgets('the location points at user code, not framework internals', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+        ),
+      ),
+    );
+
+    final report = await tester.auditAccessibility(
+      contrast: false,
+      textScales: const [1.0],
+    );
+    final finding = report.findings.firstWhere(
+      (f) => f.ruleId == 'attest/interactive-name',
+    );
+
+    expect(finding.location, isNotNull);
+    expect(finding.location!.file, isNot(startsWith('package:flutter/')));
+  });
+
   testWidgets('the gate failure description is grouped and readable', (
     tester,
   ) async {
