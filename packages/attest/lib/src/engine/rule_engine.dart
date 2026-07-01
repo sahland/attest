@@ -4,6 +4,7 @@ import '../model/finding.dart';
 import '../model/semantics_snapshot.dart';
 import '../model/severity.dart';
 import '../rules/ambiguous_name_rule.dart';
+import '../rules/contrast_rule.dart';
 import '../rules/field_label_rule.dart';
 import '../rules/focus_trap_rule.dart';
 import '../rules/image_alt_rule.dart';
@@ -31,6 +32,7 @@ class RuleEngine {
         FocusTrapRule(),
         AmbiguousNameRule(),
         TextOverflowRule(),
+        ContrastRule(),
       ]);
 
   /// The rules this engine evaluates, in order.

@@ -35,6 +35,19 @@ class SemanticsSnapshot {
   /// Every node in the tree, in pre-order (root first).
   Iterable<SemanticsNodeData> get allNodes => root.selfAndDescendants;
 
+  /// Returns a copy with the given observation lists replaced, used to enrich a
+  /// tree snapshot with collector output.
+  SemanticsSnapshot copyWith({
+    List<ContrastSample>? contrastSamples,
+    List<TextScaleObservation>? textScaleObservations,
+  }) =>
+      SemanticsSnapshot(
+        root: root,
+        contrastSamples: contrastSamples ?? this.contrastSamples,
+        textScaleObservations:
+            textScaleObservations ?? this.textScaleObservations,
+      );
+
   /// Parses a [SemanticsSnapshot] from [json].
   factory SemanticsSnapshot.fromJson(Map<String, dynamic> json) =>
       SemanticsSnapshot(

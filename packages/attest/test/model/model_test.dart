@@ -19,9 +19,10 @@ void main() {
     root: node,
     contrastSamples: [
       ContrastSample(
-        nodeId: 2,
+        label: 'Total',
         foregroundLuminance: 0.1,
         backgroundLuminance: 0.9,
+        bounds: RectData.zero,
       ),
     ],
     textScaleObservations: [
@@ -53,9 +54,10 @@ void main() {
         ),
         contrastSamples: [
           ContrastSample(
-            nodeId: 2,
+            label: 'Total',
             foregroundLuminance: 0.1,
             backgroundLuminance: 0.9,
+            bounds: RectData.zero,
           ),
         ],
         textScaleObservations: [
@@ -119,9 +121,10 @@ void main() {
   group('derived behaviour', () {
     test('contrast ratio matches the WCAG formula', () {
       const sample = ContrastSample(
-        nodeId: 1,
+        label: 'x',
         foregroundLuminance: 0,
         backgroundLuminance: 1,
+        bounds: RectData.zero,
       );
       // (1 + 0.05) / (0 + 0.05) = 21.
       expect(sample.contrastRatio, closeTo(21, 1e-9));

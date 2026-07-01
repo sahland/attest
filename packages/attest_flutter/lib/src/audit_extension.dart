@@ -2,6 +2,7 @@ import 'package:attest/attest.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'raster_collector.dart';
 import 'snapshot_builder.dart';
 import 'text_scale_collector.dart';
 
@@ -29,13 +30,15 @@ extension AccessibilityAudit on WidgetTester {
   /// set, [config] to tune the rules, [gateSeverity] to change which findings
   /// fail the gate, and [textScales] to choose the system text sizes the
   /// overflow check re-pumps at (1.0 is the as-pumped baseline and is skipped by
-  /// the collector). Pass `const [1.0]` to disable the text-scale pass.
+  /// the collector). Pass `const [1.0]` to disable the text-scale pass. Set
+  /// [contrast] to `false` to skip the (more expensive) raster contrast pass.
   Future<AuditReport> auditAccessibility({
     String screenName = 'screen',
     RuleEngine? engine,
     RuleConfig config = const RuleConfig(),
     Severity gateSeverity = Severity.error,
     List<double> textScales = const [1.0, 1.3, 2.0],
+    bool contrast = true,
   }) async {
     final handle = ensureSemantics();
     await pump();
@@ -46,16 +49,17 @@ extension AccessibilityAudit on WidgetTester {
         devicePixelRatio: devicePixelRatio,
       );
 
+      if (contrast) {
+        final samples = await const RasterCollector().collect(this);
+        snapshot = snapshot.copyWith(contrastSamples: samples);
+      }
+
       if (textScales.any((scale) => scale != 1.0)) {
         final observations = await const TextScaleCollector().collect(
           this,
           textScales,
         );
-        snapshot = SemanticsSnapshot(
-          root: snapshot.root,
-          contrastSamples: snapshot.contrastSamples,
-          textScaleObservations: observations,
-        );
+        snapshot = snapshot.copyWith(textScaleObservations: observations);
       }
 
       return (engine ?? RuleEngine.standard()).run(

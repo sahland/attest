@@ -32,6 +32,7 @@ export 'src/model/text_direction_data.dart';
 export 'src/model/text_scale_observation.dart';
 export 'src/model/text_style_data.dart';
 export 'src/rules/ambiguous_name_rule.dart';
+export 'src/rules/contrast_rule.dart';
 export 'src/rules/criteria.dart';
 export 'src/rules/field_label_rule.dart';
 export 'src/rules/focus_trap_rule.dart';

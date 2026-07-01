@@ -1,28 +1,47 @@
 import 'package:meta/meta.dart';
 
-/// One measured text-versus-background contrast observation for a node.
+import 'rect_data.dart';
+
+/// One measured text-versus-background contrast observation.
 ///
 /// Produced by the raster collector in `attest_flutter` (see roadmap M4) and
-/// consumed by the contrast rule. A snapshot built by a pure-Dart test carries
-/// none of these, and the contrast rule simply yields nothing — graceful
-/// degradation rather than a crash.
+/// consumed by the contrast rule. It carries everything the rule needs — the
+/// two relative luminances plus the text's size, weight and enabled state — so
+/// the rule stays pure WCAG math. A snapshot built by a pure-Dart test carries
+/// none of these, and the contrast rule simply yields nothing.
 @immutable
 class ContrastSample {
-  /// Creates a [ContrastSample] relating a node to its measured luminances.
+  /// Creates a [ContrastSample].
   const ContrastSample({
-    required this.nodeId,
+    required this.label,
     required this.foregroundLuminance,
     required this.backgroundLuminance,
+    required this.bounds,
+    this.fontSize,
+    this.isBold = false,
+    this.isDisabled = false,
   });
 
-  /// The [SemanticsNodeData.id] of the text node this sample describes.
-  final int nodeId;
+  /// The sampled text, used for the finding message and a stable fingerprint.
+  final String label;
 
   /// The WCAG relative luminance (0–1) of the text glyphs.
   final double foregroundLuminance;
 
   /// The WCAG relative luminance (0–1) of the background behind the glyphs.
   final double backgroundLuminance;
+
+  /// The text's bounding rectangle in global logical pixels.
+  final RectData bounds;
+
+  /// The font size in logical pixels, when known.
+  final double? fontSize;
+
+  /// Whether the text is bold (weight 700 or heavier).
+  final bool isBold;
+
+  /// Whether the text belongs to a disabled control, which WCAG 1.4.3 exempts.
+  final bool isDisabled;
 
   /// The WCAG contrast ratio between foreground and background, in the range
   /// 1.0 (no contrast) to 21.0 (black on white).
@@ -36,32 +55,60 @@ class ContrastSample {
     return (hi + 0.05) / (lo + 0.05);
   }
 
+  /// Whether this counts as large text under WCAG: at least 24 logical px, or at
+  /// least 18.66 px when bold. Large text has a lower contrast requirement.
+  bool get isLargeText {
+    final size = fontSize ?? 0;
+    return size >= 24 || (isBold && size >= 18.66);
+  }
+
   /// Parses a [ContrastSample] from [json].
   factory ContrastSample.fromJson(Map<String, dynamic> json) => ContrastSample(
-        nodeId: json['nodeId'] as int,
+        label: json['label'] as String? ?? '',
         foregroundLuminance: (json['foregroundLuminance'] as num).toDouble(),
         backgroundLuminance: (json['backgroundLuminance'] as num).toDouble(),
+        bounds: json['bounds'] == null
+            ? RectData.zero
+            : RectData.fromJson(json['bounds'] as Map<String, dynamic>),
+        fontSize: (json['fontSize'] as num?)?.toDouble(),
+        isBold: json['isBold'] as bool? ?? false,
+        isDisabled: json['isDisabled'] as bool? ?? false,
       );
 
   /// The JSON representation of this sample.
   Map<String, dynamic> toJson() => {
-        'nodeId': nodeId,
+        if (label.isNotEmpty) 'label': label,
         'foregroundLuminance': foregroundLuminance,
         'backgroundLuminance': backgroundLuminance,
+        'bounds': bounds.toJson(),
+        if (fontSize != null) 'fontSize': fontSize,
+        if (isBold) 'isBold': isBold,
+        if (isDisabled) 'isDisabled': isDisabled,
       };
 
   @override
   bool operator ==(Object other) =>
       other is ContrastSample &&
-      other.nodeId == nodeId &&
+      other.label == label &&
       other.foregroundLuminance == foregroundLuminance &&
-      other.backgroundLuminance == backgroundLuminance;
+      other.backgroundLuminance == backgroundLuminance &&
+      other.bounds == bounds &&
+      other.fontSize == fontSize &&
+      other.isBold == isBold &&
+      other.isDisabled == isDisabled;
 
   @override
-  int get hashCode =>
-      Object.hash(nodeId, foregroundLuminance, backgroundLuminance);
+  int get hashCode => Object.hash(
+        label,
+        foregroundLuminance,
+        backgroundLuminance,
+        bounds,
+        fontSize,
+        isBold,
+        isDisabled,
+      );
 
   @override
-  String toString() => 'ContrastSample(nodeId: $nodeId, ratio: '
-      '${contrastRatio.toStringAsFixed(2)})';
+  String toString() =>
+      'ContrastSample("$label", ratio: ${contrastRatio.toStringAsFixed(2)})';
 }

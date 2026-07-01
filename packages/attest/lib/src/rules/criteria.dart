@@ -69,4 +69,12 @@ abstract final class Criteria {
     en301549: '11.1.4.4',
     title: 'Resize Text',
   );
+
+  /// WCAG 1.4.3 Contrast (Minimum) (Level AA).
+  static const Criterion contrastMinimum = Criterion(
+    wcag: '1.4.3',
+    wcagLevel: 'AA',
+    en301549: '11.1.4.3',
+    title: 'Contrast (Minimum)',
+  );
 }

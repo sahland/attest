@@ -4,17 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // The tree-rule screens are audited without the text-scale pass so each is
-  // isolated to the single defect it demonstrates.
+  // The tree-rule screens are audited without the text-scale or contrast passes
+  // so each is isolated to the single defect it demonstrates.
   Future<AuditReport> audit(
     WidgetTester tester,
     Widget screen, {
     List<double> textScales = const [1.0],
+    bool contrast = false,
   }) async {
     await tester.pumpWidget(MaterialApp(home: screen));
     return tester.auditAccessibility(
       screenName: screen.runtimeType.toString(),
       textScales: textScales,
+      contrast: contrast,
     );
   }
 
@@ -71,6 +73,17 @@ void main() {
       ruleIds(await audit(tester, const BrokenTextOverflowScreen())),
       isEmpty,
     );
+  });
+
+  testWidgets('the low-contrast screen reports a contrast violation', (
+    tester,
+  ) async {
+    final report = await audit(
+      tester,
+      const BrokenContrastScreen(),
+      contrast: true,
+    );
+    expect(ruleIds(report), contains('attest/contrast'));
   });
 
   testWidgets('the clean screen has no violations', (tester) async {

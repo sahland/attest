@@ -13,5 +13,6 @@ export 'package:attest/attest.dart';
 
 export 'src/audit_extension.dart';
 export 'src/matchers.dart';
+export 'src/raster_collector.dart';
 export 'src/snapshot_builder.dart';
 export 'src/text_scale_collector.dart';

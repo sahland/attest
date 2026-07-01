@@ -180,6 +180,27 @@ class BrokenTextOverflowScreen extends StatelessWidget {
   }
 }
 
+/// A screen whose text is too faint against its background.
+///
+/// Triggers `attest/contrast` under the raster pass.
+class BrokenContrastScreen extends StatelessWidget {
+  const BrokenContrastScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Contrast')),
+      backgroundColor: Colors.white,
+      body: const Center(
+        child: Text(
+          'Account balance',
+          style: TextStyle(color: Color(0xFFBBBBBB), fontSize: 16),
+        ),
+      ),
+    );
+  }
+}
+
 /// A screen built correctly: every element has an accessible name.
 ///
 /// Produces no findings, and serves as the audit's clean baseline.

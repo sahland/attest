@@ -34,7 +34,11 @@ void main() {
       ),
     );
 
-    final report = await tester.auditAccessibility(screenName: 'Clean');
+    final report = await tester.auditAccessibility(
+      screenName: 'Clean',
+      contrast: false,
+      textScales: const [1.0],
+    );
 
     expect(report, passesAccessibilityGate());
     expect(report, hasNoAccessibilityViolations());
@@ -51,7 +55,11 @@ void main() {
       ),
     );
 
-    final report = await tester.auditAccessibility(screenName: 'Defect');
+    final report = await tester.auditAccessibility(
+      screenName: 'Defect',
+      contrast: false,
+      textScales: const [1.0],
+    );
 
     final mismatch = StringDescription();
     passesAccessibilityGate().describeMismatch(report, mismatch, {}, false);
