@@ -4,6 +4,14 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.9.0
+
+### Changed
+
+- `attest/state-exposed` now fires on a group of two or more custom controls
+  (down from three), catching small segmented/toggle pairs that expose no
+  selected state.
+
 ## 0.8.0
 
 ### Added

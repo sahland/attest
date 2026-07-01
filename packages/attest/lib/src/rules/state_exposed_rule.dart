@@ -11,18 +11,18 @@ import 'criteria.dart';
 
 /// Flags a group of custom tappable controls that expose no selected state.
 ///
-/// Three or more sibling gesture controls that share no role (not a button,
-/// link or field) and none of which is selectable look like a hand-built tab
-/// bar, chip group or segmented control whose state was never surfaced to
-/// assistive technology. This is a heuristic — a row of custom nav targets can
-/// trip it — so it needs a group of at least three, stays silent if any sibling
-/// already exposes state, and ships as a suppressible warning.
+/// Two or more sibling gesture controls that share no role (not a button, link
+/// or field) and none of which is selectable look like a hand-built segmented
+/// control, tab bar or chip group whose state was never surfaced to assistive
+/// technology. This is a heuristic — a pair of custom nav targets can trip it —
+/// so it stays silent if any sibling already exposes state and ships as a
+/// suppressible warning.
 class StateExposedRule implements Rule {
   /// Creates a [StateExposedRule].
   const StateExposedRule();
 
   /// The smallest sibling group treated as a selectable set.
-  static const int _minimumGroupSize = 3;
+  static const int _minimumGroupSize = 2;
 
   @override
   String get id => 'attest/state-exposed';

@@ -48,8 +48,13 @@ void main() {
     expect(evaluate(rule, snapshot), isEmpty);
   });
 
-  test('does not flag a group smaller than three', () {
-    final snapshot = snap(node(children: [tab('Day'), tab('Week')]));
+  test('flags a pair of custom tappables', () {
+    final snapshot = snap(node(children: [tab('Grid'), tab('List')]));
+    expect(evaluate(rule, snapshot), hasLength(2));
+  });
+
+  test('does not flag a lone control', () {
+    final snapshot = snap(node(children: [tab('Grid')]));
     expect(evaluate(rule, snapshot), isEmpty);
   });
 }
