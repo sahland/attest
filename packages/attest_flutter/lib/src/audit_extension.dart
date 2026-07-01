@@ -7,7 +7,9 @@ import 'snapshot_builder.dart';
 import 'text_scale_collector.dart';
 
 /// The version of attest reported in [AuditMeta.toolVersion].
-const String attestVersion = '0.1.0';
+///
+/// Kept in sync with the package version by a test; see `version_test.dart`.
+const String attestVersion = '0.8.3';
 
 /// Accessibility auditing for [WidgetTester].
 extension AccessibilityAudit on WidgetTester {

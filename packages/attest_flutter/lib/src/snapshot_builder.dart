@@ -26,8 +26,9 @@ class SemanticsSnapshotBuilder {
     double devicePixelRatio = 1.0,
     RenderObject? renderRoot,
   }) {
-    final locations =
-        renderRoot == null ? null : _LocationIndex.build(renderRoot);
+    final locations = renderRoot == null
+        ? null
+        : _LocationIndex.build(renderRoot);
     return SemanticsSnapshot(
       root: _convert(root, Matrix4.identity(), devicePixelRatio, locations),
     );
@@ -79,40 +80,35 @@ class SemanticsSnapshotBuilder {
   }
 
   Set<SemanticsFlagData> _flags(ui.SemanticsFlags f) => {
-        if (f.isButton) SemanticsFlagData.isButton,
-        if (f.isLink) SemanticsFlagData.isLink,
-        if (f.isImage) SemanticsFlagData.isImage,
-        if (f.isTextField) SemanticsFlagData.isTextField,
-        if (f.isHeader) SemanticsFlagData.isHeader,
-        if (f.isHidden) SemanticsFlagData.isHidden,
-        if (f.isEnabled == ui.Tristate.isTrue) SemanticsFlagData.isEnabled,
-        if (f.isChecked != ui.CheckedState.none)
-          SemanticsFlagData.hasCheckedState,
-        if (f.isChecked == ui.CheckedState.isTrue) SemanticsFlagData.isChecked,
-        if (f.isToggled != ui.Tristate.none) SemanticsFlagData.hasToggledState,
-        if (f.isToggled == ui.Tristate.isTrue) SemanticsFlagData.isToggled,
-        if (f.isSelected == ui.Tristate.isTrue) SemanticsFlagData.isSelected,
-      };
+    if (f.isButton) SemanticsFlagData.isButton,
+    if (f.isLink) SemanticsFlagData.isLink,
+    if (f.isImage) SemanticsFlagData.isImage,
+    if (f.isTextField) SemanticsFlagData.isTextField,
+    if (f.isHeader) SemanticsFlagData.isHeader,
+    if (f.isHidden) SemanticsFlagData.isHidden,
+    if (f.isEnabled == ui.Tristate.isTrue) SemanticsFlagData.isEnabled,
+    if (f.isChecked != ui.CheckedState.none) SemanticsFlagData.hasCheckedState,
+    if (f.isChecked == ui.CheckedState.isTrue) SemanticsFlagData.isChecked,
+    if (f.isToggled != ui.Tristate.none) SemanticsFlagData.hasToggledState,
+    if (f.isToggled == ui.Tristate.isTrue) SemanticsFlagData.isToggled,
+    if (f.isSelected == ui.Tristate.isTrue) SemanticsFlagData.isSelected,
+  };
 
   Set<SemanticsActionData> _actions(SemanticsData data) => {
-        if (data.hasAction(SemanticsAction.tap)) SemanticsActionData.tap,
-        if (data.hasAction(SemanticsAction.longPress))
-          SemanticsActionData.longPress,
-        if (data.hasAction(SemanticsAction.increase))
-          SemanticsActionData.increase,
-        if (data.hasAction(SemanticsAction.decrease))
-          SemanticsActionData.decrease,
-        if (data.hasAction(SemanticsAction.scrollLeft))
-          SemanticsActionData.scrollLeft,
-        if (data.hasAction(SemanticsAction.scrollRight))
-          SemanticsActionData.scrollRight,
-        if (data.hasAction(SemanticsAction.scrollUp))
-          SemanticsActionData.scrollUp,
-        if (data.hasAction(SemanticsAction.scrollDown))
-          SemanticsActionData.scrollDown,
-        if (data.hasAction(SemanticsAction.dismiss))
-          SemanticsActionData.dismiss,
-      };
+    if (data.hasAction(SemanticsAction.tap)) SemanticsActionData.tap,
+    if (data.hasAction(SemanticsAction.longPress))
+      SemanticsActionData.longPress,
+    if (data.hasAction(SemanticsAction.increase)) SemanticsActionData.increase,
+    if (data.hasAction(SemanticsAction.decrease)) SemanticsActionData.decrease,
+    if (data.hasAction(SemanticsAction.scrollLeft))
+      SemanticsActionData.scrollLeft,
+    if (data.hasAction(SemanticsAction.scrollRight))
+      SemanticsActionData.scrollRight,
+    if (data.hasAction(SemanticsAction.scrollUp)) SemanticsActionData.scrollUp,
+    if (data.hasAction(SemanticsAction.scrollDown))
+      SemanticsActionData.scrollDown,
+    if (data.hasAction(SemanticsAction.dismiss)) SemanticsActionData.dismiss,
+  };
 }
 
 /// Maps semantics node ids back to render-tree facts the snapshot cannot carry

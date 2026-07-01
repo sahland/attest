@@ -68,10 +68,7 @@ class BrokenFieldLabelScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Field label')),
       // A bare field with no label: a screen reader announces only "edit box".
-      body: const Padding(
-        padding: EdgeInsets.all(24),
-        child: TextField(),
-      ),
+      body: const Padding(padding: EdgeInsets.all(24), child: TextField()),
     );
   }
 }
@@ -169,10 +166,7 @@ class BrokenTextOverflowScreen extends StatelessWidget {
         child: SizedBox(
           width: 200,
           child: Row(
-            children: [
-              Text('Settings overview panel'),
-              Icon(Icons.info),
-            ],
+            children: [Text('Settings overview panel'), Icon(Icons.info)],
           ),
         ),
       ),
@@ -250,9 +244,7 @@ class CleanScreen extends StatelessWidget {
             const SizedBox(height: 24),
             const SizedBox(
               width: 240,
-              child: TextField(
-                decoration: InputDecoration(labelText: 'Email'),
-              ),
+              child: TextField(decoration: InputDecoration(labelText: 'Email')),
             ),
             const SizedBox(height: 24),
             ElevatedButton(onPressed: () {}, child: const Text('Pay')),

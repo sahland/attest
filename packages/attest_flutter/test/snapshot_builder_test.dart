@@ -11,10 +11,7 @@ void main() {
         home: Scaffold(
           body: Column(
             children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Pay'),
-              ),
+              ElevatedButton(onPressed: () {}, child: const Text('Pay')),
               Semantics(
                 image: true,
                 label: 'Revenue chart',

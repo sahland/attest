@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
       ('Contrast (broken)', (_) => const BrokenContrastScreen()),
       (
         'Heading structure (broken)',
-        (_) => const BrokenHeadingStructureScreen()
+        (_) => const BrokenHeadingStructureScreen(),
       ),
       ('Clean', (_) => const CleanScreen()),
     ];

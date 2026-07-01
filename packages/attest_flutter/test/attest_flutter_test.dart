@@ -26,10 +26,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: ElevatedButton(
-            onPressed: () {},
-            child: const Text('Pay'),
-          ),
+          body: ElevatedButton(onPressed: () {}, child: const Text('Pay')),
         ),
       ),
     );

@@ -28,34 +28,27 @@ void main() {
   testWidgets('each broken screen reports exactly its catalogued defect', (
     tester,
   ) async {
-    expect(
-      ruleIds(await audit(tester, const BrokenInteractiveNameScreen())),
-      {'attest/interactive-name'},
-    );
-    expect(
-      ruleIds(await audit(tester, const BrokenImageAltScreen())),
-      {'attest/image-alt'},
-    );
-    expect(
-      ruleIds(await audit(tester, const BrokenPlaceholderNameScreen())),
-      {'attest/placeholder-name'},
-    );
-    expect(
-      ruleIds(await audit(tester, const BrokenFieldLabelScreen())),
-      {'attest/field-label'},
-    );
-    expect(
-      ruleIds(await audit(tester, const BrokenFocusTrapScreen())),
-      {'attest/focus-trap'},
-    );
-    expect(
-      ruleIds(await audit(tester, const BrokenAmbiguousNameScreen())),
-      {'attest/ambiguous-name'},
-    );
-    expect(
-      ruleIds(await audit(tester, const BrokenHeadingStructureScreen())),
-      {'attest/heading-structure'},
-    );
+    expect(ruleIds(await audit(tester, const BrokenInteractiveNameScreen())), {
+      'attest/interactive-name',
+    });
+    expect(ruleIds(await audit(tester, const BrokenImageAltScreen())), {
+      'attest/image-alt',
+    });
+    expect(ruleIds(await audit(tester, const BrokenPlaceholderNameScreen())), {
+      'attest/placeholder-name',
+    });
+    expect(ruleIds(await audit(tester, const BrokenFieldLabelScreen())), {
+      'attest/field-label',
+    });
+    expect(ruleIds(await audit(tester, const BrokenFocusTrapScreen())), {
+      'attest/focus-trap',
+    });
+    expect(ruleIds(await audit(tester, const BrokenAmbiguousNameScreen())), {
+      'attest/ambiguous-name',
+    });
+    expect(ruleIds(await audit(tester, const BrokenHeadingStructureScreen())), {
+      'attest/heading-structure',
+    });
   });
 
   testWidgets('the text-overflow screen overflows only when text grows', (

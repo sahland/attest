@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Widget _screen(Color textColor) => MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Text(
-            'Account balance',
-            style: TextStyle(color: textColor, fontSize: 16),
-          ),
-        ),
+  home: Scaffold(
+    backgroundColor: Colors.white,
+    body: Center(
+      child: Text(
+        'Account balance',
+        style: TextStyle(color: textColor, fontSize: 16),
       ),
-    );
+    ),
+  ),
+);
 
 void main() {
   testWidgets('measures the contrast of a known colour pair', (tester) async {
@@ -30,10 +30,7 @@ void main() {
 
     final report = await tester.auditAccessibility(textScales: const [1.0]);
 
-    expect(
-      report.findings.map((f) => f.ruleId),
-      contains('attest/contrast'),
-    );
+    expect(report.findings.map((f) => f.ruleId), contains('attest/contrast'));
   });
 
   testWidgets('does not flag high-contrast text', (tester) async {

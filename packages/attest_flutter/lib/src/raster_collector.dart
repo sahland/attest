@@ -108,7 +108,8 @@ class RasterCollector {
         height: rect.height,
       ),
       fontSize: style?.fontSize,
-      isBold: (style?.fontWeight ?? FontWeight.normal).value >=
+      isBold:
+          (style?.fontWeight ?? FontWeight.normal).value >=
           FontWeight.bold.value,
       isDisabled: opacity < _disabledOpacity,
     );

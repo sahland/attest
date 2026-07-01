@@ -91,8 +91,10 @@ String _render(AuditReport report, List<Finding> findings) {
     ..writeln();
   for (final finding in findings) {
     buffer
-      ..writeln('  ✗ [${finding.severity.name}] ${finding.ruleId} — '
-          '${finding.criterion}')
+      ..writeln(
+        '  ✗ [${finding.severity.name}] ${finding.ruleId} — '
+        '${finding.criterion}',
+      )
       ..writeln('    ${finding.message}');
     if (finding.location != null) {
       buffer.writeln('    ${finding.location}');
