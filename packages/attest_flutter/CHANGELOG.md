@@ -4,6 +4,14 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.8.2
+
+### Fixed
+
+- Correct the SDK constraint: the package uses the `SemanticsData.flagsCollection`
+  tri-state API, so it requires Flutter >= 3.32.0 (Dart >= 3.8.0). The previous
+  `>= 3.27.0` bound was inaccurate and would fail to compile on 3.27–3.31.
+
 ## 0.8.1
 
 ### Changed
