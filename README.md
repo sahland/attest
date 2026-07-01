@@ -12,6 +12,43 @@ Lighthouse cannot inspect a Flutter app — this fills that gap.
 > issues. attest provides automated coverage of machine-checkable criteria plus
 > a structured checklist for the rest. It does **not** certify "EAA compliance."
 
+## Quick start
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:attest_flutter/attest_flutter.dart';
+
+void main() {
+  testWidgets('CheckoutScreen is accessible', (tester) async {
+    await tester.pumpWidget(const MyApp(home: CheckoutScreen()));
+
+    final report = await tester.auditAccessibility();
+
+    expect(report, passesAccessibilityGate());
+  });
+}
+```
+
+One call walks the semantics tree, rasterizes for contrast, re-pumps at enlarged
+text sizes, and returns a report where every finding cites a WCAG success
+criterion and EN 301 549 clause, anchored to the `file:line` that produced it.
+
+## What it checks
+
+Twelve rules across three detection methods — tree walk, rasterized pixels, and
+re-pump at enlarged text:
+
+- **Names & roles:** interactive-name, image-alt, placeholder-name, field-label,
+  ambiguous-name, state-exposed
+- **Geometry & reachability:** target-size, focus-trap, focus-order
+- **Rendered output:** contrast (real pixels), text-overflow (reflow at 200%)
+- **Structure:** heading-structure
+
+Plus a **CI baseline gate** (fail only on new findings, by stable fingerprint),
+**SARIF/HTML/JSON** output, versioned **standard packs** (WCAG 2.1/EN 301 549
+v3.2.1 and WCAG 2.2), and a **screen-reader transcript** — the traversal-order
+sequence a screen reader would announce, which no other Flutter tool produces.
+
 ## Packages
 
 | Package | Description |
