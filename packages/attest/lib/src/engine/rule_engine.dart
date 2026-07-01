@@ -61,7 +61,8 @@ class RuleEngine {
 
     final findings = <Finding>[
       for (final rule in rules)
-        if (!config.disabledRules.contains(rule.id))
+        if (!config.disabledRules.contains(rule.id) &&
+            config.standard.includes(rule.criterion))
           ...rule.evaluate(snapshot, context),
     ]..sort(_byRuleThenFingerprint);
 

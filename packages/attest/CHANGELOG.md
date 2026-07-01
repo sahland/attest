@@ -4,6 +4,15 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.8.0
+
+### Added
+
+- Versioned standard packs: `Standard` (`en301549_v3_2_1`, `wcag22`) and
+  `RuleConfig.standard`. The engine runs a rule only when its criterion belongs
+  to the selected pack, so `attest/target-size` (WCAG 2.5.8) is active only under
+  `wcag22`.
+
 ## 0.7.0
 
 ### Added

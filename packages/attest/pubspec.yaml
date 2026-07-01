@@ -2,7 +2,7 @@ name: attest
 description: >-
   Continuous accessibility-compliance engine for Flutter. Pure-Dart rules that
   map findings to WCAG and EN 301 549 success criteria, with CI baseline gating.
-version: 0.7.0
+version: 0.8.0
 repository: https://github.com/sahland/attest
 issue_tracker: https://github.com/sahland/attest/issues
 homepage: https://github.com/sahland/attest

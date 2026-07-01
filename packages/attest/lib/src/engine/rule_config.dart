@@ -1,3 +1,4 @@
+import '../model/standard.dart';
 import '../model/target_size_mode.dart';
 
 /// Tunable inputs the rules read while evaluating a snapshot.
@@ -12,6 +13,7 @@ class RuleConfig {
     this.targetSizeMode = TargetSizeMode.platform,
     this.platformTargetSize = 48,
     this.disabledRules = const {},
+    this.standard = Standard.en301549_v3_2_1,
   });
 
   /// Labels treated as non-meaningful placeholders by the placeholder-name rule.
@@ -30,6 +32,10 @@ class RuleConfig {
   /// Rule ids to skip, e.g. `{'attest/heading-structure'}`. The main lever for
   /// muting a noisy heuristic across a whole run.
   final Set<String> disabledRules;
+
+  /// The standard pack to audit against; rules whose criterion is outside it are
+  /// skipped.
+  final Standard standard;
 
   /// The minimum acceptable touch-target side, in logical pixels, resolved from
   /// [targetSizeMode] and [platformTargetSize].

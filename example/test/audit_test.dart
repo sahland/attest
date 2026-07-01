@@ -11,12 +11,14 @@ void main() {
     Widget screen, {
     List<double> textScales = const [1.0],
     bool contrast = false,
+    RuleConfig config = const RuleConfig(),
   }) async {
     await tester.pumpWidget(MaterialApp(home: screen));
     return tester.auditAccessibility(
       screenName: screen.runtimeType.toString(),
       textScales: textScales,
       contrast: contrast,
+      config: config,
     );
   }
 
@@ -41,10 +43,6 @@ void main() {
     expect(
       ruleIds(await audit(tester, const BrokenFieldLabelScreen())),
       {'attest/field-label'},
-    );
-    expect(
-      ruleIds(await audit(tester, const BrokenTargetSizeScreen())),
-      {'attest/target-size'},
     );
     expect(
       ruleIds(await audit(tester, const BrokenFocusTrapScreen())),
@@ -76,6 +74,26 @@ void main() {
     expect(
       ruleIds(await audit(tester, const BrokenTextOverflowScreen())),
       isEmpty,
+    );
+  });
+
+  testWidgets('target size is gated by the selected standard pack', (
+    tester,
+  ) async {
+    // WCAG 2.5.8 is new in 2.2, so the default EN 301 549 v3.2.1 pack skips it.
+    expect(
+      ruleIds(await audit(tester, const BrokenTargetSizeScreen())),
+      isEmpty,
+    );
+    expect(
+      ruleIds(
+        await audit(
+          tester,
+          const BrokenTargetSizeScreen(),
+          config: const RuleConfig(standard: Standard.wcag22),
+        ),
+      ),
+      {'attest/target-size'},
     );
   });
 

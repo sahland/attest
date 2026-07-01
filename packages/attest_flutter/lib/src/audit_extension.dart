@@ -9,9 +9,6 @@ import 'text_scale_collector.dart';
 /// The version of attest reported in [AuditMeta.toolVersion].
 const String attestVersion = '0.1.0';
 
-/// The default standard pack the audit runs against.
-const String _defaultStandard = 'en301549_v3_2_1';
-
 /// Accessibility auditing for [WidgetTester].
 extension AccessibilityAudit on WidgetTester {
   /// Audits the currently pumped screen and returns an [AuditReport].
@@ -69,7 +66,7 @@ extension AccessibilityAudit on WidgetTester {
         snapshot,
         meta: AuditMeta(
           screenName: screenName,
-          standard: _defaultStandard,
+          standard: config.standard.name,
           toolVersion: attestVersion,
           timestamp: DateTime.now().toUtc(),
         ),

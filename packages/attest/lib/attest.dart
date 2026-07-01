@@ -27,6 +27,7 @@ export 'src/model/semantics_node_data.dart';
 export 'src/model/semantics_snapshot.dart';
 export 'src/model/severity.dart';
 export 'src/model/source_location.dart';
+export 'src/model/standard.dart';
 export 'src/model/target_size_mode.dart';
 export 'src/model/text_direction_data.dart';
 export 'src/model/text_scale_observation.dart';

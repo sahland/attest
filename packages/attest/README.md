@@ -15,6 +15,24 @@ unit-testable. The Flutter-facing helpers (the `WidgetTester` extension and the
 raster/text-scale collectors) live in
 [`attest_flutter`](https://pub.dev/packages/attest_flutter).
 
+## Standard packs
+
+Audits run against a versioned pack, chosen with `RuleConfig.standard`:
+
+- `Standard.en301549_v3_2_1` (default) — WCAG 2.1 Level AA, the current EU legal
+  baseline.
+- `Standard.wcag22` — WCAG 2.2 Level AA, the basis for the forthcoming
+  EN 301 549 v4.1.1.
+
+A rule runs only when its cited criterion belongs to the selected pack, so
+switching packs changes both the checks that run and the criteria cited. For
+example `attest/target-size` (WCAG 2.5.8) is new in 2.2, so it is inactive under
+the default `en301549_v3_2_1` pack and active under `wcag22`.
+
+**Migrating to WCAG 2.2:** set `standard: Standard.wcag22`, then re-run
+`attest baseline --update` — the newly active rules may add findings you will
+want to review and accept.
+
 ## Status
 
 Early development. The public API is not yet stable.
