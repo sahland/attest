@@ -6,10 +6,13 @@ import '../model/severity.dart';
 import '../rules/ambiguous_name_rule.dart';
 import '../rules/contrast_rule.dart';
 import '../rules/field_label_rule.dart';
+import '../rules/focus_order_rule.dart';
 import '../rules/focus_trap_rule.dart';
+import '../rules/heading_structure_rule.dart';
 import '../rules/image_alt_rule.dart';
 import '../rules/interactive_name_rule.dart';
 import '../rules/placeholder_name_rule.dart';
+import '../rules/state_exposed_rule.dart';
 import '../rules/target_size_rule.dart';
 import '../rules/text_overflow_rule.dart';
 import 'rule.dart';
@@ -33,6 +36,9 @@ class RuleEngine {
         AmbiguousNameRule(),
         TextOverflowRule(),
         ContrastRule(),
+        HeadingStructureRule(),
+        FocusOrderRule(),
+        StateExposedRule(),
       ]);
 
   /// The rules this engine evaluates, in order.
@@ -54,7 +60,9 @@ class RuleEngine {
     );
 
     final findings = <Finding>[
-      for (final rule in rules) ...rule.evaluate(snapshot, context),
+      for (final rule in rules)
+        if (!config.disabledRules.contains(rule.id))
+          ...rule.evaluate(snapshot, context),
     ]..sort(_byRuleThenFingerprint);
 
     return AuditReport(

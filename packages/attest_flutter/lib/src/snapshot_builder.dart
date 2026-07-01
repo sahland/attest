@@ -45,13 +45,15 @@ class SemanticsSnapshotBuilder {
     );
     final physicalRect = MatrixUtils.transformRect(globalTransform, node.rect);
 
-    final children = <SemanticsNodeData>[];
-    node.visitChildren((SemanticsNode child) {
-      children.add(
+    // Use the real traversal order (sort keys + geometry), not the raw child
+    // order that `visitChildren` returns, so the focus-order rule sees what
+    // assistive technology actually announces.
+    final children = [
+      for (final child in node.debugListChildrenInOrder(
+        DebugSemanticsDumpOrder.traversalOrder,
+      ))
         _convert(child, globalTransform, devicePixelRatio, locations),
-      );
-      return true;
-    });
+    ];
 
     return SemanticsNodeData(
       id: node.id,
@@ -72,6 +74,7 @@ class SemanticsSnapshotBuilder {
           : TextDirectionData.ltr,
       childrenInTraversalOrder: children,
       creator: locations?.locationFor(node.id),
+      textStyle: locations?.textStyleFor(node.id),
     );
   }
 
@@ -112,32 +115,50 @@ class SemanticsSnapshotBuilder {
       };
 }
 
-/// Maps semantics node ids to the source location of the widget that created
-/// them, using the render tree's debug creator information.
+/// Maps semantics node ids back to render-tree facts the snapshot cannot carry
+/// on its own: the source location of the creating widget, and the text style of
+/// text nodes.
 ///
 /// This relies on `--track-widget-creation` (on by default under `flutter
 /// test`) and on debug-only render-tree state, so it is strictly best-effort:
-/// any failure yields a null location rather than an error.
+/// any failure yields a null result rather than an error.
 class _LocationIndex {
-  _LocationIndex(this._renderObjectsByNodeId);
+  _LocationIndex(this._renderObjectsByNodeId, this._textStylesByNodeId);
 
   factory _LocationIndex.build(RenderObject root) {
     final byNodeId = <int, RenderObject>{};
+    final styles = <int, TextStyleData>{};
     void visit(RenderObject renderObject) {
       final node = renderObject.debugSemantics;
-      if (node != null) byNodeId.putIfAbsent(node.id, () => renderObject);
+      if (node != null) {
+        byNodeId.putIfAbsent(node.id, () => renderObject);
+        if (renderObject is RenderParagraph) {
+          styles.putIfAbsent(node.id, () => _styleOf(renderObject));
+        }
+      }
       renderObject.visitChildren(visit);
     }
 
     visit(root);
-    return _LocationIndex(byNodeId);
+    return _LocationIndex(byNodeId, styles);
   }
 
   final Map<int, RenderObject> _renderObjectsByNodeId;
+  final Map<int, TextStyleData> _textStylesByNodeId;
 
   static final RegExp _pattern = RegExp(
     r'([\w./:\\-]+\.dart):(\d+)(?::(\d+))?',
   );
+
+  static TextStyleData _styleOf(RenderParagraph paragraph) {
+    final style = paragraph.text.style;
+    return TextStyleData(
+      fontSize: style?.fontSize,
+      fontWeight: style?.fontWeight?.value,
+    );
+  }
+
+  TextStyleData? textStyleFor(int nodeId) => _textStylesByNodeId[nodeId];
 
   SourceLocation? locationFor(int nodeId) {
     final renderObject = _renderObjectsByNodeId[nodeId];

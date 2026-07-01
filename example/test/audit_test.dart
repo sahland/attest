@@ -54,6 +54,10 @@ void main() {
       ruleIds(await audit(tester, const BrokenAmbiguousNameScreen())),
       {'attest/ambiguous-name'},
     );
+    expect(
+      ruleIds(await audit(tester, const BrokenHeadingStructureScreen())),
+      {'attest/heading-structure'},
+    );
   });
 
   testWidgets('the text-overflow screen overflows only when text grows', (

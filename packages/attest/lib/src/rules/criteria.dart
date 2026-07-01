@@ -77,4 +77,12 @@ abstract final class Criteria {
     en301549: '11.1.4.3',
     title: 'Contrast (Minimum)',
   );
+
+  /// WCAG 2.4.3 Focus Order (Level A).
+  static const Criterion focusOrder = Criterion(
+    wcag: '2.4.3',
+    wcagLevel: 'A',
+    en301549: '11.2.4.3',
+    title: 'Focus Order',
+  );
 }

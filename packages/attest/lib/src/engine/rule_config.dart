@@ -11,6 +11,7 @@ class RuleConfig {
     this.placeholderDenylist = defaultPlaceholderDenylist,
     this.targetSizeMode = TargetSizeMode.platform,
     this.platformTargetSize = 48,
+    this.disabledRules = const {},
   });
 
   /// Labels treated as non-meaningful placeholders by the placeholder-name rule.
@@ -25,6 +26,10 @@ class RuleConfig {
   /// [targetSizeMode] is [TargetSizeMode.platform]. Defaults to the Material
   /// guidance of 48; set to 44 for iOS.
   final double platformTargetSize;
+
+  /// Rule ids to skip, e.g. `{'attest/heading-structure'}`. The main lever for
+  /// muting a noisy heuristic across a whole run.
+  final Set<String> disabledRules;
 
   /// The minimum acceptable touch-target side, in logical pixels, resolved from
   /// [targetSizeMode] and [platformTargetSize].

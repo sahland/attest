@@ -4,6 +4,19 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.6.0
+
+### Added
+
+- The snapshot builder now records each text node's font size and weight (from
+  the render tree), which the heading-structure rule reads.
+
+### Fixed
+
+- Children are captured in the real traversal order (sort keys + geometry) via
+  `debugListChildrenInOrder`, not the raw child order, so the focus-order rule
+  no longer false-positives on a standard `Scaffold` app bar.
+
 ## 0.5.0
 
 ### Added

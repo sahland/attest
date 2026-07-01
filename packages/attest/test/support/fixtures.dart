@@ -13,6 +13,7 @@ const SemanticsFlagData isHidden = SemanticsFlagData.isHidden;
 const SemanticsFlagData isEnabled = SemanticsFlagData.isEnabled;
 const SemanticsFlagData hasCheckedState = SemanticsFlagData.hasCheckedState;
 const SemanticsFlagData hasToggledState = SemanticsFlagData.hasToggledState;
+const SemanticsFlagData isSelected = SemanticsFlagData.isSelected;
 
 const SemanticsActionData tap = SemanticsActionData.tap;
 const SemanticsActionData longPress = SemanticsActionData.longPress;

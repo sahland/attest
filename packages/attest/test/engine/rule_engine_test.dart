@@ -87,4 +87,27 @@ void main() {
     );
     expect(report.passes, isTrue);
   });
+
+  test('a disabled rule produces no findings', () {
+    final snapshot = snap(
+      node(
+        label: 'Your orders',
+        textStyle: const TextStyleData(fontSize: 28, fontWeight: 700),
+      ),
+    );
+
+    final ruleIds =
+        engine.run(snapshot, meta: meta).findings.map((f) => f.ruleId);
+    expect(ruleIds, contains('attest/heading-structure'));
+
+    final suppressed = engine.run(
+      snapshot,
+      meta: meta,
+      config: const RuleConfig(disabledRules: {'attest/heading-structure'}),
+    );
+    expect(
+      suppressed.findings.map((f) => f.ruleId),
+      isNot(contains('attest/heading-structure')),
+    );
+  });
 }

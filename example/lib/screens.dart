@@ -201,6 +201,33 @@ class BrokenContrastScreen extends StatelessWidget {
   }
 }
 
+/// A screen with a visual heading that is not exposed as a header.
+///
+/// Triggers the heuristic `attest/heading-structure`. It has no app bar, so no
+/// element on the screen carries header semantics.
+class BrokenHeadingStructureScreen extends StatelessWidget {
+  const BrokenHeadingStructureScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Your orders',
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text('You have no orders yet.'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// A screen built correctly: every element has an accessible name.
 ///
 /// Produces no findings, and serves as the audit's clean baseline.
