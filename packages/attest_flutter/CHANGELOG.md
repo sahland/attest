@@ -18,6 +18,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   abstention are pinned by test, and the overflow fixture is proven to fit at
   text scale 1.0 and overflow at 2.0.
 
+### Changed
+
+- Stated the version-support policy: Flutter ≥ 3.32 is a hard floor (the
+  tri-state `flagsCollection` semantics API), with the current and previous
+  three stable Flutter releases supported and each new stable tracked within
+  one release cycle.
+
 ## 0.9.0
 
 ### Changed

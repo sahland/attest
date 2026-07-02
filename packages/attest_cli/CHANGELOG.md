@@ -4,6 +4,14 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Changed
+
+- Stated the version-support policy: Dart SDK ≥ 3.6, no Flutter dependency,
+  and toolkit-wide support for the current and previous three stable Flutter
+  releases.
+
 ## 0.5.0
 
 ### Changed

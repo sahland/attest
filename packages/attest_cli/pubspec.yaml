@@ -12,6 +12,8 @@ topics:
   - wcag
   - testing
 
+# Same floor as the attest core: nothing in the code needs more than Dart 3.x
+# basics; 3.6 is the lowest bound the pub-workspace tooling permits.
 environment:
   sdk: ^3.6.0
 

@@ -33,6 +33,15 @@ the default `en301549_v3_2_1` pack and active under `wcag22`.
 `attest baseline --update` — the newly active rules may add findings you will
 want to review and accept.
 
+## Supported versions
+
+Pure Dart, **SDK ≥ 3.6**, no Flutter dependency — it runs anywhere Dart runs
+(the CI gate, scripts, servers). The floor is set by the repository's
+pub-workspace tooling, not by any language feature the code needs. The policy
+for the toolkit as a whole: the current and the previous three stable Flutter
+releases are supported, and each new stable Flutter is tracked within one
+release cycle.
+
 ## Status
 
 Early development. The public API is not yet stable.

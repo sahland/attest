@@ -12,6 +12,9 @@ topics:
   - wcag
   - testing
 
+# Flutter 3.32 introduced the tri-state SemanticsData.flagsCollection API the
+# snapshot builder maps; earlier SDKs cannot compile this package. Dart 3.8 is
+# the Dart shipped with Flutter 3.32.
 environment:
   sdk: ^3.8.0
   flutter: ">=3.32.0"

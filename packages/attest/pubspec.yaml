@@ -12,6 +12,9 @@ topics:
   - wcag
   - testing
 
+# The code itself needs nothing newer than the Dart 3.0 class modifiers; the
+# 3.6 floor is the lowest bound the pub-workspace tooling permits, and is
+# verified by the analyzer running at language version 3.6.
 environment:
   sdk: ^3.6.0
 

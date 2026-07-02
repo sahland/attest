@@ -118,6 +118,14 @@ Heuristic rules ship as warnings for exactly this reason.
 - [`attest_cli`](https://pub.dev/packages/attest_cli) — the CI baseline gate and
   SARIF / HTML / JSON reporter.
 
+## Supported versions
+
+Requires **Flutter ≥ 3.32** (Dart ≥ 3.8): the snapshot builder maps the
+tri-state `SemanticsData.flagsCollection` API introduced there. The support
+policy: the current and the previous three stable Flutter releases, with each
+new stable Flutter tracked within one release cycle — semantics-API drift is a
+standing maintenance commitment, not an afterthought.
+
 ## Status
 
 Early (`0.9.x`); the API may still change before 1.0. Feedback — especially

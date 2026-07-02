@@ -31,6 +31,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   violation change moves exactly one, and a 2000-node screen must audit within
   an explicit per-screen time budget.
 
+### Changed
+
+- Stated the version-support policy: Dart SDK ≥ 3.6 (a tooling floor, not a
+  language-feature requirement — documented in the pubspec), and toolkit-wide
+  support for the current and previous three stable Flutter releases.
+
 ## 0.9.0
 
 ### Changed

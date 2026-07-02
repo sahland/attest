@@ -63,6 +63,12 @@ jobs:
 Commit `.a11y/baseline.json` to the repository; refresh it with
 `attest baseline --update` when you deliberately accept a finding.
 
+## Supported versions
+
+Pure Dart, **SDK ≥ 3.6**, no Flutter dependency — activate it globally on any
+CI image with a Dart SDK. The toolkit-wide policy: the current and the previous
+three stable Flutter releases are supported.
+
 ## License
 
 BSD-3-Clause.
