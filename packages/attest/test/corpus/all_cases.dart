@@ -15,6 +15,7 @@ import 'focus_trap.dart';
 import 'heading_structure.dart';
 import 'image_alt.dart';
 import 'interactive_name.dart';
+import 'non_text_contrast.dart';
 import 'placeholder_name.dart';
 import 'real_world.dart';
 import 'state_exposed.dart';
@@ -35,5 +36,6 @@ final List<CorpusCase> corpusCases = [
   ...headingStructureCases,
   ...focusOrderCases,
   ...stateExposedCases,
+  ...nonTextContrastCases,
   ...realWorldCases,
 ];

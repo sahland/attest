@@ -35,13 +35,14 @@ criterion and EN 301 549 clause, anchored to the `file:line` that produced it.
 
 ## What it checks
 
-Twelve rules across three detection methods — tree walk, rasterized pixels, and
-re-pump at enlarged text:
+Thirteen rules across three detection methods — tree walk, rasterized pixels,
+and re-pump at enlarged text:
 
 - **Names & roles:** interactive-name, image-alt, placeholder-name, field-label,
   ambiguous-name, state-exposed
 - **Geometry & reachability:** target-size, focus-trap, focus-order
-- **Rendered output:** contrast (real pixels), text-overflow (reflow at 200%)
+- **Rendered output:** contrast and non-text (icon) contrast (real pixels),
+  text-overflow (reflow at 200%)
 - **Structure:** heading-structure
 
 Plus a **CI baseline gate** (fail only on new findings, by stable fingerprint),

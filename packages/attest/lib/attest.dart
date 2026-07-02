@@ -45,6 +45,7 @@ export 'src/rules/focus_trap_rule.dart';
 export 'src/rules/heading_structure_rule.dart';
 export 'src/rules/image_alt_rule.dart';
 export 'src/rules/interactive_name_rule.dart';
+export 'src/rules/non_text_contrast_rule.dart';
 export 'src/rules/placeholder_name_rule.dart';
 export 'src/rules/state_exposed_rule.dart';
 export 'src/rules/target_size_rule.dart';

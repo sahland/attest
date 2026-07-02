@@ -11,6 +11,7 @@ import '../rules/focus_trap_rule.dart';
 import '../rules/heading_structure_rule.dart';
 import '../rules/image_alt_rule.dart';
 import '../rules/interactive_name_rule.dart';
+import '../rules/non_text_contrast_rule.dart';
 import '../rules/placeholder_name_rule.dart';
 import '../rules/state_exposed_rule.dart';
 import '../rules/target_size_rule.dart';
@@ -36,6 +37,7 @@ class RuleEngine {
         AmbiguousNameRule(),
         TextOverflowRule(),
         ContrastRule(),
+        NonTextContrastRule(),
         HeadingStructureRule(),
         FocusOrderRule(),
         StateExposedRule(),

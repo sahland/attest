@@ -78,6 +78,17 @@ abstract final class Criteria {
     title: 'Contrast (Minimum)',
   );
 
+  /// WCAG 1.4.11 Non-text Contrast (Level AA).
+  ///
+  /// User-interface components and meaningful graphical objects — icons among
+  /// them — need a contrast of at least 3:1 against adjacent colours.
+  static const Criterion nonTextContrast = Criterion(
+    wcag: '1.4.11',
+    wcagLevel: 'AA',
+    en301549: '11.1.4.11',
+    title: 'Non-text Contrast',
+  );
+
   /// WCAG 2.4.3 Focus Order (Level A).
   static const Criterion focusOrder = Criterion(
     wcag: '2.4.3',

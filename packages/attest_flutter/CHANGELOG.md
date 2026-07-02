@@ -4,6 +4,20 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+
+- The raster collector detects icon glyphs (Private Use Area code points) and
+  marks their samples as non-text, so the new `attest/non-text-contrast` rule
+  (WCAG 1.4.11) can hold them to the 3:1 minimum. Requires `attest` with the
+  non-text-contrast rule.
+
+### Fixed
+
+- A small icon whose contrast is between 3:1 and 4.5:1 is no longer flagged as a
+  text-contrast failure.
+
 ## 1.0.0 - 2026-07-02
 
 First stable release. Requires `attest` 1.0.0.

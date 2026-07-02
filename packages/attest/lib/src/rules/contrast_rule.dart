@@ -42,6 +42,8 @@ class ContrastRule implements Rule {
   ) sync* {
     for (final sample in snapshot.contrastSamples) {
       if (sample.isDisabled) continue;
+      // Icons and other non-text glyphs are governed by 1.4.11, not 1.4.3.
+      if (sample.isNonText) continue;
       final threshold = sample.isLargeText ? 3.0 : 4.5;
       final ratio = sample.contrastRatio;
       if (ratio >= threshold) continue;

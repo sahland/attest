@@ -4,6 +4,20 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+
+- `attest/non-text-contrast` (WCAG 1.4.11): icons and other non-text glyphs are
+  held to the flat 3:1 minimum instead of the text minimum. `ContrastSample`
+  gained an `isNonText` flag; the contrast rule now skips non-text samples.
+
+### Fixed
+
+- A small icon rendered below 4.5:1 but at or above 3:1 is no longer reported as
+  a text-contrast failure. Icons are non-text content (governed by 1.4.11), so
+  holding them to the text minimum was a false positive.
+
 ## 1.0.0 - 2026-07-02
 
 First stable release. The public API is frozen (see below) and the rules ship

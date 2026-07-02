@@ -106,6 +106,7 @@ class RasterCollector {
     return ContrastSample(
       label: text,
       identifier: _identifierOf(paragraph),
+      isNonText: _isIconGlyph(text),
       foregroundLuminance: _luminance(blended),
       backgroundLuminance: _luminance(background),
       bounds: RectData(
@@ -135,6 +136,22 @@ class RasterCollector {
     }
     return null;
   }
+
+  /// Whether [text] is an icon glyph rather than readable text.
+  ///
+  /// Icon fonts (Material Icons, Cupertino Icons, and custom sets) map each icon
+  /// to a Unicode Private Use Area code point. Text never uses those, so a
+  /// string made entirely of PUA runes is an icon, governed by WCAG 1.4.11.
+  static bool _isIconGlyph(String text) {
+    final runes = text.runes.where((r) => r > 0x20).toList();
+    if (runes.isEmpty) return false;
+    return runes.every(_isPrivateUse);
+  }
+
+  static bool _isPrivateUse(int rune) =>
+      (rune >= 0xE000 && rune <= 0xF8FF) ||
+      (rune >= 0xF0000 && rune <= 0xFFFFD) ||
+      (rune >= 0x100000 && rune <= 0x10FFFD);
 
   /// The background is the most frequent colour within the text's box, ignoring
   /// pixels close to the foreground (the glyphs and their antialiased edges).

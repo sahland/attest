@@ -21,6 +21,7 @@ class ContrastSample {
     this.fontSize,
     this.isBold = false,
     this.isDisabled = false,
+    this.isNonText = false,
   });
 
   /// The developer-assigned semantics identifier of the text node this sample
@@ -48,6 +49,11 @@ class ContrastSample {
 
   /// Whether the text belongs to a disabled control, which WCAG 1.4.3 exempts.
   final bool isDisabled;
+
+  /// Whether this sample is a non-text graphical glyph — an icon — rather than
+  /// readable text. Non-text content is governed by WCAG 1.4.11 (a flat 3:1
+  /// minimum) instead of the size-dependent text minimum of 1.4.3.
+  final bool isNonText;
 
   /// The WCAG contrast ratio between foreground and background, in the range
   /// 1.0 (no contrast) to 21.0 (black on white).
@@ -80,6 +86,7 @@ class ContrastSample {
         fontSize: (json['fontSize'] as num?)?.toDouble(),
         isBold: json['isBold'] as bool? ?? false,
         isDisabled: json['isDisabled'] as bool? ?? false,
+        isNonText: json['isNonText'] as bool? ?? false,
       );
 
   /// The JSON representation of this sample.
@@ -92,6 +99,7 @@ class ContrastSample {
         if (fontSize != null) 'fontSize': fontSize,
         if (isBold) 'isBold': isBold,
         if (isDisabled) 'isDisabled': isDisabled,
+        if (isNonText) 'isNonText': isNonText,
       };
 
   @override
@@ -104,7 +112,8 @@ class ContrastSample {
       other.bounds == bounds &&
       other.fontSize == fontSize &&
       other.isBold == isBold &&
-      other.isDisabled == isDisabled;
+      other.isDisabled == isDisabled &&
+      other.isNonText == isNonText;
 
   @override
   int get hashCode => Object.hash(
@@ -116,6 +125,7 @@ class ContrastSample {
         fontSize,
         isBold,
         isDisabled,
+        isNonText,
       );
 
   @override
