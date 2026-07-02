@@ -25,6 +25,7 @@ int _nextId = 0;
 /// Builds a [SemanticsNodeData] with an auto-assigned id, defaulting every field
 /// so a test sets only what it is exercising.
 SemanticsNodeData node({
+  String? identifier,
   String label = '',
   String value = '',
   String hint = '',
@@ -40,6 +41,7 @@ SemanticsNodeData node({
 }) {
   return SemanticsNodeData(
     id: id ?? ++_nextId,
+    identifier: identifier,
     label: label,
     value: value,
     hint: hint,

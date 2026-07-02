@@ -23,6 +23,7 @@ class Finding {
     required this.message,
     required this.suggestion,
     required this.fingerprint,
+    this.identifier,
     this.location,
     this.bounds = RectData.zero,
   });
@@ -49,6 +50,14 @@ class Finding {
   /// unit of the baseline diff. See `Fingerprinter`.
   final String fingerprint;
 
+  /// The developer-assigned semantics identifier of the offending node, or of
+  /// its nearest ancestor that has one, when available.
+  ///
+  /// Set from `SemanticsProperties.identifier`. It is more stable and meaningful
+  /// than a source location for pointing at the element at fault, and it is what
+  /// the validation corpus matches an expected finding against.
+  final String? identifier;
+
   /// Where the originating widget was created, when available.
   final SourceLocation? location;
 
@@ -65,6 +74,7 @@ class Finding {
         message: json['message'] as String,
         suggestion: json['suggestion'] as String,
         fingerprint: json['fingerprint'] as String,
+        identifier: json['identifier'] as String?,
         location: json['location'] == null
             ? null
             : SourceLocation.fromJson(json['location'] as Map<String, dynamic>),
@@ -82,6 +92,7 @@ class Finding {
         'message': message,
         'suggestion': suggestion,
         'fingerprint': fingerprint,
+        if (identifier != null) 'identifier': identifier,
         if (location != null) 'location': location!.toJson(),
         'bounds': bounds.toJson(),
       };
@@ -96,6 +107,7 @@ class Finding {
       other.message == message &&
       other.suggestion == suggestion &&
       other.fingerprint == fingerprint &&
+      other.identifier == identifier &&
       other.location == location &&
       other.bounds == bounds;
 
@@ -108,6 +120,7 @@ class Finding {
         message,
         suggestion,
         fingerprint,
+        identifier,
         location,
         bounds,
       );

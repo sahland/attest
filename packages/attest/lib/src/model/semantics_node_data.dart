@@ -23,6 +23,7 @@ class SemanticsNodeData {
   /// to empty, so a fixture need only set the fields under test.
   const SemanticsNodeData({
     required this.id,
+    this.identifier,
     this.label = '',
     this.value = '',
     this.hint = '',
@@ -38,6 +39,14 @@ class SemanticsNodeData {
 
   /// A stable identifier for this node, unique within its snapshot.
   final int id;
+
+  /// The developer-assigned semantics identifier, from
+  /// `SemanticsProperties.identifier`, when one was set.
+  ///
+  /// Unlike [id] (a per-run tree index), this is authored in the widget code
+  /// and stable across runs. The validation corpus uses it to anchor an
+  /// expected finding to the exact node that should produce it.
+  final String? identifier;
 
   /// The node's accessible name, as a screen reader would announce it.
   final String label;
@@ -98,6 +107,7 @@ class SemanticsNodeData {
   factory SemanticsNodeData.fromJson(Map<String, dynamic> json) =>
       SemanticsNodeData(
         id: json['id'] as int,
+        identifier: json['identifier'] as String?,
         label: json['label'] as String? ?? '',
         value: json['value'] as String? ?? '',
         hint: json['hint'] as String? ?? '',
@@ -133,6 +143,7 @@ class SemanticsNodeData {
   /// Flag and action sets are emitted as sorted lists so the output is stable.
   Map<String, dynamic> toJson() => {
         'id': id,
+        if (identifier != null) 'identifier': identifier,
         if (label.isNotEmpty) 'label': label,
         if (value.isNotEmpty) 'value': value,
         if (hint.isNotEmpty) 'hint': hint,
@@ -155,6 +166,7 @@ class SemanticsNodeData {
   bool operator ==(Object other) =>
       other is SemanticsNodeData &&
       other.id == id &&
+      other.identifier == identifier &&
       other.label == label &&
       other.value == value &&
       other.hint == hint &&
@@ -173,6 +185,7 @@ class SemanticsNodeData {
   @override
   int get hashCode => Object.hash(
         id,
+        identifier,
         label,
         value,
         hint,

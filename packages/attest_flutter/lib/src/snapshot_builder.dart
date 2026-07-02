@@ -58,6 +58,7 @@ class SemanticsSnapshotBuilder {
 
     return SemanticsNodeData(
       id: node.id,
+      identifier: data.identifier.isEmpty ? null : data.identifier,
       label: data.label,
       value: data.value,
       hint: data.hint,

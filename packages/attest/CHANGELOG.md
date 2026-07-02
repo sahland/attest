@@ -4,6 +4,17 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+
+- `SemanticsNodeData.identifier` and `Finding.identifier`, carrying the
+  developer-assigned semantics identifier (`SemanticsProperties.identifier`). A
+  finding resolves to the offending node's identifier, or its nearest ancestor's.
+- The validation-corpus API (`package:attest/corpus.dart`): `CorpusCase`,
+  `ExpectedFinding` and `CorpusCategory`, the labelled ground-truth types the
+  forthcoming precision/recall harness measures each rule against.
+
 ## 0.9.0
 
 ### Changed

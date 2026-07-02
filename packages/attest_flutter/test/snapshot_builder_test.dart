@@ -61,6 +61,45 @@ void main() {
     );
   });
 
+  testWidgets('captures the developer-assigned semantics identifier', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Semantics(
+            identifier: 'checkout.pay-button',
+            button: true,
+            label: 'Pay',
+            child: const SizedBox(width: 48, height: 48),
+          ),
+        ),
+      ),
+    );
+
+    final handle = tester.ensureSemantics();
+    await tester.pump();
+    final view = tester.binding.renderViews.first;
+    final root = view.owner!.semanticsOwner!.rootSemanticsNode!;
+    final snapshot = const SemanticsSnapshotBuilder().build(
+      root,
+      devicePixelRatio: view.flutterView.devicePixelRatio,
+    );
+    handle.dispose();
+
+    expect(
+      snapshot.allNodes.any((n) => n.identifier == 'checkout.pay-button'),
+      isTrue,
+      reason: 'expected the identifier to be carried into the snapshot',
+    );
+    // Nodes without an authored identifier stay null (not empty string).
+    expect(
+      snapshot.allNodes.every((n) => n.identifier != ''),
+      isTrue,
+      reason: 'empty identifiers should be normalized to null',
+    );
+  });
+
   testWidgets('resolves bounds to logical pixels', (tester) async {
     await tester.pumpWidget(
       MaterialApp(

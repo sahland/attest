@@ -4,6 +4,7 @@ import 'package:test/test.dart';
 void main() {
   const node = SemanticsNodeData(
     id: 1,
+    identifier: 'checkout.pay-button',
     label: 'Pay',
     flags: {SemanticsFlagData.isButton, SemanticsFlagData.isEnabled},
     actions: {SemanticsActionData.tap},
@@ -35,6 +36,7 @@ void main() {
       const other = SemanticsSnapshot(
         root: SemanticsNodeData(
           id: 1,
+          identifier: 'checkout.pay-button',
           label: 'Pay',
           flags: {
             SemanticsFlagData.isEnabled,
@@ -100,6 +102,7 @@ void main() {
             message: 'Button has no accessible name.',
             suggestion: 'Add a Semantics label.',
             fingerprint: 'abc123',
+            identifier: 'checkout.pay-button',
             location: SourceLocation(file: 'lib/pay.dart', line: 42),
             bounds: RectData(left: 0, top: 0, width: 48, height: 48),
           ),

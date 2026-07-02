@@ -71,8 +71,22 @@ class RuleContext {
         nodePath: index.pathOf(node),
         label: label ?? node.label,
       ),
+      identifier: _identifierFor(node),
       location: node.creator,
       bounds: node.bounds,
     );
+  }
+
+  /// The semantics identifier anchoring a finding on [node]: the node's own
+  /// [SemanticsNodeData.identifier], or the nearest ancestor's if it has none.
+  /// `null` when neither the node nor any ancestor carries one.
+  String? _identifierFor(SemanticsNodeData node) {
+    SemanticsNodeData? current = node;
+    while (current != null) {
+      final id = current.identifier;
+      if (id != null) return id;
+      current = index.parentOf(current);
+    }
+    return null;
   }
 }
