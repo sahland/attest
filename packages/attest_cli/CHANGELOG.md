@@ -4,13 +4,13 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## 1.1.0 - 2026-07-02
 
 ### Added
 
 - `attest coverage`: print the coverage matrix for a standard pack (`text` or
   `json`) — which WCAG clauses attest checks automatically, partially, or leaves
-  to human review.
+  to human review. Requires `attest` 1.2.0.
 
 ## 1.0.0 - 2026-07-02
 
