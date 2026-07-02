@@ -99,6 +99,7 @@ class RasterCollector {
 
     return ContrastSample(
       label: text,
+      identifier: _identifierOf(paragraph),
       foregroundLuminance: _luminance(blended),
       backgroundLuminance: _luminance(background),
       bounds: RectData(
@@ -113,6 +114,20 @@ class RasterCollector {
           FontWeight.bold.value,
       isDisabled: opacity < _disabledOpacity,
     );
+  }
+
+  /// The developer-assigned semantics identifier nearest to [paragraph]: its
+  /// own semantics node's, or the first one found walking up the render tree
+  /// (text semantics are commonly merged into an ancestor). Best-effort debug
+  /// data; `null` when nothing in the chain carries one.
+  String? _identifierOf(RenderParagraph paragraph) {
+    RenderObject? node = paragraph;
+    for (var hops = 0; node != null && hops < 64; hops++) {
+      final identifier = node.debugSemantics?.getSemanticsData().identifier;
+      if (identifier != null && identifier.isNotEmpty) return identifier;
+      node = node.parent;
+    }
+    return null;
   }
 
   /// The background is the most frequent colour within the text's box, ignoring

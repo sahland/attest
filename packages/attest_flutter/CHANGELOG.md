@@ -4,6 +4,20 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+
+- The snapshot builder captures the developer-assigned
+  `SemanticsProperties.identifier`, and the raster collector attaches the
+  nearest semantics identifier to each contrast sample, so findings can be
+  anchored to an authored, stable id.
+- Reference validation of the measurement paths: the contrast pipeline is
+  checked end to end against a table of known colour pairs (within 0.1 of
+  independently computed WCAG ratios), gradient and disabled-control
+  abstention are pinned by test, and the overflow fixture is proven to fit at
+  text scale 1.0 and overflow at 2.0.
+
 ## 0.9.0
 
 ### Changed
