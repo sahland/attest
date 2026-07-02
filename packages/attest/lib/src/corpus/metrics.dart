@@ -20,6 +20,25 @@ typedef Auditor = FutureOr<List<Finding>> Function(
   Standard standard,
 );
 
+/// The declared precision bar for every bundled heuristic rule.
+///
+/// Deterministic rules are held to precision 1.0 on the corpus; heuristics are
+/// held to the threshold declared here instead, and the metrics gate fails when
+/// a rule measures below its bar. Declaring the number makes the quality
+/// promise explicit and reviewable: lowering a bar is a visible, changelogged
+/// decision, never a silent drift. A heuristic that cannot sustain a reasonable
+/// bar is default-disabled rather than shipped noisy.
+///
+/// Current measured precision on the corpus is 1.0 for all four; the bar is set
+/// at 0.9 to leave room for future, genuinely hard corpus cases without letting
+/// real noise through.
+const Map<String, double> declaredHeuristicPrecision = {
+  'attest/ambiguous-name': 0.9,
+  'attest/heading-structure': 0.9,
+  'attest/focus-order': 0.9,
+  'attest/state-exposed': 0.9,
+};
+
 /// Runs the validation corpus and computes per-rule precision, recall and
 /// false-positive rate — the measured correctness that the 1.0 bar rests on.
 ///

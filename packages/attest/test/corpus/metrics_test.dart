@@ -43,6 +43,7 @@ void main() {
 
     final violations = metrics.gateViolations(
       confidenceByRule: harness.confidenceByRule,
+      heuristicPrecisionThresholds: declaredHeuristicPrecision,
       baseline: baseline,
     );
     expect(

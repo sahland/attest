@@ -21,6 +21,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   (deterministic precision must be 1.0, zero false positives on clean cases,
   heuristics must meet a declared threshold, and recall must not regress against
   a committed baseline).
+- `declaredHeuristicPrecision`: an explicit precision bar (0.9) for each of the
+  four heuristic rules, enforced by the metrics gate. A contract test verifies
+  every heuristic declares a bar, tags its findings `heuristic`, and is
+  suppressible in one line via `RuleConfig.disabledRules`.
 
 ## 0.9.0
 
