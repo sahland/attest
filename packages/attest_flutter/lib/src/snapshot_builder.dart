@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:attest/attest.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 
 /// Converts a live Flutter [SemanticsNode] tree into a serializable, Flutter-free
 /// [SemanticsSnapshot] that the pure-Dart rule engine can evaluate.
@@ -10,6 +11,12 @@ import 'package:flutter/widgets.dart';
 /// Only the fields the rules consult are carried over; everything else in the
 /// live tree is dropped. Bounds are resolved to global logical pixels by
 /// accumulating each node's transform from the root.
+///
+/// **Experimental:** most tests only need `tester.auditAccessibility()`, which
+/// drives this internally. The builder's own signature may still evolve (it is
+/// expected to grow for `integration_test` support), so it is exempt from the
+/// 1.0 stability promise.
+@experimental
 class SemanticsSnapshotBuilder {
   /// Creates a [SemanticsSnapshotBuilder].
   const SemanticsSnapshotBuilder();

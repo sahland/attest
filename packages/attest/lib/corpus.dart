@@ -1,5 +1,10 @@
 /// The **attest** validation-corpus API.
 ///
+/// **Experimental.** Every member of this library is annotated `@experimental`:
+/// it is young, it will evolve with the corpus (widget-based cases, richer
+/// matching), and it is exempt from the 1.0 stability promise — breaking
+/// changes may land in minor releases, always changelogged.
+///
 /// This is a separate entry point from `package:attest/attest.dart` so the core
 /// rule-engine surface stays focused. Import it to author labelled correctness
 /// cases ([CorpusCase], [ExpectedFinding]) — the ground-truth data the

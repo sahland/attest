@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:meta/meta.dart';
 
 import '../report_loader.dart';
 
 /// `attest transcript`: print the screen-reader transcript for each audited
 /// screen — the sequence of announcements TalkBack or VoiceOver would make.
+@experimental
 class TranscriptCommand extends Command<int> {
   /// Creates the `transcript` command.
   TranscriptCommand() {

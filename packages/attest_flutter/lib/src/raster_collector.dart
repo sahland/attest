@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:attest/attest.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:meta/meta.dart';
 
 /// Rasterizes the screen and measures the contrast of each piece of text against
 /// the background actually painted behind it.
@@ -13,6 +14,11 @@ import 'package:flutter_test/flutter_test.dart';
 /// while the background is sampled from the rasterized image (the dominant
 /// non-text colour within the text's box). Sampling over gradients and images is
 /// inherently noisy, which is why the contrast rule downgrades borderline ratios.
+///
+/// **Experimental:** most tests only need `tester.auditAccessibility()`, which
+/// drives this internally. The collector's own signature may still evolve, so
+/// it is exempt from the 1.0 stability promise.
+@experimental
 class RasterCollector {
   /// Creates a [RasterCollector].
   const RasterCollector();

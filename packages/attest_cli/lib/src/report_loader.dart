@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:attest/attest.dart';
+import 'package:meta/meta.dart';
 
 /// Loads the per-screen JSON reports a test run emits.
+@experimental
 class ReportLoader {
   /// Creates a [ReportLoader].
   const ReportLoader();

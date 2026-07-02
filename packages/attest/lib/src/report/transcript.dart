@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import '../model/semantics_flag.dart';
 import '../model/semantics_node_data.dart';
 import '../model/semantics_snapshot.dart';
@@ -9,6 +11,11 @@ import '../model/semantics_snapshot.dart';
 /// snapshot captures the real traversal order and each node's role and state.
 /// It is a plain-language approximation, not a byte-exact reproduction of any
 /// one screen reader.
+///
+/// **Experimental:** the exact announcement wording has not yet been
+/// cross-validated against captured VoiceOver/TalkBack output; the line format
+/// may be refined (in minors, changelogged) until that validation lands.
+@experimental
 class TranscriptGenerator {
   /// Creates a [TranscriptGenerator].
   const TranscriptGenerator();

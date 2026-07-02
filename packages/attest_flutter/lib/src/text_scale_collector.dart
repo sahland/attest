@@ -1,5 +1,6 @@
 import 'package:attest/attest.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:meta/meta.dart';
 
 /// Re-pumps the current screen at enlarged text scales and records whether the
 /// layout overflows.
@@ -9,6 +10,11 @@ import 'package:flutter_test/flutter_test.dart';
 /// already under test without needing a reference to the widget. A layout
 /// overflow surfaces as a captured framework exception, which is drained with
 /// `takeException` so it enriches the snapshot instead of failing the test.
+///
+/// **Experimental:** most tests only need `tester.auditAccessibility()`, which
+/// drives this internally. The collector's own signature may still evolve, so
+/// it is exempt from the 1.0 stability promise.
+@experimental
 class TextScaleCollector {
   /// Creates a [TextScaleCollector].
   const TextScaleCollector();

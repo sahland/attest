@@ -3,12 +3,14 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:attest/attest.dart';
+import 'package:meta/meta.dart';
 
 import '../html_writer.dart';
 import '../report_loader.dart';
 
 /// `attest ci`: aggregate reports, diff the baseline, and exit non-zero when the
 /// run introduces new findings.
+@experimental
 class CiCommand extends Command<int> {
   /// Creates the `ci` command.
   CiCommand() {

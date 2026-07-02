@@ -77,6 +77,9 @@ extension AccessibilityAudit on WidgetTester {
       );
       if (transcript) {
         report = report.copyWith(
+          // The generator is our own experimental API; consuming it here is
+          // deliberate — the audit entry point itself stays stable.
+          // ignore: experimental_member_use
           transcript: const TranscriptGenerator().generate(snapshot),
         );
       }

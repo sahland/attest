@@ -126,10 +126,16 @@ policy: the current and the previous three stable Flutter releases, with each
 new stable Flutter tracked within one release cycle — semantics-API drift is a
 standing maintenance commitment, not an afterthought.
 
-## Status
+## API stability
 
-Early (`0.9.x`); the API may still change before 1.0. Feedback — especially
-false positives from real apps — is very welcome on the
+The developer-facing surface — `tester.auditAccessibility()`, the gate
+matchers and everything re-exported from the core — is frozen for 1.0: no
+breaking change within a major. The plumbing classes
+(`SemanticsSnapshotBuilder`, `RasterCollector`, `TextScaleCollector`) are
+annotated `@experimental`: ordinary tests never need them directly, and their
+signatures may still evolve (notably for `integration_test` support).
+
+Feedback — especially false positives from real apps — is very welcome on the
 [issue tracker](https://github.com/sahland/attest/issues).
 
 ## License

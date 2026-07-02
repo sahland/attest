@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
+import 'package:meta/meta.dart';
 
 import '../engine/rule_config.dart';
 import '../engine/rule_engine.dart';
@@ -15,6 +16,7 @@ import 'corpus_case.dart';
 ///
 /// The default wraps [RuleEngine.standard]; tests inject a canned auditor so the
 /// harness math can be verified against hand-computed metrics.
+@experimental
 typedef Auditor = FutureOr<List<Finding>> Function(
   SemanticsSnapshot snapshot,
   Standard standard,
@@ -32,6 +34,7 @@ typedef Auditor = FutureOr<List<Finding>> Function(
 /// Current measured precision on the corpus is 1.0 for all four; the bar is set
 /// at 0.9 to leave room for future, genuinely hard corpus cases without letting
 /// real noise through.
+@experimental
 const Map<String, double> declaredHeuristicPrecision = {
   'attest/ambiguous-name': 0.9,
   'attest/heading-structure': 0.9,
@@ -44,6 +47,7 @@ const Map<String, double> declaredHeuristicPrecision = {
 ///
 /// See `context/Stage2/10_QUALITY_AND_CORRECTNESS.md`: trust is the product, and
 /// it is a measured quantity, not a claim.
+@experimental
 class MetricsHarness {
   /// Creates a harness.
   ///
@@ -163,6 +167,7 @@ class MetricsHarness {
 }
 
 /// The confusion-matrix tallies and derived rates for one rule over the corpus.
+@experimental
 class RuleMetrics {
   /// Creates a zeroed accumulator for [ruleId].
   RuleMetrics(this.ruleId);
@@ -228,6 +233,7 @@ class RuleMetrics {
 }
 
 /// One reason the corpus gate failed.
+@experimental
 class GateViolation {
   /// Creates a [GateViolation].
   const GateViolation(this.ruleId, this.kind, this.message);
@@ -246,6 +252,7 @@ class GateViolation {
 }
 
 /// The gate conditions a rule can breach.
+@experimental
 enum GateViolationKind {
   /// A deterministic rule false-positived on the corpus (precision < 1.0).
   deterministicPrecision,
@@ -261,6 +268,7 @@ enum GateViolationKind {
 }
 
 /// The full corpus result: per-rule metrics plus authoring warnings.
+@experimental
 class CorpusMetrics {
   /// Creates a [CorpusMetrics].
   const CorpusMetrics({required this.byRule, this.warnings = const []});

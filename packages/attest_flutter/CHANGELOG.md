@@ -20,6 +20,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- The public API is frozen for 1.0: `auditAccessibility`, the gate matchers
+  and the re-exported core are stable within a major. The plumbing classes
+  (`SemanticsSnapshotBuilder`, `RasterCollector`, `TextScaleCollector`) are
+  annotated `@experimental` — ordinary tests never need them directly, and
+  their signatures may still evolve for `integration_test` support.
 - Stated the version-support policy: Flutter ≥ 3.32 is a hard floor (the
   tri-state `flagsCollection` semantics API), with the current and previous
   three stable Flutter releases supported and each new stable tracked within

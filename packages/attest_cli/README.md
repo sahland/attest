@@ -69,6 +69,13 @@ Pure Dart, **SDK ≥ 3.6**, no Flutter dependency — activate it globally on an
 CI image with a Dart SDK. The toolkit-wide policy: the current and the previous
 three stable Flutter releases are supported.
 
+## API stability
+
+The supported interface is the **command line** (`attest ci`, `attest
+baseline`, `attest transcript`): commands, flags and exit codes are stable
+under semantic versioning. The Dart library under `lib/` is plumbing for the
+executable, annotated `@experimental`, and may change in minor releases.
+
 ## License
 
 BSD-3-Clause.

@@ -33,6 +33,10 @@ class AuditReport {
 
   /// The screen-reader transcript: the announcements a screen reader would make,
   /// in traversal order. Empty unless the audit was asked to produce it.
+  ///
+  /// The field is stable; the exact wording of each line is not — it may be
+  /// refined until the transcript is cross-validated against real
+  /// VoiceOver/TalkBack captures (see `TranscriptGenerator`).
   final List<String> transcript;
 
   /// Returns a copy with [transcript] replaced.

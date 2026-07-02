@@ -3,10 +3,12 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:attest/attest.dart';
+import 'package:meta/meta.dart';
 
 import '../report_loader.dart';
 
 /// `attest baseline --update`: accept the current findings as the new baseline.
+@experimental
 class BaselineCommand extends Command<int> {
   /// Creates the `baseline` command.
   BaselineCommand() {

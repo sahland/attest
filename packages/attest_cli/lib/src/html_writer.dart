@@ -1,6 +1,8 @@
 import 'package:attest/attest.dart';
+import 'package:meta/meta.dart';
 
 /// Renders a human-facing HTML summary of an audit, grouped by screen.
+@experimental
 class HtmlWriter {
   /// Creates an [HtmlWriter].
   const HtmlWriter();

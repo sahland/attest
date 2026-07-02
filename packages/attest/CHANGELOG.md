@@ -33,6 +33,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- The public API is frozen for 1.0. Everything exported from
+  `package:attest/attest.dart` is stable within a major, with two documented
+  exceptions annotated `@experimental` (free to change in minors, always
+  changelogged): the validation-corpus library (`package:attest/corpus.dart`)
+  and `TranscriptGenerator`, whose announcement wording awaits cross-validation
+  against real screen readers.
 - Stated the version-support policy: Dart SDK ≥ 3.6 (a tooling floor, not a
   language-feature requirement — documented in the pubspec), and toolkit-wide
   support for the current and previous three stable Flutter releases.

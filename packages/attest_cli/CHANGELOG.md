@@ -8,6 +8,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Declared the stability contract: the supported interface is the command line
+  (commands, flags, exit codes), stable under semantic versioning. The Dart
+  library surface is plumbing for the executable and is now annotated
+  `@experimental`.
 - Stated the version-support policy: Dart SDK ≥ 3.6, no Flutter dependency,
   and toolkit-wide support for the current and previous three stable Flutter
   releases.

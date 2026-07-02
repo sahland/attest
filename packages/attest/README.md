@@ -42,9 +42,18 @@ for the toolkit as a whole: the current and the previous three stable Flutter
 releases are supported, and each new stable Flutter is tracked within one
 release cycle.
 
-## Status
+## API stability
 
-Early development. The public API is not yet stable.
+Everything exported from `package:attest/attest.dart` is frozen for 1.0:
+within a major version it will not break, and rule ids and standard-pack
+meanings never change silently — both are treated as breaking. Two exceptions,
+annotated `@experimental` and free to change in minor releases (always
+changelogged):
+
+- the validation-corpus library (`package:attest/corpus.dart`), which is young
+  and will evolve with the corpus;
+- `TranscriptGenerator` — the transcript's exact wording is not frozen until it
+  is cross-validated against real VoiceOver/TalkBack captures.
 
 ## License
 

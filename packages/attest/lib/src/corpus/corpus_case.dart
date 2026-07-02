@@ -10,6 +10,7 @@ import '../model/standard.dart';
 /// The category decides how the metrics harness scores the case (see the
 /// precision/recall harness): [positive] cases must be *caught*, while [clean]
 /// and [adversarial] cases must stay *silent*.
+@experimental
 enum CorpusCategory {
   /// A screen containing exactly one known violation of the rule under test.
   /// The signal is isolated so a miss is unambiguous.
@@ -44,6 +45,7 @@ enum CorpusCategory {
 /// node with `Semantics(identifier: ...)` (or sets it directly in a pure-Dart
 /// fixture), and the harness matches an actual finding to this expectation when
 /// the rule, WCAG criterion and resolved identifier all agree.
+@experimental
 @immutable
 class ExpectedFinding {
   /// Creates an [ExpectedFinding].
@@ -104,6 +106,7 @@ class ExpectedFinding {
 /// unrelated rules cannot pollute the measurement. A `realWorld` case leaves
 /// [ruleUnderTest] null, enables all rules, and must be labelled across every
 /// one of them.
+@experimental
 @immutable
 class CorpusCase {
   /// Creates a [CorpusCase].
