@@ -34,6 +34,24 @@ stay honest as they change — it is **not** a claim that automated checks catch
 every real-world issue. They cover the machine-checkable ~30–40%; the rest is
 the structured checklist referenced above.
 
+## Coverage matrix
+
+attest knows exactly which of its rules maps to which standard clause, and — the
+honest part — which clauses it does **not** check. `CoverageMatrix.forStandard`
+(and `attest coverage` on the CLI) emit, per pack, every WCAG Level A/AA success
+criterion classified as **automated**, **partial** or **manual**, backed by the
+`WcagRegistry` single source of truth:
+
+```
+Coverage matrix — en301549_v3_2_1
+7 automated, 2 partial, 40 manual (of 49 criteria)
+```
+
+The manual rows are the point: they are what turns findings into a complete
+audit trail instead of an implied "all clear". A consistency test keeps the
+registry honest — every bundled rule must map to an automated or partial clause,
+and every clause it claims to cover must name a real rule.
+
 ## Standard packs
 
 Audits run against a versioned pack, chosen with `RuleConfig.standard`:

@@ -4,6 +4,18 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+
+- The coverage matrix: `WcagRegistry` (the single source of truth mapping every
+  WCAG Level A/AA success criterion to automated / partial / manual coverage,
+  with an own-words note per clause), `CriterionCoverage`, `CoverageStatus`, and
+  `CoverageMatrix.forStandard`. It states, per pack, exactly what attest verifies
+  automatically and what needs human review — no new detection, no
+  false-positive risk. A consistency test keeps it aligned with the bundled
+  rules.
+
 ## 1.1.0 - 2026-07-02
 
 ### Added

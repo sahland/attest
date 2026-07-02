@@ -21,11 +21,20 @@ attest ci --format sarif --output attest.sarif
 
 # Accept the current findings as the new baseline.
 attest baseline --update --report-dir build/a11y --baseline .a11y/baseline.json
+
+# Print which WCAG clauses attest checks automatically vs. manually.
+attest coverage --standard en301549_v3_2_1
+attest coverage --standard wcag22 --format json
 ```
 
 `attest ci` exits non-zero when the run produces a finding whose fingerprint is
 not in the baseline, so it gates a pull request on *new* accessibility issues
 without failing on already-accepted ones.
+
+`attest coverage` prints the coverage matrix for a standard pack: every WCAG
+Level A/AA success criterion, classified as automated, partial or manual. It is
+the honest ledger of what the tool can and cannot verify — useful when
+assembling an audit trail.
 
 ## Producing reports
 

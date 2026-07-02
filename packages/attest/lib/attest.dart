@@ -50,3 +50,6 @@ export 'src/rules/placeholder_name_rule.dart';
 export 'src/rules/state_exposed_rule.dart';
 export 'src/rules/target_size_rule.dart';
 export 'src/rules/text_overflow_rule.dart';
+export 'src/standards/coverage_matrix.dart';
+export 'src/standards/criterion_coverage.dart';
+export 'src/standards/wcag_registry.dart';

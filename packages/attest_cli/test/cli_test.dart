@@ -113,4 +113,12 @@ void main() {
   test('transcript runs over the reports', () async {
     expect(await run(['transcript', '--report-dir', reportDir]), 0);
   });
+
+  test('coverage prints the matrix for each pack and format', () async {
+    expect(await run(['coverage']), 0);
+    expect(
+      await run(['coverage', '--standard', 'wcag22', '--format', 'json']),
+      0,
+    );
+  });
 }

@@ -17,16 +17,18 @@ import 'package:meta/meta.dart';
 
 import 'src/commands/baseline_command.dart';
 import 'src/commands/ci_command.dart';
+import 'src/commands/coverage_command.dart';
 import 'src/commands/transcript_command.dart';
 
 export 'src/commands/baseline_command.dart';
 export 'src/commands/ci_command.dart';
+export 'src/commands/coverage_command.dart';
 export 'src/commands/transcript_command.dart';
 export 'src/html_writer.dart';
 export 'src/report_loader.dart';
 
-/// Builds the `attest` command runner with the `ci`, `baseline` and
-/// `transcript` commands.
+/// Builds the `attest` command runner with the `ci`, `baseline`, `transcript`
+/// and `coverage` commands.
 @experimental
 CommandRunner<int> buildAttestRunner() => CommandRunner<int>(
       'attest',
@@ -34,4 +36,5 @@ CommandRunner<int> buildAttestRunner() => CommandRunner<int>(
     )
       ..addCommand(CiCommand())
       ..addCommand(BaselineCommand())
-      ..addCommand(TranscriptCommand());
+      ..addCommand(TranscriptCommand())
+      ..addCommand(CoverageCommand());
