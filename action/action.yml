@@ -1,0 +1,60 @@
+name: attest accessibility gate
+description: >-
+  Gate a Flutter pull request on new accessibility findings. Aggregates the
+  per-screen reports your widget tests write, diffs them against a committed
+  baseline by fingerprint, and fails only on new issues.
+author: sahland
+
+branding:
+  icon: eye
+  color: blue
+
+inputs:
+  report-dir:
+    description: Directory of per-screen JSON reports written by your widget tests.
+    required: false
+    default: build/a11y
+  baseline:
+    description: Path to the committed baseline of accepted findings.
+    required: false
+    default: .a11y/baseline.json
+  format:
+    description: "Output format: text, json, sarif or html."
+    required: false
+    default: sarif
+  output:
+    description: Where to write the rendered report.
+    required: false
+    default: attest.sarif
+  version:
+    description: >-
+      Version constraint for attest_cli to activate (e.g. "^1.1.0"). Empty
+      means the latest published version.
+    required: false
+    default: ''
+
+outputs:
+  report:
+    description: Path to the rendered report file.
+    value: ${{ inputs.output }}
+
+runs:
+  using: composite
+  steps:
+    - name: Activate attest_cli
+      shell: bash
+      run: |
+        if [ -n "${{ inputs.version }}" ]; then
+          dart pub global activate attest_cli "${{ inputs.version }}"
+        else
+          dart pub global activate attest_cli
+        fi
+
+    - name: Run attest ci
+      shell: bash
+      run: |
+        dart pub global run attest_cli:attest ci \
+          --report-dir "${{ inputs.report-dir }}" \
+          --baseline "${{ inputs.baseline }}" \
+          --format "${{ inputs.format }}" \
+          --output "${{ inputs.output }}"

@@ -47,8 +47,23 @@ and re-pump at enlarged text:
 
 Plus a **CI baseline gate** (fail only on new findings, by stable fingerprint),
 **SARIF/HTML/JSON** output, versioned **standard packs** (WCAG 2.1/EN 301 549
-v3.2.1 and WCAG 2.2), and a **screen-reader transcript** — the traversal-order
-sequence a screen reader would announce, which no other Flutter tool produces.
+v3.2.1 and WCAG 2.2), a **coverage matrix** (what is checked automatically vs.
+what needs human review), and a **screen-reader transcript** — the
+traversal-order sequence a screen reader would announce, which no other Flutter
+tool produces.
+
+## CI in one step
+
+A ready-made GitHub Action gates a pull request on new accessibility findings:
+
+```yaml
+- uses: sahland/attest/action@v1
+  with:
+    format: sarif
+    output: attest.sarif
+```
+
+See [`action/`](action) for the full workflow (SARIF annotations included).
 
 ## Packages
 
