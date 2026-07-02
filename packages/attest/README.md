@@ -15,6 +15,25 @@ unit-testable. The Flutter-facing helpers (the `WidgetTester` extension and the
 raster/text-scale collectors) live in
 [`attest_flutter`](https://pub.dev/packages/attest_flutter).
 
+## Measured correctness
+
+For a compliance tool, trust is the product — so correctness is measured, not
+claimed. attest ships a validation corpus of **109 hand-labelled cases**
+(positive, clean, adversarial, and composite real-world screens) and computes
+**precision and recall per rule** against it on every CI run.
+
+On the current corpus every one of the twelve rules measures **precision 1.0
+and recall 1.0, with zero false positives on the clean fixtures.** The metrics
+gate fails the build on any regression, on any false positive on a clean case,
+or if a heuristic drops below its declared precision bar. The contrast and
+overflow measurement paths are additionally reference-validated (contrast
+against independently computed WCAG ratios within 0.1).
+
+This measures that the rules do exactly what they claim on known inputs and
+stay honest as they change — it is **not** a claim that automated checks catch
+every real-world issue. They cover the machine-checkable ~30–40%; the rest is
+the structured checklist referenced above.
+
 ## Standard packs
 
 Audits run against a versioned pack, chosen with `RuleConfig.standard`:

@@ -2,7 +2,7 @@ name: attest_flutter
 description: >-
   Flutter widget-test integration for attest: a WidgetTester accessibility
   audit, raster and text-scale collectors, and gate matchers for CI.
-version: 0.9.0
+version: 1.0.0
 repository: https://github.com/sahland/attest
 issue_tracker: https://github.com/sahland/attest/issues
 homepage: https://github.com/sahland/attest
@@ -22,7 +22,7 @@ environment:
 resolution: workspace
 
 dependencies:
-  attest: ^0.9.0
+  attest: ^1.0.0
   flutter:
     sdk: flutter
   # flutter_test is a runtime dependency here (not dev): this package *provides*

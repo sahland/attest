@@ -22,6 +22,11 @@ print the transcript a screen reader (TalkBack / VoiceOver) would announce.
 > than replacing it. It gives you automated coverage of the checkable part plus
 > a structured checklist for the rest.
 
+Correctness is measured, not claimed: every rule is scored against a validation
+corpus of 109 hand-labelled cases on each CI run and currently holds
+**precision 1.0 and recall 1.0 with zero false positives on clean fixtures**
+(details in the [`attest` core README](https://pub.dev/packages/attest)).
+
 ## Install
 
 ```sh
