@@ -25,6 +25,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   four heuristic rules, enforced by the metrics gate. A contract test verifies
   every heuristic declares a bar, tags its findings `heuristic`, and is
   suppressible in one line via `RuleConfig.disabledRules`.
+- Determinism and performance guarantees are now regression-tested: identical
+  input produces byte-identical output regardless of rule registration order, a
+  pure layout translation leaves every fingerprint unchanged while a genuine
+  violation change moves exactly one, and a 2000-node screen must audit within
+  an explicit per-screen time budget.
 
 ## 0.9.0
 
