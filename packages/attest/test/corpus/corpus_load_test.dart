@@ -4,11 +4,11 @@ import 'package:test/test.dart';
 
 import 'all_cases.dart';
 
-/// Foundation checks for the corpus (P1.1): the sample cases load, are
-/// well-formed, and — as an end-to-end smoke test of the identifier plumbing —
-/// audit exactly as they are labelled.
+/// Structural invariants for the corpus. The actual auditing (and the
+/// precision/recall gate) lives in `metrics_test.dart`; here we only check the
+/// cases are well-formed so a mistake fails loudly and specifically.
 void main() {
-  test('every case has a unique id', () {
+  test('every case id is unique', () {
     final ids = corpusCases.map((c) => c.id).toList();
     expect(ids.toSet(), hasLength(ids.length));
   });
@@ -27,59 +27,48 @@ void main() {
     }
   });
 
-  test('expected findings anchor on a non-empty identifier', () {
+  test('clean and adversarial cases carry no expected findings', () {
     for (final c in corpusCases) {
-      for (final e in c.expected) {
-        expect(e.identifier, isNotEmpty, reason: c.id);
-        if (c.isIsolated) {
-          expect(e.ruleId, c.ruleUnderTest, reason: c.id);
-        }
+      if (c.category == CorpusCategory.clean ||
+          c.category == CorpusCategory.adversarial) {
+        expect(c.expected, isEmpty, reason: '${c.id} must stay silent');
       }
     }
   });
 
-  group('sample cases audit as labelled', () {
-    late Map<String, CorpusCase> byId;
-    setUp(() => byId = {for (final c in corpusCases) c.id: c});
-
-    Future<List<Finding>> auditOf(CorpusCase c) async {
-      final snapshot = await Future<SemanticsSnapshot>.value(c.build());
-      final report = RuleEngine.standard().run(
-        snapshot,
-        meta: AuditMeta(
-          screenName: c.id,
-          standard: c.standard.name,
-          toolVersion: 'test',
-          timestamp: DateTime.utc(2026),
-        ),
-        config: RuleConfig(standard: c.standard),
-      );
-      return report.findings;
+  test('positive cases expect at least one finding, each with an identifier',
+      () {
+    for (final c in corpusCases) {
+      if (c.category != CorpusCategory.positive) continue;
+      expect(c.expected, isNotEmpty, reason: '${c.id} must expect a finding');
+      for (final e in c.expected) {
+        expect(e.identifier, isNotEmpty, reason: c.id);
+        expect(e.ruleId, c.ruleUnderTest, reason: c.id);
+      }
     }
+  });
 
-    test('positive case fires and anchors to the offender identifier',
-        () async {
-      final c = byId['interactive_name/unnamed_button']!;
-      final firings =
-          (await auditOf(c)).where((f) => f.ruleId == c.ruleUnderTest).toList();
-      expect(firings, isNotEmpty);
-      expect(firings.single.identifier, 'offender.pay-button');
-    });
-
-    test('clean case stays silent for its rule', () async {
-      final c = byId['interactive_name/labeled_button']!;
-      expect(
-        (await auditOf(c)).where((f) => f.ruleId == c.ruleUnderTest),
-        isEmpty,
-      );
-    });
-
-    test('adversarial case stays silent for its rule', () async {
-      final c = byId['interactive_name/named_by_child_text']!;
-      expect(
-        (await auditOf(c)).where((f) => f.ruleId == c.ruleUnderTest),
-        isEmpty,
-      );
-    });
+  test('every expected identifier resolves to a node in the snapshot',
+      () async {
+    for (final c in corpusCases) {
+      final snapshot = await Future<SemanticsSnapshot>.value(c.build());
+      final identifiers = snapshot.allNodes
+          .map((SemanticsNodeData n) => n.identifier)
+          .whereType<String>()
+          .toSet()
+        ..addAll(
+          snapshot.contrastSamples
+              .map((ContrastSample s) => s.identifier)
+              .whereType<String>(),
+        );
+      for (final e in c.expected) {
+        expect(
+          identifiers,
+          contains(e.identifier),
+          reason: '${c.id}: expected identifier "${e.identifier}" is not on '
+              'any node in the built snapshot',
+        );
+      }
+    }
   });
 }

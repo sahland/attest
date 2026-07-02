@@ -67,6 +67,7 @@ class ContrastRule implements Rule {
           nodePath: 'contrast',
           label: sample.label,
         ),
+        identifier: sample.identifier,
         bounds: sample.bounds,
       );
     }

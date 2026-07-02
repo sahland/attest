@@ -17,10 +17,16 @@ class ContrastSample {
     required this.foregroundLuminance,
     required this.backgroundLuminance,
     required this.bounds,
+    this.identifier,
     this.fontSize,
     this.isBold = false,
     this.isDisabled = false,
   });
+
+  /// The developer-assigned semantics identifier of the text node this sample
+  /// was taken from, when one was set. Lets a contrast finding be anchored the
+  /// same way a tree-rule finding is.
+  final String? identifier;
 
   /// The sampled text, used for the finding message and a stable fingerprint.
   final String label;
@@ -65,6 +71,7 @@ class ContrastSample {
   /// Parses a [ContrastSample] from [json].
   factory ContrastSample.fromJson(Map<String, dynamic> json) => ContrastSample(
         label: json['label'] as String? ?? '',
+        identifier: json['identifier'] as String?,
         foregroundLuminance: (json['foregroundLuminance'] as num).toDouble(),
         backgroundLuminance: (json['backgroundLuminance'] as num).toDouble(),
         bounds: json['bounds'] == null
@@ -77,6 +84,7 @@ class ContrastSample {
 
   /// The JSON representation of this sample.
   Map<String, dynamic> toJson() => {
+        if (identifier != null) 'identifier': identifier,
         if (label.isNotEmpty) 'label': label,
         'foregroundLuminance': foregroundLuminance,
         'backgroundLuminance': backgroundLuminance,
@@ -89,6 +97,7 @@ class ContrastSample {
   @override
   bool operator ==(Object other) =>
       other is ContrastSample &&
+      other.identifier == identifier &&
       other.label == label &&
       other.foregroundLuminance == foregroundLuminance &&
       other.backgroundLuminance == backgroundLuminance &&
@@ -99,6 +108,7 @@ class ContrastSample {
 
   @override
   int get hashCode => Object.hash(
+        identifier,
         label,
         foregroundLuminance,
         backgroundLuminance,

@@ -11,6 +11,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `SemanticsNodeData.identifier` and `Finding.identifier`, carrying the
   developer-assigned semantics identifier (`SemanticsProperties.identifier`). A
   finding resolves to the offending node's identifier, or its nearest ancestor's.
+- `ContrastSample.identifier`, so a contrast finding is anchored to the sampled
+  text node the same way tree-rule findings are.
 - The validation-corpus API (`package:attest/corpus.dart`): `CorpusCase`,
   `ExpectedFinding` and `CorpusCategory`, the labelled ground-truth types the
   precision/recall harness measures each rule against.

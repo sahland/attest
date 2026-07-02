@@ -10,32 +10,37 @@ it is correct rather than claiming it — see `context/Stage2/10_QUALITY_AND_COR
 
 ```
 corpus/
-  <rule>/                 # one directory per rule, e.g. interactive_name/
-    <case>.dart           # one file per case; exposes a `final CorpusCase`
-  all_cases.dart          # explicit registry of every case (no reflection)
+  <rule>.dart             # one file per rule; exposes a `List<CorpusCase>`
+  all_cases.dart          # explicit registry aggregating every rule's list
+  support.dart            # concise case builders (positive/clean/adversarial…)
   README.md               # this file
 ```
 
-A case file is small and self-contained:
+A rule's file uses the builders in `support.dart`, which re-export the fixture
+primitives (`node`, `snap`, the flag/action aliases). Cases read like the trees
+they describe:
 
 ```dart
-import 'package:attest/attest.dart';
-import 'package:attest/corpus.dart';
-import '../../support/fixtures.dart';
+import 'support.dart';
 
-final CorpusCase myCase = CorpusCase(
-  id: 'interactive_name/unnamed_button',
-  category: CorpusCategory.positive,
-  standard: Standard.en301549_v3_2_1,
-  ruleUnderTest: 'attest/interactive-name',
-  build: () => snap(node(identifier: 'offender.x', flags: {isButton}, actions: {tap})),
-  expected: const [
-    ExpectedFinding(ruleId: 'attest/interactive-name', wcag: '4.1.2', identifier: 'offender.x'),
-  ],
-);
+const _rule = 'attest/interactive-name';
+const _wcag = '4.1.2';
+
+final List<CorpusCase> interactiveNameCases = [
+  positive(
+    'interactive_name/unnamed_button',
+    _rule,
+    snap(node(identifier: 'off.button', flags: {isButton}, actions: {tap})),
+    [ef(_rule, _wcag, 'off.button')],
+  ),
+  clean('interactive_name/labeled_button', _rule,
+      snap(node(identifier: 'ok.button', label: 'Pay', flags: {isButton}, actions: {tap}))),
+  adversarial('interactive_name/named_by_child_text', _rule,
+      snap(node(identifier: 'trap.x', flags: {isButton}, actions: {tap}, children: [node(label: 'Pay')]))),
+];
 ```
 
-Then add `myCase` to `corpusCases` in `all_cases.dart`.
+Then spread the list into `corpusCases` in `all_cases.dart`.
 
 ## The rules of authoring a case
 

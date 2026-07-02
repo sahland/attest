@@ -1,19 +1,39 @@
 // The registry of pure-Dart corpus cases in the core package.
 //
-// Dart has no reflection, so cases are listed explicitly here. Add a new case
-// file under `corpus/<rule>/<case>.dart`, then append its case to [corpusCases].
-// Widget-based (real-world) cases live in `attest_flutter` and feed the same
-// harness with a snapshot built from a pumped widget.
+// Cases are grouped one file per rule (each exposing a `List<CorpusCase>`) and
+// gathered here explicitly — Dart has no reflection. Widget-based (real-world)
+// cases live in `attest_flutter` and feed the same harness with a snapshot built
+// from a pumped widget.
 
 import 'package:attest/corpus.dart';
 
-import 'interactive_name/labeled_button.dart';
-import 'interactive_name/named_by_child_text.dart';
-import 'interactive_name/unnamed_button.dart';
+import 'ambiguous_name.dart';
+import 'contrast.dart';
+import 'field_label.dart';
+import 'focus_order.dart';
+import 'focus_trap.dart';
+import 'heading_structure.dart';
+import 'image_alt.dart';
+import 'interactive_name.dart';
+import 'placeholder_name.dart';
+import 'real_world.dart';
+import 'state_exposed.dart';
+import 'target_size.dart';
+import 'text_overflow.dart';
 
 /// Every pure-Dart corpus case, in a stable order.
 final List<CorpusCase> corpusCases = [
-  unnamedButton,
-  labeledButton,
-  namedByChildText,
+  ...interactiveNameCases,
+  ...imageAltCases,
+  ...placeholderNameCases,
+  ...fieldLabelCases,
+  ...targetSizeCases,
+  ...focusTrapCases,
+  ...ambiguousNameCases,
+  ...textOverflowCases,
+  ...contrastCases,
+  ...headingStructureCases,
+  ...focusOrderCases,
+  ...stateExposedCases,
+  ...realWorldCases,
 ];
