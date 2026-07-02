@@ -13,7 +13,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   finding resolves to the offending node's identifier, or its nearest ancestor's.
 - The validation-corpus API (`package:attest/corpus.dart`): `CorpusCase`,
   `ExpectedFinding` and `CorpusCategory`, the labelled ground-truth types the
-  forthcoming precision/recall harness measures each rule against.
+  precision/recall harness measures each rule against.
+- `MetricsHarness` and `CorpusMetrics`: run the corpus, compute per-rule
+  precision, recall and false-positive-on-clean rate, and evaluate a CI gate
+  (deterministic precision must be 1.0, zero false positives on clean cases,
+  heuristics must meet a declared threshold, and recall must not regress against
+  a committed baseline).
 
 ## 0.9.0
 

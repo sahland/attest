@@ -1,0 +1,15 @@
+{
+  "rules": [
+    {
+      "ruleId": "attest/interactive-name",
+      "truePositives": 1,
+      "falsePositives": 0,
+      "falseNegatives": 0,
+      "falsePositivesOnClean": 0,
+      "cleanCases": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "fpRateOnClean": 0.0
+    }
+  ]
+}

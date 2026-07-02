@@ -11,3 +11,4 @@
 library;
 
 export 'src/corpus/corpus_case.dart';
+export 'src/corpus/metrics.dart';
