@@ -73,6 +73,14 @@ melos run format:check           # formatting check
 melos run test                   # all unit, widget and golden tests
 ```
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) — the most valuable contributions are
+real-world false positives (each one becomes a permanent adversarial fixture)
+and new rules, which the [rule contract](context/Stage2/11_RULE_AUTHORING.md)
+keeps small and self-contained. Security issues go through
+[SECURITY.md](SECURITY.md), never a public issue.
+
 ## License
 
 BSD-3-Clause. See [LICENSE](LICENSE).

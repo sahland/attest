@@ -1,0 +1,68 @@
+name: Rule proposal
+description: Propose a new accessibility check.
+labels: [rule-proposal]
+body:
+  - type: input
+    id: rule-id
+    attributes:
+      label: Proposed rule id
+      description: Permanent once shipped, so choose carefully.
+      placeholder: attest/<kebab-case>
+    validations:
+      required: true
+  - type: input
+    id: criterion
+    attributes:
+      label: Standard mapping
+      description: >-
+        The WCAG success criterion (number + level) and the EN 301 549 clause.
+        A rule with no citable criterion is not accepted.
+      placeholder: "WCAG 4.1.3 (AA) / EN 301 549 11.4.1.3"
+    validations:
+      required: true
+  - type: dropdown
+    id: method
+    attributes:
+      label: Detection method
+      description: TREE unless the criterion genuinely needs rendered pixels or re-layout.
+      options:
+        - TREE (pure snapshot walk)
+        - RASTER (needs rendered pixels)
+        - TEXTSCALE (needs re-layout at enlarged text)
+    validations:
+      required: true
+  - type: dropdown
+    id: confidence
+    attributes:
+      label: Confidence
+      description: >-
+        Heuristic if the check relies on visual/structural inference. Heuristics
+        ship as suppressible warnings with a declared precision bar.
+      options:
+        - deterministic
+        - heuristic
+    validations:
+      required: true
+  - type: textarea
+    id: detection
+    attributes:
+      label: Detection sketch
+      description: How the rule decides a node violates the criterion, in terms of the snapshot fields.
+    validations:
+      required: true
+  - type: textarea
+    id: traps
+    attributes:
+      label: Known false-positive traps
+      description: >-
+        Situations that look like a violation but are fine. Each becomes a
+        mandatory adversarial fixture.
+    validations:
+      required: true
+  - type: textarea
+    id: fix
+    attributes:
+      label: Fix suggestion
+      description: The concrete, correct fix a finding would suggest, ideally with a code hint.
+    validations:
+      required: true

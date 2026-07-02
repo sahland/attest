@@ -1,0 +1,50 @@
+name: Bug report
+description: A wrong finding (false positive), a missed violation, or a crash.
+labels: [bug]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem is it?
+      options:
+        - False positive (attest flagged something that is actually fine)
+        - Missed violation (attest stayed silent on a real issue)
+        - Crash / exception
+        - Wrong metadata (criterion, severity, location, fix suggestion)
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: rule
+    attributes:
+      label: Rule id
+      description: The rule involved, if known.
+      placeholder: attest/interactive-name
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal repro widget
+      description: >-
+        The smallest widget tree that shows the problem, ideally as a complete
+        widget test. A confirmed false positive becomes a permanent adversarial
+        fixture, so the smaller the repro, the faster it lands.
+      render: dart
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual finding
+      description: What should attest have reported, and what did it report?
+    validations:
+      required: true
+  - type: textarea
+    id: versions
+    attributes:
+      label: Versions
+      description: >-
+        Paste the attest package versions from your pubspec.lock and the output
+        of `flutter --version`.
+      render: text
+    validations:
+      required: true
