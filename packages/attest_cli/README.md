@@ -41,6 +41,12 @@ the automated findings *plus* a generated **manual-review checklist** — every
 criterion the tool cannot fully verify, with a note on what to check — so "no
 findings" never reads as an implied all-clear.
 
+The **conformance export** (`attest ci --format conformance`) is the same audit
+trail as machine-readable JSON: a clause-by-clause document with, for every
+success criterion in the pack, its coverage status, guidance and the findings
+mapped to it. It is the stable substrate for a dashboard or a VPAT / EU
+accessibility statement.
+
 ## Producing reports
 
 Have your widget tests write each `AuditReport` as JSON into the report

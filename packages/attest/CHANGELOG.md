@@ -4,6 +4,16 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.4.0 - 2026-07-02
+
+### Added
+
+- `ConformanceReport`: a machine-readable, clause-by-clause conformance document
+  for a standard pack — every criterion with its coverage status, guidance and
+  the findings mapped to it. Built with `ConformanceReport.build`; it is the
+  stable substrate a dashboard or VPAT / accessibility statement consumes, with
+  a `schemaVersion` bumped only on a breaking shape change.
+
 ## 1.3.0 - 2026-07-02
 
 ### Added

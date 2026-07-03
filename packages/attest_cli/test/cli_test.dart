@@ -122,6 +122,35 @@ void main() {
     );
   });
 
+  test('ci --format conformance writes a machine-readable document', () async {
+    final outputPath = '${temp.path}/conformance.json';
+    await run([
+      'ci',
+      '--report-dir',
+      reportDir,
+      '--baseline',
+      baselinePath,
+      '--format',
+      'conformance',
+      '--output',
+      outputPath,
+    ]);
+    final doc =
+        jsonDecode(File(outputPath).readAsStringSync()) as Map<String, dynamic>;
+    expect(doc['schemaVersion'], '1');
+    expect(doc['standard'], 'en301549_v3_2_1');
+    expect(doc['summary'], isA<Map<String, dynamic>>());
+    final criteria = doc['criteria'] as List;
+    expect(criteria, isNotEmpty);
+    // A manual criterion is present with guidance and no rules.
+    final manual = criteria.cast<Map<String, dynamic>>().firstWhere(
+          (c) => (c['criterion'] as Map)['wcag'] == '1.4.1',
+        );
+    expect(manual['status'], 'manual');
+    expect(manual['needsManualReview'], isTrue);
+    expect(manual['guidance'], isA<String>());
+  });
+
   test('ci --format html embeds the manual-review checklist', () async {
     final outputPath = '${temp.path}/out.html';
     await run([

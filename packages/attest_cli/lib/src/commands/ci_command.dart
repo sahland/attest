@@ -27,7 +27,7 @@ class CiCommand extends Command<int> {
       )
       ..addOption(
         'format',
-        allowed: ['text', 'json', 'sarif', 'html'],
+        allowed: ['text', 'json', 'sarif', 'html', 'conformance'],
         defaultsTo: 'text',
         help: 'Output format.',
       )
@@ -99,10 +99,33 @@ class CiCommand extends Command<int> {
         );
       case 'html':
         return const HtmlWriter().write(reports, gate);
+      case 'conformance':
+        final version =
+            reports.isEmpty ? '0.0.0' : reports.first.meta.toolVersion;
+        return const JsonEncoder.withIndent('  ').convert(
+          ConformanceReport.build(
+            standard: _packOf(reports),
+            findings: aggregateFindings(reports),
+            toolVersion: version,
+          ).toJson(),
+        );
       case 'text':
       default:
         return _text(gate);
     }
+  }
+
+  /// The standard pack the [reports] were audited under, defaulting to
+  /// EN 301 549 v3.2.1 when it cannot be read.
+  Standard _packOf(List<AuditReport> reports) {
+    for (final report in reports) {
+      try {
+        return Standard.fromJson(report.meta.standard);
+      } on ArgumentError {
+        continue;
+      }
+    }
+    return Standard.en301549_v3_2_1;
   }
 
   String _text(GateResult gate) {
