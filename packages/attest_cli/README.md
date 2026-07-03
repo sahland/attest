@@ -36,6 +36,11 @@ Level A/AA success criterion, classified as automated, partial or manual. It is
 the honest ledger of what the tool can and cannot verify — useful when
 assembling an audit trail.
 
+The **HTML report** (`attest ci --format html`) is a complete audit artifact:
+the automated findings *plus* a generated **manual-review checklist** — every
+criterion the tool cannot fully verify, with a note on what to check — so "no
+findings" never reads as an implied all-clear.
+
 ## Producing reports
 
 Have your widget tests write each `AuditReport` as JSON into the report

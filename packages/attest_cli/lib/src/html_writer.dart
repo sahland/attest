@@ -31,9 +31,17 @@ class HtmlWriter {
       for (final finding in gate.newFindings) finding.fingerprint,
     };
 
+    final hasFindings = reports.any((r) => r.findings.isNotEmpty);
+    buffer.writeln('<h2>Automated findings</h2>');
+    if (!hasFindings) {
+      buffer.writeln(
+        '<p class="clean">No automated findings. This is not conformance — '
+        'complete the manual checklist below.</p>',
+      );
+    }
     for (final report in reports) {
       if (report.findings.isEmpty) continue;
-      buffer.writeln('<h2>${_escape(report.meta.screenName)}</h2>');
+      buffer.writeln('<h3>${_escape(report.meta.screenName)}</h3>');
       for (final finding in report.findings) {
         buffer.writeln(
           _finding(finding, newFingerprints.contains(finding.fingerprint)),
@@ -41,8 +49,69 @@ class HtmlWriter {
       }
     }
 
-    buffer.writeln('</body></html>');
+    buffer
+      ..writeln(_checklist(_packOf(reports)))
+      ..writeln('</body></html>');
     return buffer.toString();
+  }
+
+  /// The standard pack the [reports] were audited under, defaulting to
+  /// EN 301 549 v3.2.1 when it cannot be read.
+  Standard _packOf(List<AuditReport> reports) {
+    for (final report in reports) {
+      try {
+        return Standard.fromJson(report.meta.standard);
+      } on ArgumentError {
+        continue;
+      }
+    }
+    return Standard.en301549_v3_2_1;
+  }
+
+  /// The generated manual-review checklist: the criteria attest cannot fully
+  /// verify, so the report is a complete audit trail rather than an implied
+  /// all-clear.
+  String _checklist(Standard standard) {
+    final matrix = CoverageMatrix.forStandard(standard);
+    final buffer = StringBuffer()
+      ..writeln(
+        '<h2>Manual review checklist — ${_escape(standard.toJson())}</h2>',
+      )
+      ..writeln(
+        '<p class="disclaimer">attest verifies '
+        '${matrix.count(CoverageStatus.automated)} criteria automatically and '
+        '${matrix.count(CoverageStatus.partial)} in part. The '
+        '${matrix.count(CoverageStatus.manual)} items below require human review '
+        'to complete the audit against this standard.</p>',
+      );
+
+    const headings = {
+      CoverageStatus.partial: 'Partially automated — verify the remainder',
+      CoverageStatus.manual: 'Manual',
+    };
+    for (final entry in headings.entries) {
+      final group = matrix.withStatus(entry.key).toList();
+      if (group.isEmpty) continue;
+      buffer
+        ..writeln('<h3>${entry.value}</h3>')
+        ..writeln('<ul class="checklist">');
+      for (final row in group) {
+        buffer.writeln(_checklistRow(row));
+      }
+      buffer.writeln('</ul>');
+    }
+    return buffer.toString();
+  }
+
+  String _checklistRow(CriterionCoverage row) {
+    final c = row.criterion;
+    final rules = row.ruleIds.isEmpty
+        ? ''
+        : ' <span class="rules">(${_escape(row.ruleIds.join(', '))})</span>';
+    return '<li><label><input type="checkbox"> '
+        '<strong>${_escape(c.wcag)} ${_escape(c.wcagLevel)}</strong> '
+        '${_escape(c.title)}$rules</label>'
+        '<p class="guidance">${_escape(row.guidance)}</p></li>';
   }
 
   String _finding(Finding finding, bool isNew) {
@@ -69,7 +138,14 @@ class HtmlWriter {
       'font-size:.7rem;font-weight:700;margin-right:.5rem}'
       '.new{background:#c5221f;color:#fff;border-radius:3px;padding:0 .3rem;'
       'font-size:.7rem;margin-right:.5rem}.criterion{color:#555}'
-      '.fix{color:#137333}.loc{color:#555;font-family:monospace}';
+      '.fix{color:#137333}.loc{color:#555;font-family:monospace}'
+      'h3{font-size:1rem;margin-top:1.2rem;color:#333}.clean{color:#137333}'
+      'ul.checklist{list-style:none;padding-left:0}'
+      'ul.checklist li{border-left:4px solid #1a73e8;background:#f3f7ff;'
+      'padding:.5rem .75rem;margin:.4rem 0}'
+      'ul.checklist label{font-weight:600;cursor:pointer}'
+      '.guidance{color:#444;margin:.25rem 0 0 1.4rem}'
+      '.rules{color:#555;font-weight:400;font-family:monospace}';
 
   String _escape(String value) => value
       .replaceAll('&', '&amp;')

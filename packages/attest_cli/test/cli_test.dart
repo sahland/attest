@@ -121,4 +121,24 @@ void main() {
       0,
     );
   });
+
+  test('ci --format html embeds the manual-review checklist', () async {
+    final outputPath = '${temp.path}/out.html';
+    await run([
+      'ci',
+      '--report-dir',
+      reportDir,
+      '--baseline',
+      baselinePath,
+      '--format',
+      'html',
+      '--output',
+      outputPath,
+    ]);
+    final html = File(outputPath).readAsStringSync();
+    expect(html, contains('Manual review checklist'));
+    // A criterion that is manual-only must appear as a checklist item.
+    expect(html, contains('Use of Color'));
+    expect(html, contains('type="checkbox"'));
+  });
 }
