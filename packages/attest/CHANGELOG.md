@@ -4,6 +4,14 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.3.0 - 2026-07-02
+
+### Added
+
+- `CoverageMatrix.renderTable()` now prints each criterion's guidance note under
+  it, so the text output — and `attest coverage` — is an actionable checklist
+  rather than just a list of clause numbers.
+
 ## 1.2.0 - 2026-07-02
 
 ### Added

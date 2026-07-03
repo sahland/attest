@@ -104,5 +104,14 @@ void main() {
       expect(json['summary'], isA<Map<String, dynamic>>());
       expect((json['criteria'] as List).length, matrix.total);
     });
+
+    test('the rendered table includes each criterion and its guidance', () {
+      final table = CoverageMatrix.forStandard(
+        Standard.en301549_v3_2_1,
+      ).renderTable();
+      expect(table, contains('1.4.1'));
+      expect(table, contains('Use of Color'));
+      expect(table, contains('Colour must not be the only way'));
+    });
   });
 }

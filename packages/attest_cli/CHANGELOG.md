@@ -4,7 +4,7 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## 1.2.0 - 2026-07-02
 
 ### Added
 
@@ -13,6 +13,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   guidance, as a checklist item. The report is a complete audit trail rather
   than an implied all-clear, and it renders even when there are no automated
   findings.
+- `attest coverage` text output now shows each criterion's guidance note.
+  Requires `attest` 1.3.0.
 
 ## 1.1.0 - 2026-07-02
 

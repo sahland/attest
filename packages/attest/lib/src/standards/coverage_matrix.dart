@@ -67,10 +67,12 @@ class CoverageMatrix {
       for (final row in group) {
         final c = row.criterion;
         final rules = row.ruleIds.isEmpty ? '' : ' [${row.ruleIds.join(', ')}]';
-        buffer.writeln(
-          '  ${c.wcag.padRight(7)} ${c.wcagLevel.padRight(2)} '
-          '${c.title}$rules',
-        );
+        buffer
+          ..writeln(
+            '  ${c.wcag.padRight(7)} ${c.wcagLevel.padRight(2)} '
+            '${c.title}$rules',
+          )
+          ..writeln('      ${row.guidance}');
       }
       buffer.writeln();
     }
