@@ -19,6 +19,10 @@ const SemanticsFlagData isSelected = SemanticsFlagData.isSelected;
 
 const SemanticsActionData tap = SemanticsActionData.tap;
 const SemanticsActionData longPress = SemanticsActionData.longPress;
+const SemanticsActionData increase = SemanticsActionData.increase;
+const SemanticsActionData decrease = SemanticsActionData.decrease;
+const SemanticsActionData scrollUp = SemanticsActionData.scrollUp;
+const SemanticsActionData scrollDown = SemanticsActionData.scrollDown;
 
 int _nextId = 0;
 

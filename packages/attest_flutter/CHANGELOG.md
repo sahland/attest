@@ -4,6 +4,14 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.1 - 2026-07-02
+
+### Changed
+
+- Require `attest` 1.5.0, which adds the `attest/adjustable-value` rule
+  (WCAG 4.1.2): sliders and steppers that expose no current value are now
+  flagged. No API change in this package.
+
 ## 1.1.0 - 2026-07-02
 
 ### Added

@@ -18,11 +18,11 @@ raster/text-scale collectors) live in
 ## Measured correctness
 
 For a compliance tool, trust is the product — so correctness is measured, not
-claimed. attest ships a validation corpus of **118 hand-labelled cases**
+claimed. attest ships a validation corpus of **128 hand-labelled cases**
 (positive, clean, adversarial, and composite real-world screens) and computes
 **precision and recall per rule** against it on every CI run.
 
-On the current corpus every one of the thirteen rules measures **precision 1.0
+On the current corpus every one of the fourteen rules measures **precision 1.0
 and recall 1.0, with zero false positives on the clean fixtures.** The metrics
 gate fails the build on any regression, on any false positive on a clean case,
 or if a heuristic drops below its declared precision bar. The contrast and

@@ -469,9 +469,14 @@ abstract final class WcagRegistry {
       'A',
       'Name, Role, Value',
       CoverageStatus.automated,
-      rules: ['$_a/interactive-name', '$_a/state-exposed'],
-      guidance: 'Flags interactive elements with no accessible name and '
-          'custom controls that never expose their state.',
+      rules: [
+        '$_a/interactive-name',
+        '$_a/state-exposed',
+        '$_a/adjustable-value',
+      ],
+      guidance: 'Flags interactive elements with no accessible name, custom '
+          'controls that never expose their state, and adjustable controls '
+          'with no value.',
     ),
     _c(
       '4.1.3',

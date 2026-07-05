@@ -3,6 +3,7 @@ import '../model/audit_report.dart';
 import '../model/finding.dart';
 import '../model/semantics_snapshot.dart';
 import '../model/severity.dart';
+import '../rules/adjustable_value_rule.dart';
 import '../rules/ambiguous_name_rule.dart';
 import '../rules/contrast_rule.dart';
 import '../rules/field_label_rule.dart';
@@ -41,6 +42,7 @@ class RuleEngine {
         HeadingStructureRule(),
         FocusOrderRule(),
         StateExposedRule(),
+        AdjustableValueRule(),
       ]);
 
   /// The rules this engine evaluates, in order.

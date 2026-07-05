@@ -7,6 +7,7 @@
 
 import 'package:attest/corpus.dart';
 
+import 'adjustable_value.dart';
 import 'ambiguous_name.dart';
 import 'contrast.dart';
 import 'field_label.dart';
@@ -24,6 +25,7 @@ import 'text_overflow.dart';
 
 /// Every pure-Dart corpus case, in a stable order.
 final List<CorpusCase> corpusCases = [
+  ...adjustableValueCases,
   ...interactiveNameCases,
   ...imageAltCases,
   ...placeholderNameCases,
