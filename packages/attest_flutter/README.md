@@ -81,6 +81,32 @@ like a coverage gate. It emits **SARIF** for GitHub's Problems panel and HTML
 for humans. See the [CLI README](https://pub.dev/packages/attest_cli) for a
 ready-made GitHub Actions workflow.
 
+## Auditing across interactions
+
+A static audit only sees one moment. Many barriers appear in motion — an
+unlabeled control revealed in a dialog, semantics that break after a state
+change, a focus trap that only exists post-navigation. `auditFlow` drives a
+scripted flow and re-audits after each step:
+
+```dart
+final reports = await tester.auditFlow(
+  screenName: 'Checkout',
+  steps: [
+    AuditStep('open coupon dialog', (t) async {
+      await t.tap(find.text('Add coupon'));
+      await t.pumpAndSettle();
+    }),
+  ],
+);
+
+expect(reports, everyElement(passesAccessibilityGate()));
+```
+
+It returns one report per step (initial first), each labelled with the step, so
+the defect that only shows up after the interaction is caught too. Nothing else
+in Flutter checks accessibility across interactions. *(Experimental — the flow
+API will grow.)*
+
 ## Screen-reader transcript
 
 `auditAccessibility()` also returns the sequence a screen reader would announce,

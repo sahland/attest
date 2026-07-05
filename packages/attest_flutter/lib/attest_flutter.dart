@@ -12,6 +12,7 @@ library;
 export 'package:attest/attest.dart';
 
 export 'src/audit_extension.dart';
+export 'src/audit_flow.dart';
 export 'src/matchers.dart';
 export 'src/raster_collector.dart';
 export 'src/snapshot_builder.dart';
