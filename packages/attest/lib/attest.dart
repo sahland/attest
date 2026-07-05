@@ -34,6 +34,7 @@ export 'src/model/text_scale_observation.dart';
 export 'src/model/text_style_data.dart';
 export 'src/report/baseline.dart';
 export 'src/report/baseline_gate.dart';
+export 'src/report/flow_analysis.dart';
 export 'src/report/sarif.dart';
 export 'src/report/transcript.dart';
 export 'src/rules/adjustable_value_rule.dart';

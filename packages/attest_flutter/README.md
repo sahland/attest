@@ -103,9 +103,17 @@ expect(reports, everyElement(passesAccessibilityGate()));
 ```
 
 It returns one report per step (initial first), each labelled with the step, so
-the defect that only shows up after the interaction is caught too. Nothing else
-in Flutter checks accessibility across interactions. *(Experimental — the flow
-API will grow.)*
+the defect that only shows up after the interaction is caught too. Pass the
+result to `FlowAnalysis` to pinpoint the step that caused a barrier:
+
+```dart
+final flow = FlowAnalysis.of(reports);
+// e.g. "opening the coupon dialog introduced these findings":
+print(flow.introducedByInteractions);
+```
+
+Nothing else in Flutter checks accessibility across interactions.
+*(Experimental — the flow API will grow.)*
 
 ## Screen-reader transcript
 
