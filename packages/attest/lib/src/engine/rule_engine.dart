@@ -9,6 +9,7 @@ import '../rules/contrast_rule.dart';
 import '../rules/field_label_rule.dart';
 import '../rules/focus_order_rule.dart';
 import '../rules/focus_trap_rule.dart';
+import '../rules/generic_link_text_rule.dart';
 import '../rules/heading_structure_rule.dart';
 import '../rules/image_alt_rule.dart';
 import '../rules/interactive_name_rule.dart';
@@ -43,6 +44,7 @@ class RuleEngine {
         FocusOrderRule(),
         StateExposedRule(),
         AdjustableValueRule(),
+        GenericLinkTextRule(),
       ]);
 
   /// The rules this engine evaluates, in order.

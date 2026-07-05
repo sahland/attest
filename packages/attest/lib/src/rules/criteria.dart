@@ -96,4 +96,12 @@ abstract final class Criteria {
     en301549: '11.2.4.3',
     title: 'Focus Order',
   );
+
+  /// WCAG 2.4.4 Link Purpose (In Context) (Level A).
+  static const Criterion linkPurpose = Criterion(
+    wcag: '2.4.4',
+    wcagLevel: 'A',
+    en301549: '11.2.4.4',
+    title: 'Link Purpose (In Context)',
+  );
 }

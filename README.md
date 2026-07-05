@@ -35,11 +35,11 @@ criterion and EN 301 549 clause, anchored to the `file:line` that produced it.
 
 ## What it checks
 
-Fourteen rules across three detection methods — tree walk, rasterized pixels,
+Fifteen rules across three detection methods — tree walk, rasterized pixels,
 and re-pump at enlarged text:
 
 - **Names & roles:** interactive-name, image-alt, placeholder-name, field-label,
-  ambiguous-name, state-exposed, adjustable-value
+  ambiguous-name, state-exposed, adjustable-value, generic-link-text
 - **Geometry & reachability:** target-size, focus-trap, focus-order
 - **Rendered output:** contrast and non-text (icon) contrast (real pixels),
   text-overflow (reflow at 200%)

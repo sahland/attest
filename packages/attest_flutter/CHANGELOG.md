@@ -4,6 +4,14 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.2 - 2026-07-02
+
+### Changed
+
+- Require `attest` 1.6.0, which adds the `attest/generic-link-text` rule
+  (WCAG 2.4.4): links with vague text like "read more" are now flagged. No API
+  change in this package.
+
 ## 1.1.1 - 2026-07-02
 
 ### Changed

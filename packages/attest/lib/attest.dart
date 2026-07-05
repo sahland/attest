@@ -43,6 +43,7 @@ export 'src/rules/criteria.dart';
 export 'src/rules/field_label_rule.dart';
 export 'src/rules/focus_order_rule.dart';
 export 'src/rules/focus_trap_rule.dart';
+export 'src/rules/generic_link_text_rule.dart';
 export 'src/rules/heading_structure_rule.dart';
 export 'src/rules/image_alt_rule.dart';
 export 'src/rules/interactive_name_rule.dart';

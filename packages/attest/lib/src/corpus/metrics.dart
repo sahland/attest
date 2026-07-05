@@ -40,6 +40,7 @@ const Map<String, double> declaredHeuristicPrecision = {
   'attest/heading-structure': 0.9,
   'attest/focus-order': 0.9,
   'attest/state-exposed': 0.9,
+  'attest/generic-link-text': 0.9,
 };
 
 /// Runs the validation corpus and computes per-rule precision, recall and

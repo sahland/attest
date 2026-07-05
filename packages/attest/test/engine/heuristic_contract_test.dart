@@ -47,6 +47,9 @@ void main() {
         ],
       ),
     ),
+    'attest/generic-link-text': snap(
+      node(label: 'Read more', flags: {isLink}, actions: {tap}),
+    ),
   };
 
   AuditReport run(

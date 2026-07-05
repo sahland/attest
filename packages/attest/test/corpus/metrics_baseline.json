@@ -67,6 +67,17 @@
       "fpRateOnClean": 0.0
     },
     {
+      "ruleId": "attest/generic-link-text",
+      "truePositives": 4,
+      "falsePositives": 0,
+      "falseNegatives": 0,
+      "falsePositivesOnClean": 0,
+      "cleanCases": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "fpRateOnClean": 0.0
+    },
+    {
       "ruleId": "attest/heading-structure",
       "truePositives": 7,
       "falsePositives": 0,

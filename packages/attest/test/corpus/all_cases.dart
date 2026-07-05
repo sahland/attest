@@ -13,6 +13,7 @@ import 'contrast.dart';
 import 'field_label.dart';
 import 'focus_order.dart';
 import 'focus_trap.dart';
+import 'generic_link_text.dart';
 import 'heading_structure.dart';
 import 'image_alt.dart';
 import 'interactive_name.dart';
@@ -39,5 +40,6 @@ final List<CorpusCase> corpusCases = [
   ...focusOrderCases,
   ...stateExposedCases,
   ...nonTextContrastCases,
+  ...genericLinkTextCases,
   ...realWorldCases,
 ];

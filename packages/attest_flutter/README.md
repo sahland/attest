@@ -23,7 +23,7 @@ print the transcript a screen reader (TalkBack / VoiceOver) would announce.
 > a structured checklist for the rest.
 
 Correctness is measured, not claimed: every rule is scored against a validation
-corpus of 128 hand-labelled cases on each CI run and currently holds
+corpus of 137 hand-labelled cases on each CI run and currently holds
 **precision 1.0 and recall 1.0 with zero false positives on clean fixtures**
 (details in the [`attest` core README](https://pub.dev/packages/attest)).
 
@@ -58,11 +58,11 @@ fix and the `file:line` to change.
 
 ## What it checks
 
-Fourteen rules across three detection methods that source-level linters can't do:
+Fifteen rules across three detection methods that source-level linters can't do:
 
 - **Names & roles** — unlabeled buttons, images with no alt text, form fields
   with no label, generic "Button" labels, duplicate/ambiguous names, sliders
-  that expose no value.
+  that expose no value, links with vague text ("read more").
 - **Rendered output** — real text **contrast** and **icon / non-text contrast**
   measured from the rasterized screen, and layout **overflow / reflow** when the
   system font is scaled to 200%.

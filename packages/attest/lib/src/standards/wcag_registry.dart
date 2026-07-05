@@ -274,9 +274,11 @@ abstract final class WcagRegistry {
       '2.4.4',
       'A',
       'Link Purpose (In Context)',
-      CoverageStatus.manual,
-      guidance: 'A link\'s purpose must be clear from its text or context; '
-          'the interactive-name rule only ensures it has a name.',
+      CoverageStatus.partial,
+      rules: ['$_a/generic-link-text'],
+      guidance: 'Flags links whose whole name is a generic phrase like '
+          '"read more". Whether the purpose is clear from surrounding context '
+          'is manual.',
     ),
     _c(
       '2.4.5',
