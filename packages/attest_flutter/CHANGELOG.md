@@ -4,6 +4,16 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.2 - 2026-07-14
+
+### Added
+
+- Documented auditing on a device with `integration_test`: `auditAccessibility`
+  works unchanged on a live binding, so the rendered app can be audited on a
+  device or desktop (native semantics, real focus). A runnable example lives at
+  `example/integration_test`. Contrast needs a debug build; the overflow pass
+  relies on a test-only re-pump, so start with `textScales: [1.0]` on device.
+
 ## 1.2.1 - 2026-07-02
 
 ### Changed

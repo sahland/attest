@@ -115,6 +115,34 @@ print(flow.introducedByInteractions);
 Nothing else in Flutter checks accessibility across interactions.
 *(Experimental — the flow API will grow.)*
 
+## On a device (integration_test)
+
+The same `tester.auditAccessibility()` works in an `integration_test`, so you
+can audit the **rendered app** on a device or desktop — catching native-
+semantics and platform-channel differences a widget test cannot see:
+
+```dart
+import 'package:integration_test/integration_test.dart';
+
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  testWidgets('home is accessible', (tester) async {
+    await tester.pumpWidget(const MyApp());
+    await tester.pumpAndSettle();
+
+    final report = await tester.auditAccessibility(textScales: const [1.0]);
+    expect(report, passesAccessibilityGate());
+  });
+}
+```
+
+The tree-walking rules run on any binding. Contrast reads the rendered layer, so
+keep it a debug build; the text-scale overflow pass relies on a test-only
+re-pump, so start with `textScales: [1.0]` on a live binding and widen it once
+validated on your target. A full example is in the repo at
+[`example/integration_test`](https://github.com/sahland/attest/tree/main/example/integration_test).
+
 ## Screen-reader transcript
 
 `auditAccessibility()` also returns the sequence a screen reader would announce,
