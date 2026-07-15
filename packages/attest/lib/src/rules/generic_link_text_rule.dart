@@ -21,7 +21,8 @@ class GenericLinkTextRule implements Rule {
   const GenericLinkTextRule();
 
   /// Accessible names that describe no destination, compared case-insensitively
-  /// against a link's whole trimmed label.
+  /// against a link's whole label once edge decoration is stripped (see
+  /// [_core]).
   static const Set<String> _genericPhrases = {
     'click here',
     'click',
@@ -52,6 +53,30 @@ class GenericLinkTextRule implements Rule {
   @override
   Confidence get confidence => Confidence.heuristic;
 
+  /// Edge decoration developers append to generic link text without making it
+  /// describe anything: trailing ellipses and arrows (`Read more…`, `More ›`),
+  /// leading bullets, surrounding punctuation. Matched at either end only, so
+  /// internal text is never altered.
+  static final RegExp _edgeDecoration = RegExp(
+    r'^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$',
+    unicode: true,
+  );
+
+  static final RegExp _innerWhitespace = RegExp(r'\s+');
+
+  /// The comparable core of [label]: lower-cased, edge decoration removed and
+  /// internal whitespace collapsed. `"Read more…"`, `"READ MORE"` and
+  /// `"read  more"` all reduce to `read more`.
+  ///
+  /// Only leading/trailing non-alphanumeric runs are stripped, so a link whose
+  /// visible text is genuinely descriptive can never collapse onto a generic
+  /// phrase — its internal words survive untouched.
+  static String _core(String label) => label
+      .toLowerCase()
+      .replaceAll(_edgeDecoration, '')
+      .replaceAll(_innerWhitespace, ' ')
+      .trim();
+
   @override
   Iterable<Finding> evaluate(
     SemanticsSnapshot snapshot,
@@ -59,7 +84,7 @@ class GenericLinkTextRule implements Rule {
   ) sync* {
     for (final node in snapshot.allNodes) {
       if (!node.hasFlag(SemanticsFlagData.isLink)) continue;
-      final label = node.label.trim().toLowerCase();
+      final label = _core(node.label);
       if (label.isEmpty) continue;
       if (!_genericPhrases.contains(label)) continue;
       yield context.report(

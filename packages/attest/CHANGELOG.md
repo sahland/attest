@@ -4,6 +4,19 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.8.0 - 2026-07-15
+
+### Changed
+
+- `attest/generic-link-text` (WCAG 2.4.4) now strips edge decoration before
+  matching, so the most common real-world forms of vague link text are caught:
+  `"Read more…"` (trailing ellipsis), `"More ›"` and `"Learn more!"` all reduce
+  to their generic core. Only leading/trailing non-alphanumeric runs are
+  removed and internal words are left untouched, so a descriptive link can never
+  collapse onto a generic phrase — precision stays 1.0 on the corpus. New corpus
+  cases pin both the added recall and that the match remains whole-label, never
+  a substring (`"Read more about the 2026 pricing"` stays silent).
+
 ## 1.7.0 - 2026-07-02
 
 ### Added

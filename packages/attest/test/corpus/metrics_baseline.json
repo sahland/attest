@@ -68,7 +68,7 @@
     },
     {
       "ruleId": "attest/generic-link-text",
-      "truePositives": 4,
+      "truePositives": 7,
       "falsePositives": 0,
       "falseNegatives": 0,
       "falsePositivesOnClean": 0,
