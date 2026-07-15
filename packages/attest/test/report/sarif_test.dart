@@ -7,6 +7,8 @@ void main() {
     wcagLevel: 'A',
     en301549: '11.4.1.2',
     title: 'Name, Role, Value',
+    understanding:
+        'https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html',
   );
   final report = AuditReport(
     findings: const [
@@ -40,6 +42,12 @@ void main() {
     expect(driver['name'], 'attest');
     expect(driver['version'], '0.6.0');
     expect(driver['rules'], hasLength(1));
+
+    final rule = (driver['rules'] as List).single as Map<String, dynamic>;
+    expect(
+      rule['helpUri'],
+      'https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html',
+    );
 
     final result = (run['results'] as List).single as Map<String, dynamic>;
     expect(result['ruleId'], 'attest/interactive-name');

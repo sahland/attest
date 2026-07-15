@@ -57,7 +57,7 @@ class SarifWriter {
         'id': finding.ruleId,
         'name': finding.criterion.title,
         'shortDescription': {'text': finding.criterion.title},
-        'helpUri': informationUri,
+        'helpUri': finding.criterion.understanding ?? informationUri,
         'properties': {
           'wcag': finding.criterion.wcag,
           'wcagLevel': finding.criterion.wcagLevel,

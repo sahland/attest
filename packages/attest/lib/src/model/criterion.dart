@@ -14,6 +14,7 @@ class Criterion {
     required this.wcagLevel,
     required this.en301549,
     required this.title,
+    this.understanding,
   });
 
   /// The WCAG success-criterion number, e.g. `1.4.3`.
@@ -28,12 +29,21 @@ class Criterion {
   /// The human-readable title of the criterion, e.g. `Contrast (Minimum)`.
   final String title;
 
+  /// The canonical W3C "Understanding" page for this criterion, when known —
+  /// the authoritative explanation of what it requires and how to satisfy it.
+  ///
+  /// Surfaced to developers as the "learn more" link on a finding (the SARIF
+  /// `helpUri`, the test-failure output). Null for a criterion parsed from
+  /// older JSON that predates this field.
+  final String? understanding;
+
   /// Parses a [Criterion] from [json].
   factory Criterion.fromJson(Map<String, dynamic> json) => Criterion(
         wcag: json['wcag'] as String,
         wcagLevel: json['wcagLevel'] as String,
         en301549: json['en301549'] as String,
         title: json['title'] as String,
+        understanding: json['understanding'] as String?,
       );
 
   /// The JSON representation of this criterion.
@@ -42,6 +52,7 @@ class Criterion {
         'wcagLevel': wcagLevel,
         'en301549': en301549,
         'title': title,
+        if (understanding != null) 'understanding': understanding,
       };
 
   @override
@@ -50,10 +61,12 @@ class Criterion {
       other.wcag == wcag &&
       other.wcagLevel == wcagLevel &&
       other.en301549 == en301549 &&
-      other.title == title;
+      other.title == title &&
+      other.understanding == understanding;
 
   @override
-  int get hashCode => Object.hash(wcag, wcagLevel, en301549, title);
+  int get hashCode =>
+      Object.hash(wcag, wcagLevel, en301549, title, understanding);
 
   @override
   String toString() =>

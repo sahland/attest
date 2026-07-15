@@ -99,9 +99,12 @@ String _render(AuditReport report, List<Finding> findings) {
     if (finding.location != null) {
       buffer.writeln('    ${finding.location}');
     }
-    buffer
-      ..writeln('    Fix: ${finding.suggestion}')
-      ..writeln();
+    buffer.writeln('    Fix: ${finding.suggestion}');
+    final understanding = finding.criterion.understanding;
+    if (understanding != null) {
+      buffer.writeln('    Learn: $understanding');
+    }
+    buffer.writeln();
   }
   return buffer.toString().trimRight();
 }

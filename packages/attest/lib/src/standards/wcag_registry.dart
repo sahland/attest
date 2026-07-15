@@ -1,4 +1,5 @@
 import '../model/criterion.dart';
+import '../rules/criteria.dart';
 import 'criterion_coverage.dart';
 
 /// The single source of truth mapping WCAG Level A and AA success criteria to
@@ -21,6 +22,7 @@ abstract final class WcagRegistry {
     CoverageStatus status, {
     List<String> rules = const [],
     required String guidance,
+    String? understanding,
   }) =>
       CriterionCoverage(
         criterion: Criterion(
@@ -28,6 +30,7 @@ abstract final class WcagRegistry {
           wcagLevel: level,
           en301549: '11.$wcag',
           title: title,
+          understanding: understanding,
         ),
         status: status,
         ruleIds: rules,
@@ -47,6 +50,7 @@ abstract final class WcagRegistry {
       rules: ['$_a/image-alt'],
       guidance: 'Flags images exposed to assistive tech with no text '
           'alternative. Whether an existing alt text is meaningful is manual.',
+      understanding: Criteria.nonTextContent.understanding,
     ),
     _c(
       '1.2.1',
@@ -92,6 +96,7 @@ abstract final class WcagRegistry {
       rules: ['$_a/field-label', '$_a/heading-structure'],
       guidance: 'Flags form controls with no programmatic label and headings '
           'not exposed as such. Other structural relationships need review.',
+      understanding: Criteria.infoAndRelationships.understanding,
     ),
     _c(
       '1.3.2',
@@ -148,6 +153,7 @@ abstract final class WcagRegistry {
       rules: ['$_a/contrast'],
       guidance: 'Measures text contrast from rendered pixels against the '
           '4.5:1 / 3:1 minimums.',
+      understanding: Criteria.contrastMinimum.understanding,
     ),
     _c(
       '1.4.4',
@@ -157,6 +163,7 @@ abstract final class WcagRegistry {
       rules: ['$_a/text-overflow'],
       guidance: 'Re-lays out the screen at enlarged text and flags layout '
           'that overflows or clips.',
+      understanding: Criteria.resizeText.understanding,
     ),
     _c(
       '1.4.5',
@@ -181,6 +188,7 @@ abstract final class WcagRegistry {
       rules: ['$_a/non-text-contrast'],
       guidance: 'Measures icon / graphical contrast from rendered pixels '
           'against the 3:1 minimum.',
+      understanding: Criteria.nonTextContrast.understanding,
     ),
     _c(
       '1.4.12',
@@ -208,6 +216,7 @@ abstract final class WcagRegistry {
       rules: ['$_a/focus-trap'],
       guidance: 'Flags interactive elements that are tappable but hidden from '
           'assistive tech. Full keyboard operability is otherwise manual.',
+      understanding: Criteria.keyboard.understanding,
     ),
     _c(
       '2.1.2',
@@ -269,6 +278,7 @@ abstract final class WcagRegistry {
       rules: ['$_a/focus-order'],
       guidance: 'A heuristic flags clear upward jumps in traversal order. '
           'Confirm the overall order preserves meaning and operability.',
+      understanding: Criteria.focusOrder.understanding,
     ),
     _c(
       '2.4.4',
@@ -279,6 +289,7 @@ abstract final class WcagRegistry {
       guidance: 'Flags links whose whole name is a generic phrase like '
           '"read more". Whether the purpose is clear from surrounding context '
           'is manual.',
+      understanding: Criteria.linkPurpose.understanding,
     ),
     _c(
       '2.4.5',
@@ -296,6 +307,7 @@ abstract final class WcagRegistry {
       rules: ['$_a/placeholder-name', '$_a/ambiguous-name'],
       guidance: 'Flags placeholder labels and duplicate/ambiguous names. '
           'Whether a descriptive label is apt is manual.',
+      understanding: Criteria.headingsAndLabels.understanding,
     ),
     _c(
       '2.4.7',
@@ -359,6 +371,7 @@ abstract final class WcagRegistry {
       rules: ['$_a/target-size'],
       guidance: 'Flags touch targets below the minimum size from the node '
           'geometry.',
+      understanding: Criteria.targetSize.understanding,
     ),
 
     // --- 3 Understandable ---
@@ -479,6 +492,7 @@ abstract final class WcagRegistry {
       guidance: 'Flags interactive elements with no accessible name, custom '
           'controls that never expose their state, and adjustable controls '
           'with no value.',
+      understanding: Criteria.nameRoleValue.understanding,
     ),
     _c(
       '4.1.3',

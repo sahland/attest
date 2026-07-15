@@ -8,12 +8,18 @@ import '../model/criterion.dart';
 /// reviewed and versioned in one place; the formal, version-switched packs
 /// arrive with the standard-pack work (see roadmap M8).
 abstract final class Criteria {
+  /// The base URL of the WCAG 2.2 "Understanding" documents. Each criterion's
+  /// [Criterion.understanding] is this plus the criterion's stable W3C slug.
+  static const String _understandingBase =
+      'https://www.w3.org/WAI/WCAG22/Understanding/';
+
   /// WCAG 4.1.2 Name, Role, Value (Level A).
   static const Criterion nameRoleValue = Criterion(
     wcag: '4.1.2',
     wcagLevel: 'A',
     en301549: '11.4.1.2',
     title: 'Name, Role, Value',
+    understanding: '${_understandingBase}name-role-value.html',
   );
 
   /// WCAG 1.1.1 Non-text Content (Level A).
@@ -22,6 +28,7 @@ abstract final class Criteria {
     wcagLevel: 'A',
     en301549: '11.1.1.1',
     title: 'Non-text Content',
+    understanding: '${_understandingBase}non-text-content.html',
   );
 
   /// WCAG 2.4.6 Headings and Labels (Level AA).
@@ -30,6 +37,7 @@ abstract final class Criteria {
     wcagLevel: 'AA',
     en301549: '11.2.4.6',
     title: 'Headings and Labels',
+    understanding: '${_understandingBase}headings-and-labels.html',
   );
 
   /// WCAG 1.3.1 Info and Relationships (Level A).
@@ -38,6 +46,7 @@ abstract final class Criteria {
     wcagLevel: 'A',
     en301549: '11.1.3.1',
     title: 'Info and Relationships',
+    understanding: '${_understandingBase}info-and-relationships.html',
   );
 
   /// WCAG 2.5.8 Target Size (Minimum) (Level AA).
@@ -49,6 +58,7 @@ abstract final class Criteria {
     wcagLevel: 'AA',
     en301549: '11.2.5.8',
     title: 'Target Size (Minimum)',
+    understanding: '${_understandingBase}target-size-minimum.html',
   );
 
   /// WCAG 2.1.1 Keyboard (Level A).
@@ -57,6 +67,7 @@ abstract final class Criteria {
     wcagLevel: 'A',
     en301549: '11.2.1.1',
     title: 'Keyboard',
+    understanding: '${_understandingBase}keyboard.html',
   );
 
   /// WCAG 1.4.4 Resize Text (Level AA).
@@ -68,6 +79,7 @@ abstract final class Criteria {
     wcagLevel: 'AA',
     en301549: '11.1.4.4',
     title: 'Resize Text',
+    understanding: '${_understandingBase}resize-text.html',
   );
 
   /// WCAG 1.4.3 Contrast (Minimum) (Level AA).
@@ -76,6 +88,7 @@ abstract final class Criteria {
     wcagLevel: 'AA',
     en301549: '11.1.4.3',
     title: 'Contrast (Minimum)',
+    understanding: '${_understandingBase}contrast-minimum.html',
   );
 
   /// WCAG 1.4.11 Non-text Contrast (Level AA).
@@ -87,6 +100,7 @@ abstract final class Criteria {
     wcagLevel: 'AA',
     en301549: '11.1.4.11',
     title: 'Non-text Contrast',
+    understanding: '${_understandingBase}non-text-contrast.html',
   );
 
   /// WCAG 2.4.3 Focus Order (Level A).
@@ -95,6 +109,7 @@ abstract final class Criteria {
     wcagLevel: 'A',
     en301549: '11.2.4.3',
     title: 'Focus Order',
+    understanding: '${_understandingBase}focus-order.html',
   );
 
   /// WCAG 2.4.4 Link Purpose (In Context) (Level A).
@@ -103,5 +118,6 @@ abstract final class Criteria {
     wcagLevel: 'A',
     en301549: '11.2.4.4',
     title: 'Link Purpose (In Context)',
+    understanding: '${_understandingBase}link-purpose-in-context.html',
   );
 }

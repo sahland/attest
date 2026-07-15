@@ -4,6 +4,18 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.9.0 - 2026-07-15
+
+### Added
+
+- Every bundled criterion now carries the canonical W3C "Understanding" URL
+  (`Criterion.understanding`), the authoritative explanation of what it requires
+  and how to satisfy it. It is surfaced as the "learn more" link on a finding:
+  the SARIF `helpUri` now points at the specific criterion (so GitHub and GitLab
+  render a per-rule link straight to the W3C guidance) instead of the generic
+  project URL. The field is optional and JSON round-trips backward-compatibly —
+  a criterion parsed from older output simply has a null URL.
+
 ## 1.8.0 - 2026-07-15
 
 ### Changed

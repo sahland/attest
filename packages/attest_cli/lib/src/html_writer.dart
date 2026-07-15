@@ -116,6 +116,13 @@ class HtmlWriter {
 
   String _finding(Finding finding, bool isNew) {
     final location = finding.location;
+    final understanding = finding.criterion.understanding;
+    final learn = understanding == null
+        ? ''
+        : '<p class="learn"><a href="${_escape(understanding)}" '
+            'target="_blank" rel="noopener">Understanding '
+            '${_escape(finding.criterion.wcag)} '
+            '${_escape(finding.criterion.title)} →</a></p>';
     return '<div class="finding ${finding.severity.name}">'
         '<span class="badge">${finding.severity.name}</span>'
         '${isNew ? '<span class="new">new</span>' : ''}'
@@ -124,6 +131,7 @@ class HtmlWriter {
         '<p>${_escape(finding.message)}</p>'
         '${location == null ? '' : '<p class="loc">${_escape(location.toString())}</p>'}'
         '<p class="fix">Fix: ${_escape(finding.suggestion)}</p>'
+        '$learn'
         '</div>';
   }
 
@@ -139,6 +147,7 @@ class HtmlWriter {
       '.new{background:#c5221f;color:#fff;border-radius:3px;padding:0 .3rem;'
       'font-size:.7rem;margin-right:.5rem}.criterion{color:#555}'
       '.fix{color:#137333}.loc{color:#555;font-family:monospace}'
+      '.learn{margin:.25rem 0 0}.learn a{color:#1a73e8}'
       'h3{font-size:1rem;margin-top:1.2rem;color:#333}.clean{color:#137333}'
       'ul.checklist{list-style:none;padding-left:0}'
       'ul.checklist li{border-left:4px solid #1a73e8;background:#f3f7ff;'
