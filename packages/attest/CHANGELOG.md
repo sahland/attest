@@ -4,6 +4,19 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.10.0 - 2026-07-15
+
+### Added
+
+- Findings from the deterministic rules now carry a `codeExample`: a
+  ready-to-paste Dart snippet showing the fix as a `// Before` / `// After`
+  pair (missing accessible name, image alt, field label, adjustable value,
+  heading, exposed state). It is copy-and-adapt guidance, not an edit attest
+  applies for you — a runtime audit has the offending `file:line` but not the
+  source AST, so auto-applied fixes are deliberately out of scope. The snippet
+  is optional (null for geometric/visual findings) and rides through JSON and
+  the SARIF result properties.
+
 ## 1.9.0 - 2026-07-15
 
 ### Added

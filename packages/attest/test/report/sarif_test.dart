@@ -19,6 +19,7 @@ void main() {
         confidence: Confidence.deterministic,
         message: 'Button has no accessible name.',
         suggestion: 'Add a Semantics label.',
+        codeExample: '// After\nIconButton(tooltip: "Share", ...)',
         fingerprint: 'abc123',
         location: SourceLocation(file: 'lib/pay.dart', line: 42, column: 5),
       ),
@@ -51,6 +52,10 @@ void main() {
 
     final result = (run['results'] as List).single as Map<String, dynamic>;
     expect(result['ruleId'], 'attest/interactive-name');
+    expect(
+      (result['properties'] as Map)['codeExample'],
+      contains('IconButton'),
+    );
     expect(result['level'], 'error');
     expect((result['message'] as Map)['text'], isNotEmpty);
     expect(

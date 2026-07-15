@@ -101,6 +101,9 @@ void main() {
             confidence: Confidence.deterministic,
             message: 'Button has no accessible name.',
             suggestion: 'Add a Semantics label.',
+            codeExample: '// Before\nIconButton(icon: Icon(Icons.share))\n'
+                '// After\nIconButton(icon: Icon(Icons.share), '
+                "tooltip: 'Share')",
             fingerprint: 'abc123',
             identifier: 'checkout.pay-button',
             location: SourceLocation(file: 'lib/pay.dart', line: 42),

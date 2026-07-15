@@ -100,6 +100,12 @@ String _render(AuditReport report, List<Finding> findings) {
       buffer.writeln('    ${finding.location}');
     }
     buffer.writeln('    Fix: ${finding.suggestion}');
+    final code = finding.codeExample;
+    if (code != null) {
+      for (final line in code.split('\n')) {
+        buffer.writeln('      $line');
+      }
+    }
     final understanding = finding.criterion.understanding;
     if (understanding != null) {
       buffer.writeln('    Learn: $understanding');

@@ -20,6 +20,15 @@ void main() {
     expect(evaluate(rule, snapshot), hasFinding('attest/interactive-name'));
   });
 
+  test('attaches a ready-to-paste code example to the finding', () {
+    final snapshot = snap(node(flags: {isButton}, actions: {tap}));
+    final finding = evaluate(rule, snapshot).single;
+    expect(finding.codeExample, isNotNull);
+    expect(finding.codeExample, contains('// Before'));
+    expect(finding.codeExample, contains('// After'));
+    expect(finding.codeExample, contains('tooltip:'));
+  });
+
   test('accepts a named button', () {
     final snapshot =
         snap(node(flags: {isButton}, actions: {tap}, label: 'Pay'));

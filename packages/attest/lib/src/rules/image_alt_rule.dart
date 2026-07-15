@@ -50,6 +50,12 @@ class ImageAltRule implements Rule {
         suggestion:
             "Provide Image(…, semanticLabel: '…'), or wrap a purely decorative "
             'image in ExcludeSemantics.',
+        codeExample: '// Before — no text alternative\n'
+            "Image.asset('logo.png')\n\n"
+            '// After — describe it\n'
+            "Image.asset('logo.png', semanticLabel: 'Acme logo')\n\n"
+            '// Or, if purely decorative, hide it from assistive tech\n'
+            "ExcludeSemantics(child: Image.asset('divider.png'))",
       );
     }
   }

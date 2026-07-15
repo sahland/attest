@@ -85,7 +85,11 @@ class SarifWriter {
           },
         ],
       'partialFingerprints': {'attest/v1': finding.fingerprint},
-      'properties': {'screen': screen, 'suggestion': finding.suggestion},
+      'properties': {
+        'screen': screen,
+        'suggestion': finding.suggestion,
+        if (finding.codeExample != null) 'codeExample': finding.codeExample,
+      },
     };
   }
 

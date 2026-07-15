@@ -56,6 +56,14 @@ class HeadingStructureRule implements Rule {
             'Text "${node.label}" looks like a heading (large or bold) but is '
             'not exposed as one, so it cannot be navigated to as a heading.',
         suggestion: 'Wrap it in Semantics(header: true, child: …).',
+        codeExample: '// Before — looks like a heading but is plain text\n'
+            "Text('Account settings', style: theme.textTheme.headlineSmall)\n\n"
+            '// After — expose it as a heading so it can be navigated to\n'
+            'Semantics(\n'
+            '  header: true,\n'
+            "  child: Text('Account settings', "
+            'style: theme.textTheme.headlineSmall),\n'
+            ')',
       );
     }
   }

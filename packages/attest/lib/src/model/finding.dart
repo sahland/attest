@@ -23,6 +23,7 @@ class Finding {
     required this.message,
     required this.suggestion,
     required this.fingerprint,
+    this.codeExample,
     this.identifier,
     this.location,
     this.bounds = RectData.zero,
@@ -45,6 +46,15 @@ class Finding {
 
   /// A concrete suggestion for fixing the problem, ideally with example code.
   final String suggestion;
+
+  /// A ready-to-paste Dart snippet showing the fix, typically a `// Before` /
+  /// `// After` pair, when the rule has a canonical code-level remedy.
+  ///
+  /// Present for deterministic rules whose fix is a specific widget change
+  /// (adding an accessible name, exposing a value); null for geometric or
+  /// visual findings (contrast, target size) whose fix is not a code template.
+  /// It is guidance to copy and adapt, not an edit attest applies for you.
+  final String? codeExample;
 
   /// A hash that is stable across runs but changes on a genuine regression; the
   /// unit of the baseline diff. See `Fingerprinter`.
@@ -74,6 +84,7 @@ class Finding {
         message: json['message'] as String,
         suggestion: json['suggestion'] as String,
         fingerprint: json['fingerprint'] as String,
+        codeExample: json['codeExample'] as String?,
         identifier: json['identifier'] as String?,
         location: json['location'] == null
             ? null
@@ -92,6 +103,7 @@ class Finding {
         'message': message,
         'suggestion': suggestion,
         'fingerprint': fingerprint,
+        if (codeExample != null) 'codeExample': codeExample,
         if (identifier != null) 'identifier': identifier,
         if (location != null) 'location': location!.toJson(),
         'bounds': bounds.toJson(),
@@ -107,6 +119,7 @@ class Finding {
       other.message == message &&
       other.suggestion == suggestion &&
       other.fingerprint == fingerprint &&
+      other.codeExample == codeExample &&
       other.identifier == identifier &&
       other.location == location &&
       other.bounds == bounds;
@@ -120,6 +133,7 @@ class Finding {
         message,
         suggestion,
         fingerprint,
+        codeExample,
         identifier,
         location,
         bounds,

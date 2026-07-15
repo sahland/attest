@@ -116,6 +116,10 @@ class HtmlWriter {
 
   String _finding(Finding finding, bool isNew) {
     final location = finding.location;
+    final code = finding.codeExample;
+    final example = code == null
+        ? ''
+        : '<pre class="code"><code>${_escape(code)}</code></pre>';
     final understanding = finding.criterion.understanding;
     final learn = understanding == null
         ? ''
@@ -131,6 +135,7 @@ class HtmlWriter {
         '<p>${_escape(finding.message)}</p>'
         '${location == null ? '' : '<p class="loc">${_escape(location.toString())}</p>'}'
         '<p class="fix">Fix: ${_escape(finding.suggestion)}</p>'
+        '$example'
         '$learn'
         '</div>';
   }
@@ -148,6 +153,9 @@ class HtmlWriter {
       'font-size:.7rem;margin-right:.5rem}.criterion{color:#555}'
       '.fix{color:#137333}.loc{color:#555;font-family:monospace}'
       '.learn{margin:.25rem 0 0}.learn a{color:#1a73e8}'
+      'pre.code{background:#1e1e1e;color:#e8e8e8;padding:.6rem .8rem;'
+      'border-radius:4px;overflow-x:auto;font-size:.8rem;line-height:1.4;'
+      'margin:.4rem 0}pre.code code{font-family:ui-monospace,monospace}'
       'h3{font-size:1rem;margin-top:1.2rem;color:#333}.clean{color:#137333}'
       'ul.checklist{list-style:none;padding-left:0}'
       'ul.checklist li{border-left:4px solid #1a73e8;background:#f3f7ff;'

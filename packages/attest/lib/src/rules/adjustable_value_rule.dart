@@ -49,6 +49,13 @@ class AdjustableValueRule implements Rule {
         suggestion:
             "Expose the current value via Semantics(value: '…') — for example "
             'the slider position as "50%" — separate from its label.',
+        codeExample: '// Before — the control adjusts but announces no value\n'
+            'Slider(value: _volume, onChanged: _setVolume)\n\n'
+            '// After — expose the current value to a screen reader\n'
+            'Semantics(\n'
+            "  value: '\${(_volume * 100).round()}%',\n"
+            '  child: Slider(value: _volume, onChanged: _setVolume),\n'
+            ')',
       );
     }
   }

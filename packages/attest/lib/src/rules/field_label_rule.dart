@@ -48,6 +48,13 @@ class FieldLabelRule implements Rule {
         suggestion:
             'Provide InputDecoration(labelText: …) for fields, or wrap the '
             'control in Semantics(label: …) and associate it with its caption.',
+        codeExample: '// Before — a hint is not a label\n'
+            'TextField(controller: _email,\n'
+            "    decoration: InputDecoration(hintText: 'you@example.com'))\n\n"
+            '// After — add a real label\n'
+            'TextField(controller: _email,\n'
+            "    decoration: InputDecoration(labelText: 'Email',\n"
+            "        hintText: 'you@example.com'))",
       );
     }
   }

@@ -48,6 +48,11 @@ class InteractiveNameRule implements Rule {
         suggestion:
             "Wrap it in Semantics(label: '…', button: true, child: …) or use "
             'IconButton(tooltip: …).',
+        codeExample: '// Before — a screen reader announces only "button"\n'
+            'IconButton(icon: Icon(Icons.share), onPressed: _share)\n\n'
+            '// After — give it an accessible name\n'
+            "IconButton(icon: Icon(Icons.share), tooltip: 'Share', "
+            'onPressed: _share)',
       );
     }
   }

@@ -4,6 +4,14 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.5.0 - 2026-07-15
+
+### Added
+
+- The HTML report renders a finding's `codeExample` as a syntax-styled code
+  block, and the text output prints it indented under the fix, so the
+  before/after remedy is right next to the violation. Requires `attest` 1.10.0.
+
 ## 1.4.0 - 2026-07-15
 
 ### Added

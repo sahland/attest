@@ -55,6 +55,7 @@ class RuleContext {
     SemanticsNodeData node, {
     required String message,
     required String suggestion,
+    String? codeExample,
     Severity? severity,
     String? label,
   }) {
@@ -65,6 +66,7 @@ class RuleContext {
       confidence: rule.confidence,
       message: message,
       suggestion: suggestion,
+      codeExample: codeExample,
       fingerprint: Fingerprinter.compute(
         ruleId: rule.id,
         wcag: rule.criterion.wcag,

@@ -9,7 +9,7 @@ import 'text_scale_collector.dart';
 /// The version of attest reported in [AuditMeta.toolVersion].
 ///
 /// Kept in sync with the package version by a test; see `version_test.dart`.
-const String attestVersion = '1.3.0';
+const String attestVersion = '1.4.0';
 
 /// Accessibility auditing for [WidgetTester].
 extension AccessibilityAudit on WidgetTester {

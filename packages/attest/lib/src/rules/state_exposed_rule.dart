@@ -58,6 +58,14 @@ class StateExposedRule implements Rule {
               'technology.',
           suggestion: 'Propagate the state via Semantics(selected: true) or '
               'Semantics(toggled: true).',
+          codeExample:
+              '// Before — a custom chip that never tells AT if it is selected\n'
+              'GestureDetector(onTap: _select, child: _chip(label))\n\n'
+              '// After — expose the selected state\n'
+              'Semantics(\n'
+              '  selected: _isSelected,\n'
+              '  child: GestureDetector(onTap: _select, child: _chip(label)),\n'
+              ')',
         );
       }
     }
