@@ -4,6 +4,20 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.5.0 - 2026-07-15
+
+### Changed
+
+- The contrast raster pass is substantially faster on busy screens. The
+  background scan now reads packed pixels straight from the buffer instead of
+  allocating an object per pixel, and it subsamples large text boxes with a
+  stride — the background is taken as the mode, which a uniform stride over a
+  solid field leaves unchanged. On a 240-node screen collection dropped from
+  ~145 ms to ~40 ms (the pixel scan itself ~13× faster; the remaining cost is
+  the fixed rasterization). Measured ratios are unchanged: the reference pairs
+  still validate, and a new test pins that a box far larger than the sampling
+  cap yields the same contrast. No API change.
+
 ## 1.4.0 - 2026-07-15
 
 ### Added

@@ -27,6 +27,14 @@ class RasterCollector {
   /// pixel is treated as background rather than glyph.
   static const int _backgroundDistance = 60;
 
+  /// The most pixels [_sampleBackground] reads from a single text box. The
+  /// background colour is taken as the mode within the box, which is invariant
+  /// under uniform subsampling of a solid field, so on a larger box the scan
+  /// steps over pixels rather than reading every one — bounding the per-box
+  /// cost regardless of the box's size. A thousand samples is far more than a
+  /// mode needs to be stable.
+  static const int _maxSamplesPerBox = 1024;
+
   /// Below this foreground opacity the text is assumed to belong to a disabled
   /// control (Material disabled text is ~0.38 opaque).
   static const double _disabledOpacity = 0.6;
@@ -53,7 +61,10 @@ class RasterCollector {
       if (byteData == null) continue;
 
       final image = _SampledImage(
-        byteData,
+        byteData.buffer.asUint8List(
+          byteData.offsetInBytes,
+          byteData.lengthInBytes,
+        ),
         (view.paintBounds.width / devicePixelRatio).round(),
         (view.paintBounds.height / devicePixelRatio).round(),
       );
@@ -157,21 +168,35 @@ class RasterCollector {
   /// pixels close to the foreground (the glyphs and their antialiased edges).
   /// A mode is far more robust than an average for a solid background, which a
   /// thin glyph never outnumbers.
+  ///
+  /// The loop reads packed RGB integers straight from the pixel buffer — no
+  /// per-pixel object is allocated — and steps by [_strideFor] so a large box
+  /// costs no more than a small one.
   _Rgb? _sampleBackground(Rect rect, _SampledImage image, _Rgb foreground) {
-    final counts = <int, int>{};
-
     final left = rect.left.floor();
     final top = rect.top.floor();
     final right = rect.right.ceil();
     final bottom = rect.bottom.ceil();
+    if (right <= left || bottom <= top) return null;
 
-    for (var y = top; y < bottom; y++) {
-      for (var x = left; x < right; x++) {
-        final pixel = image.colorAt(x, y);
-        if (pixel == null) continue;
-        if (_distance(pixel, foreground) <= _backgroundDistance) continue;
-        final key = (pixel.r << 16) | (pixel.g << 8) | pixel.b;
-        counts[key] = (counts[key] ?? 0) + 1;
+    final step = _strideFor((right - left) * (bottom - top));
+    final fr = foreground.r;
+    final fg = foreground.g;
+    final fb = foreground.b;
+    final counts = <int, int>{};
+
+    for (var y = top; y < bottom; y += step) {
+      for (var x = left; x < right; x += step) {
+        final packed = image.packedAt(x, y);
+        if (packed < 0) continue;
+        final r = (packed >> 16) & 0xff;
+        final g = (packed >> 8) & 0xff;
+        final b = packed & 0xff;
+        if ((r - fr).abs() + (g - fg).abs() + (b - fb).abs() <=
+            _backgroundDistance) {
+          continue;
+        }
+        counts[packed] = (counts[packed] ?? 0) + 1;
       }
     }
 
@@ -189,11 +214,14 @@ class RasterCollector {
     return _Rgb((bestKey >> 16) & 0xff, (bestKey >> 8) & 0xff, bestKey & 0xff);
   }
 
+  /// The sampling step for a box of [area] pixels: 1 up to [_maxSamplesPerBox],
+  /// then the smallest stride that keeps the sampled count near that cap.
+  static int _strideFor(int area) => area <= _maxSamplesPerBox
+      ? 1
+      : math.max(1, math.sqrt(area / _maxSamplesPerBox).floor());
+
   int _mix(int foreground, int background, double opacity) =>
       (foreground * opacity + background * (1 - opacity)).round();
-
-  int _distance(_Rgb a, _Rgb b) =>
-      (a.r - b.r).abs() + (a.g - b.g).abs() + (a.b - b.b).abs();
 
   double _luminance(_Rgb color) =>
       0.2126 * _channel(color.r) +
@@ -212,19 +240,18 @@ class RasterCollector {
 class _SampledImage {
   _SampledImage(this._data, this.width, this.height);
 
-  final ByteData _data;
+  final Uint8List _data;
   final int width;
   final int height;
 
-  _Rgb? colorAt(int x, int y) {
-    if (x < 0 || y < 0 || x >= width || y >= height) return null;
+  /// The RGB of pixel ([x], [y]) packed as `(r << 16) | (g << 8) | b`, or `-1`
+  /// when the coordinate is outside the image. Packing avoids allocating an
+  /// object for each of the many pixels the background scan reads.
+  int packedAt(int x, int y) {
+    if (x < 0 || y < 0 || x >= width || y >= height) return -1;
     final offset = (y * width + x) * 4;
-    if (offset + 3 >= _data.lengthInBytes) return null;
-    return _Rgb(
-      _data.getUint8(offset),
-      _data.getUint8(offset + 1),
-      _data.getUint8(offset + 2),
-    );
+    if (offset + 2 >= _data.length) return -1;
+    return (_data[offset] << 16) | (_data[offset + 1] << 8) | _data[offset + 2];
   }
 }
 
