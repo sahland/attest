@@ -35,6 +35,11 @@ class CiCommand extends Command<int> {
         'output',
         abbr: 'o',
         help: 'Write output to this file instead of stdout.',
+      )
+      ..addOption(
+        'history',
+        help: 'Append this run to a JSON trend log at this path and show the '
+            'change since the previous run.',
       );
   }
 
@@ -55,7 +60,9 @@ class CiCommand extends Command<int> {
       _loadBaseline(args.option('baseline')!),
     ).evaluate(aggregateFindings(reports));
 
-    final rendered = _render(args.option('format')!, reports, gate);
+    final trend = _recordTrend(args.option('history'), gate);
+
+    final rendered = _render(args.option('format')!, reports, gate, trend);
     final outputPath = args.option('output');
     if (outputPath == null) {
       stdout.writeln(rendered);
@@ -82,7 +89,34 @@ class CiCommand extends Command<int> {
     );
   }
 
-  String _render(String format, List<AuditReport> reports, GateResult gate) {
+  /// Appends this run to the trend log at [path] (creating it if absent) and
+  /// returns the change since the previous run. Returns null when no
+  /// `--history` path was given.
+  RunDelta? _recordTrend(String? path, GateResult gate) {
+    if (path == null) return null;
+    final file = File(path);
+    final log = file.existsSync()
+        ? TrendLog.fromJson(
+            jsonDecode(file.readAsStringSync()) as Map<String, dynamic>,
+          )
+        : TrendLog.empty;
+    final updated = log.append(
+      summarizeRun(gate, timestamp: DateTime.now().toUtc()),
+    );
+    file
+      ..createSync(recursive: true)
+      ..writeAsStringSync(
+        const JsonEncoder.withIndent('  ').convert(updated.toJson()),
+      );
+    return updated.latestDelta;
+  }
+
+  String _render(
+    String format,
+    List<AuditReport> reports,
+    GateResult gate,
+    RunDelta? trend,
+  ) {
     switch (format) {
       case 'json':
         return const JsonEncoder.withIndent('  ').convert({
@@ -98,7 +132,7 @@ class CiCommand extends Command<int> {
           SarifWriter(toolVersion: version).write(reports),
         );
       case 'html':
-        return const HtmlWriter().write(reports, gate);
+        return const HtmlWriter().write(reports, gate, trend: trend);
       case 'conformance':
         final version =
             reports.isEmpty ? '0.0.0' : reports.first.meta.toolVersion;
@@ -111,7 +145,7 @@ class CiCommand extends Command<int> {
         );
       case 'text':
       default:
-        return _text(gate);
+        return _text(gate, trend);
     }
   }
 
@@ -128,12 +162,14 @@ class CiCommand extends Command<int> {
     return Standard.en301549_v3_2_1;
   }
 
-  String _text(GateResult gate) {
+  String _text(GateResult gate, RunDelta? trend) {
+    final trendLine = trend == null ? '' : '${_trendLine(trend)}\n';
     if (gate.passed) {
-      return 'No new accessibility findings '
+      return '${trendLine}No new accessibility findings '
           '(${gate.knownFindings.length} known).';
     }
     final buffer = StringBuffer()
+      ..write(trendLine)
       ..writeln('${gate.newFindings.length} new accessibility finding(s):')
       ..writeln();
     for (final finding in gate.newFindings) {
@@ -158,5 +194,22 @@ class CiCommand extends Command<int> {
       buffer.writeln();
     }
     return buffer.toString().trimRight();
+  }
+
+  /// A one-line trend summary, e.g. `Trend: 8 findings (down 2 since last
+  /// run).` or, for the first recorded run, `Trend: 8 findings (first run).`.
+  static String _trendLine(RunDelta trend) {
+    final total = trend.current.total;
+    final noun = total == 1 ? 'finding' : 'findings';
+    if (!trend.hasPrevious) {
+      return 'Trend: $total $noun (first recorded run).';
+    }
+    final change = trend.totalDelta;
+    final direction = change == 0
+        ? 'no change'
+        : change < 0
+            ? 'down ${-change}'
+            : 'up $change';
+    return 'Trend: $total $noun ($direction since last run).';
   }
 }

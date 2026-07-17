@@ -37,6 +37,7 @@ export 'src/report/baseline_gate.dart';
 export 'src/report/flow_analysis.dart';
 export 'src/report/sarif.dart';
 export 'src/report/transcript.dart';
+export 'src/report/trend.dart';
 export 'src/rules/adjustable_value_rule.dart';
 export 'src/rules/ambiguous_name_rule.dart';
 export 'src/rules/contrast_rule.dart';

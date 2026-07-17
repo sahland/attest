@@ -31,6 +31,12 @@ attest coverage --standard wcag22 --format json
 not in the baseline, so it gates a pull request on *new* accessibility issues
 without failing on already-accepted ones.
 
+Pass `--history <path>` to append each run to a JSON trend log and print how the
+finding count moved since the previous run (`Trend: 8 findings (down 2 since
+last run).`), so a project can watch its accessibility debt shrink over time —
+in the terminal and in the HTML report. The log keeps the most recent runs and
+is safe to commit.
+
 `attest coverage` prints the coverage matrix for a standard pack: every WCAG
 Level A/AA success criterion, classified as automated, partial or manual. It is
 the honest ledger of what the tool can and cannot verify — useful when

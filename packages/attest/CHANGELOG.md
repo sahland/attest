@@ -4,6 +4,17 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.11.0 - 2026-07-15
+
+### Added
+
+- Trend tracking across runs: `RunSummary` (a run's totals and per-severity
+  counts), `TrendLog` (an append-only, length-capped history that round-trips to
+  JSON) and `RunDelta` (the change since the previous run). `summarizeRun` builds
+  a summary straight from a `GateResult`. This is the model behind the CLI's new
+  `--history` flag, letting a project see its accessibility debt move over time
+  rather than only pass/fail one run.
+
 ## 1.10.0 - 2026-07-15
 
 ### Added

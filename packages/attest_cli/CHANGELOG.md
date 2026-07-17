@@ -4,6 +4,16 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.6.0 - 2026-07-15
+
+### Added
+
+- `attest ci --history <path>`: append each run to a JSON trend log and report
+  how the finding count moved since the previous run — a `Trend:` line in the
+  text output and a coloured banner in the HTML report (`▼ 2 since last run`).
+  The log is length-capped and safe to commit, so a project can watch its
+  accessibility debt shrink over time. Requires `attest` 1.11.0.
+
 ## 1.5.0 - 2026-07-15
 
 ### Added

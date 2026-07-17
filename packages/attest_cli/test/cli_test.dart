@@ -170,4 +170,38 @@ void main() {
     expect(html, contains('Use of Color'));
     expect(html, contains('type="checkbox"'));
   });
+
+  test('ci --history records a trend log and reports the change', () async {
+    final historyPath = '${temp.path}/history.json';
+    final outPath = '${temp.path}/out.txt';
+
+    List<String> ciArgs() => [
+          'ci',
+          '--report-dir',
+          reportDir,
+          '--baseline',
+          baselinePath,
+          '--history',
+          historyPath,
+          '--output',
+          outPath,
+        ];
+
+    TrendLog readLog() => TrendLog.fromJson(
+          jsonDecode(File(historyPath).readAsStringSync())
+              as Map<String, dynamic>,
+        );
+
+    // First run creates the log and reports the first recorded run.
+    await run(ciArgs());
+    expect(readLog().runs, hasLength(1));
+    expect(File(outPath).readAsStringSync(), contains('first recorded run'));
+
+    // Second run appends and, with the same reports, reports no change.
+    await run(ciArgs());
+    final log = readLog();
+    expect(log.runs, hasLength(2));
+    expect(log.runs.last.total, 1);
+    expect(File(outPath).readAsStringSync(), contains('no change since last'));
+  });
 }

@@ -7,8 +7,9 @@ class HtmlWriter {
   /// Creates an [HtmlWriter].
   const HtmlWriter();
 
-  /// Builds the HTML document for [reports], highlighting the [gate] outcome.
-  String write(List<AuditReport> reports, GateResult gate) {
+  /// Builds the HTML document for [reports], highlighting the [gate] outcome and,
+  /// when a [trend] is given, the change since the previous run.
+  String write(List<AuditReport> reports, GateResult gate, {RunDelta? trend}) {
     final buffer = StringBuffer()
       ..writeln('<!doctype html>')
       ..writeln('<html lang="en"><head><meta charset="utf-8">')
@@ -21,6 +22,7 @@ class HtmlWriter {
         '${gate.newFindings.length} new · ${gate.knownFindings.length} known · '
         '${gate.resolvedFingerprints.length} resolved</p>',
       )
+      ..writeln(_trend(trend))
       ..writeln(
         '<p class="disclaimer">Automated checks cover machine-checkable '
         'criteria only; a human must review the rest. This is not a claim of '
@@ -114,6 +116,30 @@ class HtmlWriter {
         '<p class="guidance">${_escape(row.guidance)}</p></li>';
   }
 
+  /// A compact trend banner: the current total and how it moved since the
+  /// previous run. Empty when no trend was recorded.
+  String _trend(RunDelta? trend) {
+    if (trend == null) return '';
+    final total = trend.current.total;
+    final noun = total == 1 ? 'finding' : 'findings';
+    if (!trend.hasPrevious) {
+      return '<p class="trend flat">Trend: $total $noun · first recorded '
+          'run</p>';
+    }
+    final change = trend.totalDelta;
+    final cls = change < 0
+        ? 'down'
+        : change > 0
+            ? 'up'
+            : 'flat';
+    final text = change == 0
+        ? 'no change since last run'
+        : change < 0
+            ? '▼ ${-change} since last run'
+            : '▲ $change since last run';
+    return '<p class="trend $cls">Trend: $total $noun · $text</p>';
+  }
+
   String _finding(Finding finding, bool isNew) {
     final location = finding.location;
     final code = finding.codeExample;
@@ -152,6 +178,8 @@ class HtmlWriter {
       '.new{background:#c5221f;color:#fff;border-radius:3px;padding:0 .3rem;'
       'font-size:.7rem;margin-right:.5rem}.criterion{color:#555}'
       '.fix{color:#137333}.loc{color:#555;font-family:monospace}'
+      '.trend{font-weight:600;margin:.25rem 0 .75rem}'
+      '.trend.down{color:#137333}.trend.up{color:#c5221f}.trend.flat{color:#555}'
       '.learn{margin:.25rem 0 0}.learn a{color:#1a73e8}'
       'pre.code{background:#1e1e1e;color:#e8e8e8;padding:.6rem .8rem;'
       'border-radius:4px;overflow-x:auto;font-size:.8rem;line-height:1.4;'
